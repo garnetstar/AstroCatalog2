@@ -1,0 +1,40 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Black">
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="style_detail_object_value_text">
+        <item name="android:textColor">@color/yellow_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="style_detail_object_value_text_blue">
+        <item name="android:textColor">@color/light_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="style_h1">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="style_detail_object_white_text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+</resources>

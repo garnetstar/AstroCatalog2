@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/object_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false" >
+
+    <LinearLayout
+        android:id="@+id/l3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/object_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#ffffffff"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <LinearLayout
+            android:id="@+id/l4"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="left"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/object_magnitude_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/adapter_magnitude_short"
+                android:textColor="@color/yellow_text" />
+
+            <TextView
+                android:id="@+id/object_magnitude"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/object_typ"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@color/yellow_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/l2"
+        android:layout_width="54dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right" >
+
+        <TextView
+            android:id="@+id/object_constellation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/light_red"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</LinearLayout>

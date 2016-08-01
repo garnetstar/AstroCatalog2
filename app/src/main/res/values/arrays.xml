@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="astro_object_names">
+        <item>@string/object_type_open_cluser</item>
+        <item>@string/object_type_global_cluser</item>
+        <item>@string/object_type_planetary_nebula</item>
+        <item>@string/object_type_diffuse_nebula</item>
+        <item>@string/object_type_spiral_galaxy</item>
+        <item>@string/object_type_elyptical_galaxy</item>
+        <item>@string/object_type_iregullar_galaxy</item>
+        <item>@string/object_type_binary</item>
+    </string-array>
+    <string-array name="astro_object_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="astro_object_default_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+     <string-array name="astro_object_visibility_names">
+        <item>Všechny objekty</item>
+        <item>Pouze objekty nad obzorem</item>
+    </string-array>
+    <string-array name="astro_object_visibility_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="astro_object_visibility_default_values">
+        <item>1</item>
+    </string-array>
+
+</resources>

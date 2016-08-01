@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="astro_object_default_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="astro_object_names">
+        <item>@string/object_type_open_cluser</item>
+        <item>@string/object_type_global_cluser</item>
+        <item>@string/object_type_planetary_nebula</item>
+        <item>@string/object_type_diffuse_nebula</item>
+        <item>@string/object_type_spiral_galaxy</item>
+        <item>@string/object_type_elyptical_galaxy</item>
+        <item>@string/object_type_iregullar_galaxy</item>
+        <item>@string/object_type_binary</item>
+    </string-array>
+    <string-array name="astro_object_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="astro_object_visibility_default_values">
+        <item>1</item>
+    </string-array>
+    <string-array name="astro_object_visibility_names">
+        <item>Všechny objekty</item>
+        <item>Pouze objekty nad obzorem</item>
+    </string-array>
+    <string-array name="astro_object_visibility_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+      <item>-1</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+    <color name="alert">#ffff3333</color>
+    <color name="black">#ff000000</color>
+    <color name="common_action_bar_splitter">#d2d2d2</color>
+    <color name="common_signin_btn_dark_text_default">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_disabled">#FFAAAAAA</color>
+    <color name="common_signin_btn_dark_text_focused">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_pressed">@android:color/white</color>
+    <color name="common_signin_btn_default_background">#FFDD4B39</color>
+    <color name="common_signin_btn_light_text_default">#FF737373</color>
+    <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
+    <color name="common_signin_btn_light_text_focused">#FF737373</color>
+    <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
+    <color name="light_blue">#ff3399ff</color>
+    <color name="light_red">#ffff6699</color>
+    <color name="white">#ffffffff</color>
+    <color name="yellow_text">#ffffcc66</color>
+    <declare-styleable name="LoadingImageView"><attr format="enum" name="imageAspectRatioAdjust"><enum name="none" value="0"/><enum name="adjust_width" value="1"/><enum name="adjust_height" value="2"/></attr><attr format="float" name="imageAspectRatio"/><attr format="boolean" name="circleCrop"/></declare-styleable>
+    <declare-styleable name="SeekBarDialogPreference"><attr name="android:max"/><attr format="integer" name="min"/><attr format="string" name="progressTextSuffix"/></declare-styleable>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <integer name="google_play_services_version">8115000</integer>
+    <string name="action_settings">Settings</string>
+    <string name="adapter_magnitude_short">Mag: </string>
+    <string name="app_name">AstroCatalog</string>
+    <string name="app_settings">Nastavení aplikace</string>
+    <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
+    <string name="auth_google_play_services_client_google_display_name">Google</string>
+    <string name="cardinal_east">V</string>
+    <string name="cardinal_north">S</string>
+    <string name="cardinal_south">J</string>
+    <string name="cardinal_west">Z</string>
+    <string name="common_android_wear_notification_needs_update_text"><ns1:g id="app_name">%1$s</ns1:g> requires an update to the Android Wear app.</string>
+    <string name="common_android_wear_update_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run unless you update the Android Wear app.</string>
+    <string msgid="6006316683626838685" name="common_android_wear_update_title">Update Android Wear</string>
+    <string name="common_google_play_services_api_unavailable_text"><ns1:g id="app_name">%1$s</ns1:g> requires one or more Google Play services that are not currently available. Please contact the developer for assistance.</string>
+    <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable Google Play services</string>
+    <string msgid="227660514972886228" name="common_google_play_services_enable_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t work unless you enable Google Play services.</string>
+    <string msgid="5122002158466380389" name="common_google_play_services_enable_title">Enable Google Play services</string>
+    <string name="common_google_play_services_error_notification_requested_by_msg">Requested by <ns1:g id="app_name">%1$s</ns1:g></string>
+    <string msgid="7153882981874058840" name="common_google_play_services_install_button">Get Google Play services</string>
+    <string msgid="2122112764540849864" name="common_google_play_services_install_text_phone"><ns1:g id="app_name">%1$s</ns1:g> won\'t run without Google Play services, which are missing from your phone.</string>
+    <string msgid="7351599665250191022" name="common_google_play_services_install_text_tablet"><ns1:g id="app_name">%1$s</ns1:g> won\'t run without Google Play services, which are missing from your tablet.</string>
+    <string msgid="7215213145546190223" name="common_google_play_services_install_title">Get Google Play services</string>
+    <string name="common_google_play_services_invalid_account_text">The specified account does not exist on this device. Please choose a different account.</string>
+    <string name="common_google_play_services_invalid_account_title">Invalid Account</string>
+    <string name="common_google_play_services_needs_enabling_title">An application requires Google Play services to be enabled.</string>
+    <string name="common_google_play_services_network_error_text">A data connection is required to connect to Google Play services.</string>
+    <string name="common_google_play_services_network_error_title">Network Error</string>
+    <string name="common_google_play_services_notification_needs_update_title">An application requires an update for Google Play services.</string>
+    <string name="common_google_play_services_notification_ticker">Google Play services error</string>
+    <string name="common_google_play_services_sign_in_failed_text">Error signing in the specified account. Please choose a different account.</string>
+    <string name="common_google_play_services_sign_in_failed_title">Sign in failed</string>
+    <string name="common_google_play_services_unknown_issue">Unknown issue with Google Play services.</string>
+    <string name="common_google_play_services_unsupported_text"><ns1:g id="app_name">%1$s</ns1:g> relies on Google Play services, which is not supported by your device. Contact the manufacturer for assistance.</string>
+    <string name="common_google_play_services_unsupported_title">Google Play services</string>
+    <string msgid="6556509956452265614" name="common_google_play_services_update_button">Update</string>
+    <string msgid="9053896323427875356" name="common_google_play_services_update_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run unless you update Google Play services.</string>
+    <string msgid="6006316683626838685" name="common_google_play_services_update_title">Update Google Play services</string>
+    <string name="common_google_play_services_updating_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run without Google Play services, which are currently updating.</string>
+    <string name="common_google_play_services_updating_title">Google Play services are updating</string>
+    <string name="common_open_on_phone">Open on phone</string>
+    <string name="filter_object">Viditelnost</string>
+    <string name="login">Login</string>
+    <string name="max_magnitude">Maximální magnituda</string>
+    <string name="max_magnitude_dialog">Maximální magnituda zobrazených objektů</string>
+    <string name="menu_main">Nastavení</string>
+    <string name="not_known">Nezjištěno</string>
+    <string name="object_detail_altitude_label">Výška nad obzorem:</string>
+    <string name="object_detail_azimuth_label">Azimuth:</string>
+    <string name="object_detail_constellation_label">Souhvězdí:</string>
+    <string name="object_detail_declination_label">Deklinace:</string>
+    <string name="object_detail_distance_label">Vzdálenst:</string>
+    <string name="object_detail_hourangle_label">Hodinový úhel:</string>
+    <string name="object_detail_magnitude_label">Magnituda:</string>
+    <string name="object_detail_pointer_button">Pointer</string>
+    <string name="object_detail_rectascense_label">Rektascenze:</string>
+    <string name="object_detail_type_label">Typ objektu:</string>
+    <string name="object_type_binary">Dvojhvězda</string>
+    <string name="object_type_diffuse_nebula">Difůzní mlhovina</string>
+    <string name="object_type_elyptical_galaxy">Eliptická galexie</string>
+    <string name="object_type_global_cluser">Kulová hvězdokupa</string>
+    <string name="object_type_iregullar_galaxy">Nepravidelná galaxie</string>
+    <string name="object_type_open_cluser">Otevřená hvězdokupa</string>
+    <string name="object_type_planetary_nebula">Planetární mlhovina</string>
+    <string name="object_type_spiral_galaxy">Spirální galexie</string>
+    <string name="password">Heslo</string>
+    <string name="pref_default_display_name">John Smith</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact based on your message history</string>
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_header_general">General</string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="settings_astro_object_types">Typy objektů</string>
+    <string name="settings_astro_object_types_sumary">Typy astronomických objektů které se budou filtrovat.</string>
+    <string name="title_activity_object_detatil">ObjectDetatil</string>
+    <string name="title_activity_pointer">PointerActivity</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_test">TestActivity</string>
+    <style name="AppBaseTheme" parent="android:Theme.Black">
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="style_detail_object_value_text">
+        <item name="android:textColor">@color/yellow_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="style_detail_object_value_text_blue">
+        <item name="android:textColor">@color/light_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="style_detail_object_white_text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="style_h1">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+</resources>

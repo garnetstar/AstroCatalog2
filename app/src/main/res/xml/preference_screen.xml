@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:key="preference_screen"
+    android:orderingFromXml="true"
+    android:title="@string/app_settings">
+
+    <MultiSelectListPreference
+        android:defaultValue="@array/astro_object_default_values"
+        android:entries="@array/astro_object_names"
+        android:entryValues="@array/astro_object_values"
+        android:key="setting_object_types"
+        android:summary="@string/settings_astro_object_types_sumary"
+        android:title="@string/settings_astro_object_types" />
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/astro_object_visibility_names"
+        android:entryValues="@array/astro_object_visibility_values"
+        android:key="setting_filtering"
+        android:title="@string/filter_object" />
+
+    <cz.uhk.janMachacek.UI.SeekBarDialogPreference
+        android:defaultValue="10"
+        android:dialogMessage="@string/max_magnitude_dialog"
+        android:key="setting_max_magnitude"
+        android:max="10"
+        android:title="@string/max_magnitude"
+        custom:min="1" />
+
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="preference_screen_credentials"
+        android:title="Přihlašovací údaje">
+
+        <EditTextPreference
+            android:key="login"
+            android:title="Login" />
+
+        <EditTextPreference
+            android:inputType="textPassword"
+            android:key="password"
+            android:title="Heslo" />
+    </PreferenceScreen>
+
+
+</PreferenceScreen>

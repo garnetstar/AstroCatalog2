@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\object_detatil.xml",
+        "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\menu\\object_detatil.xml"
+    },
+    {
+        "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\pointer.xml",
+        "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\menu\\pointer.xml"
+    },
+    {
+        "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\menu\\main.xml"
+    }
+]
