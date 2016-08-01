@@ -10,8 +10,13 @@ public class Config {
 
     // url pro ziskani tokenu
     public static final String API_TOKEN = "/token";
+    // url pro messierData
+    public static final String API_MESSIER_DATA = "/messierData";
 
     public static final String API_LOGIN = "login";
     public static final String API_PASSWORD = "password";
     public static final String API_GRANT_TYPE = "grant_type";
+    public static final String API_ACCESS_TOKEN = "access_token";
+    public static final String API_REFRESH_TOKEN = "refresh_token";
+
 }

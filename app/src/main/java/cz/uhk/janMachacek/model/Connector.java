@@ -10,18 +10,22 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
+import cz.uhk.janMachacek.library.ApiHttp.Response;
+import cz.uhk.janMachacek.library.ApiHttp.Utils;
 
 /**
  * Created by jan on 22.7.2016.
@@ -39,8 +43,8 @@ public class Connector {
         String token;
 
         if (preferences.getString("access_token", null) == null) {
-                // ziskat token z api
-                token = this.getTokenByLogin();
+            // ziskat token z api
+            token = this.getTokenByLogin();
         } else {
             token = preferences.getString("access_token", null);
         }
@@ -56,8 +60,8 @@ public class Connector {
         login = preferences.getString(Config.API_LOGIN, null);
         pass = preferences.getString(Config.API_PASSWORD, null);
 
-        if(login == null || pass == null)
-        throw new EmptyCredentialsException();
+        if (login == null || pass == null)
+            throw new EmptyCredentialsException();
 
         Log.d("Response ", "login: " + login);
         Log.d("Response ", "pass: " + pass);
@@ -79,7 +83,7 @@ public class Connector {
             JSONObject jsonObject = new JSONObject(json);
             //kontrola http statusu
             int httpStatus = response.getStatusLine().getStatusCode();
-            if (   httpStatus >= 400) {
+            if (httpStatus >= 400) {
                 String message = jsonObject.getString("message");
                 throw new ApiErrorException(message + ": wrong credentials");
             }
@@ -95,22 +99,48 @@ public class Connector {
             editor.commit();
             return accessToken;
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new ApiErrorException(e.getMessage(), e);
         }
     }
 
-    public String getTokenByRefreshToken() {
-        return "refresh token";
+    public void refreshAccessToken() throws ApiErrorException, IOException {
+
+        String refreshToken = preferences.getString(Config.API_REFRESH_TOKEN, null);
+
+        HttpPost post = Response.refreshToken(refreshToken);
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpResponse response = httpClient.execute(post);
+
+        String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(json);
+
+            //kontrola http statusu
+            int httpStatus = response.getStatusLine().getStatusCode();
+            if (httpStatus >= 400) {
+                String message = jsonObject.getString("message");
+                throw new ApiErrorException(message + ": wrong credentials");
+            }
+            String accessToken = jsonObject.getString(Config.API_ACCESS_TOKEN);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(Config.API_ACCESS_TOKEN, accessToken);
+            editor.commit();
+        } catch (JSONException e) {
+            throw new ApiErrorException(e.getMessage(), e);
+        }
     }
 
 
     // convert inputstream to String
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();

@@ -26,6 +26,7 @@ import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
 import cz.uhk.janMachacek.UI.AlertFragment;
 import cz.uhk.janMachacek.UI.AlertMessageFragment;
+import cz.uhk.janMachacek.library.Sync.MessierData;
 import cz.uhk.janMachacek.model.Connector;
 
 public class TestActivity extends AbstactBaseActivity implements AlertFragment.NoticeDialogListener {
@@ -104,17 +105,14 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
 
         @Override
         protected String doInBackground(String... strings) {
-            try {
-                Log.d("Response: ", connector.getToken());
-            } catch (EmptyCredentialsException e) {
-                Log.d("Response: ", e.toString());
 
+            MessierData syncMessierData = new MessierData(connector);
+
+            try {
+                syncMessierData.sync();
+            } catch (EmptyCredentialsException e) {
                 AlertFragment alert = AlertFragment.newInstance();
-                alert.show(getFragmentManager(),"alert");
-            } catch (ApiErrorException e) {
-                AlertMessageFragment alert = AlertMessageFragment.newInstance();
-                alert.setMessage(e.toString());
-                alert.show(getFragmentManager(),"error");
+                alert.show(getFragmentManager(), "alert");
             }
             return null;
         }
@@ -124,7 +122,6 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
     public void onLocationChanged(Location location) {
 
     }
-
 
 
     @Override
