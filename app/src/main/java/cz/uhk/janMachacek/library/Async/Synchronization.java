@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 import cz.uhk.janMachacek.AbstactBaseActivity;
 import cz.uhk.janMachacek.Config;
+import cz.uhk.janMachacek.Exception.ApiErrorException;
+import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
+import cz.uhk.janMachacek.Exception.WrongCredentialsException;
 import cz.uhk.janMachacek.R;
+import cz.uhk.janMachacek.model.Connector;
 
 /**
  * Created by jan on 2.8.2016.
@@ -18,28 +22,26 @@ import cz.uhk.janMachacek.R;
 public class Synchronization extends AsyncTask {
 
     private Context applicationContext;
+    private SharedPreferences preferences;
+    private Connector connector;
 
-    public Synchronization(Context context) {
+    public Synchronization(Context context, SharedPreferences preferences) {
         this.applicationContext = context;
+        this.preferences = preferences;
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
 
-        publishProgress("Start +++");
+        connector = new Connector(preferences);
+
+        sendStatus("Zahájena synchronizace");
+
         try {
-            Thread.sleep(1000);
-            publishProgress("Second");
-            Thread.sleep(1000);
-            publishProgress("Third");
-            Thread.sleep(1000);
-            publishProgress("Fourth");
-            Thread.sleep(1000);
-            publishProgress("Fifth");
-            Thread.sleep(1000);
-            publishProgress("Sixth");
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
+            if (checkAccessToken()) {
+                sendStatus("AT is " + preferences.getString(Config.API_ACCESS_TOKEN, null));
+            }
+        } catch (ApiErrorException e) {
             e.printStackTrace();
         }
 
@@ -49,7 +51,7 @@ public class Synchronization extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        sendStatus("OK finished");
+        // sendStatus("OK finished");
     }
 
     @Override
@@ -71,5 +73,23 @@ public class Synchronization extends AsyncTask {
 
     }
 
+    private boolean checkAccessToken() throws ApiErrorException {
 
+        String accessToken = preferences.getString(Config.API_ACCESS_TOKEN, null);
+
+        // pokud ještě nebyl použit access token
+        if (null == accessToken) {
+
+            try {
+                connector.getTokenByLogin();
+            } catch (EmptyCredentialsException e) {
+                sendStatus("Vyplňte přihlašovací jméno a heslo");
+                return false;
+            } catch (WrongCredentialsException e) {
+                sendStatus("Přihlašovací údaje nejsou platné" + e.getMessage());
+                return false;
+            }
+            return true;
+        } else return true;
+    }
 }
