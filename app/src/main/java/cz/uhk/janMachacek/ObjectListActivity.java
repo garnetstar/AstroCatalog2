@@ -24,9 +24,9 @@ import android.widget.Button;
 import android.widget.ListView;
 
 /**
- * Activita pro zobrazení seznamu objektù
- * 
- * @author Jan Macháèek
+ * Activita pro zobrazenï¿½ seznamu objektï¿½
+ *
+ * @author Jan Machï¿½ï¿½ek
  *
  */
 public class ObjectListActivity extends AbstactBaseActivity implements
@@ -48,15 +48,15 @@ public class ObjectListActivity extends AbstactBaseActivity implements
 	protected void onStart() {
 		super.onStart();
 
-		Button b = (Button) findViewById(R.id.button2);
-
-		b.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent i = new Intent(getBaseContext(), TestActivity.class);
-				startActivityForResult(i,0);
-			}
-		});
+//		Button b = (Button) findViewById(R.id.button2);
+//
+//		b.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				Intent i = new Intent(getBaseContext(), TestActivity.class);
+//				startActivityForResult(i,0);
+//			}
+//		});
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class ObjectListActivity extends AbstactBaseActivity implements
 			renderObjects(astroObjects);
 
 		} else {
-			//showProgressDialog("", "Urèování aktuální polohy");
+			//showProgressDialog("", "Urï¿½ovï¿½nï¿½ aktuï¿½lnï¿½ polohy");
 			findLocation();
 		}
 	}
