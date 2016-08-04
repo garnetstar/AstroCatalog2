@@ -1,10 +1,9 @@
-package cz.uhk.janMachacek.library.ApiHttp;
+package cz.uhk.janMachacek.library.Api.Http;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.UnsupportedEncodingException;
@@ -37,5 +36,19 @@ public class Response {
 
         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
         return post;
+    }
+
+    public static HttpPost accessTokenByCredentials(String login, String password) throws UnsupportedEncodingException {
+
+        HttpPost httpPost = new HttpPost(Config.API_URL + Config.API_TOKEN);
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+        nameValuePairs.add(new BasicNameValuePair("login", login));
+        nameValuePairs.add(new BasicNameValuePair("password", password));
+        nameValuePairs.add(new BasicNameValuePair(Config.API_GRANT_TYPE, "password"));
+        nameValuePairs.add(new BasicNameValuePair("client_id", Config.API_CLIENT_ID));
+
+        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+        return httpPost;
     }
 }

@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -165,9 +164,9 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
             try {
                 Date date = new Date();
                 Log.d("Response", "execution" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-                Synchronization sync = new Synchronization(getApplicationContext());
+                Synchronization sync = new Synchronization(getApplicationContext(), preference);
                 sync.execute();
-                mHandler.postDelayed(mHandlerTask, 20000);
+                mHandler.postDelayed(mHandlerTask, 30000);
             } catch (Exception e) {
                 e.printStackTrace();
                 runn = false;

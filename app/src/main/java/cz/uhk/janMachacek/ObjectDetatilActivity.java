@@ -22,9 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Activity pro zobrazení detailu objektu
+ * Activity pro zobrazenÃ­ detailu objektu
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class ObjectDetatilActivity extends AbstactBaseActivity implements
@@ -40,7 +40,7 @@ public class ObjectDetatilActivity extends AbstactBaseActivity implements
 	private Angle azimuth, altitude;
 
 	/**
-	 * atribut urèující zda je objekt viditelnı
+	 * atribut urÄujÃ­cÃ­ zda je objekt viditelnÃ½
 	 */
 	private boolean isVisible = true;
 

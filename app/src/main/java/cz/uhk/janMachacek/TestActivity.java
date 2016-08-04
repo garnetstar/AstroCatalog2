@@ -1,7 +1,6 @@
 package cz.uhk.janMachacek;
 
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -11,10 +10,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.os.StrictMode;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +17,10 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
 import cz.uhk.janMachacek.UI.AlertFragment;
-import cz.uhk.janMachacek.UI.AlertMessageFragment;
 import cz.uhk.janMachacek.library.Sync.MessierData;
-import cz.uhk.janMachacek.model.Connector;
+import cz.uhk.janMachacek.library.Api.Facade;
 
 public class TestActivity extends AbstactBaseActivity implements AlertFragment.NoticeDialogListener {
 
@@ -37,7 +30,7 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
      */
     private GoogleApiClient client;
 
-    private Connector connector;
+    private Facade apiFacade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +38,7 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
         setContentView(R.layout.activity_test);
 
         //connecctor
-        connector = new Connector(preference);
+        apiFacade = new Facade(preference);
 
         TextView v = (TextView) findViewById(R.id.testTextView);
         TextView statusCode = (TextView) findViewById(R.id.statusCode);
@@ -106,14 +99,10 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
         @Override
         protected String doInBackground(String... strings) {
 
-            MessierData syncMessierData = new MessierData(connector);
+            MessierData syncMessierData = new MessierData(apiFacade);
 
-            try {
                 syncMessierData.sync();
-            } catch (EmptyCredentialsException e) {
-                AlertFragment alert = AlertFragment.newInstance();
-                alert.show(getFragmentManager(), "alert");
-            }
+
             return null;
         }
     }

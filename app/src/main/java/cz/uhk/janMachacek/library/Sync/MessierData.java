@@ -2,7 +2,6 @@ package cz.uhk.janMachacek.library.Sync;
 
 import android.util.Log;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -19,83 +18,96 @@ import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
-import cz.uhk.janMachacek.library.ApiHttp.Response;
-import cz.uhk.janMachacek.library.ApiHttp.Utils;
-import cz.uhk.janMachacek.model.Connector;
+import cz.uhk.janMachacek.library.Api.Http.Response;
+import cz.uhk.janMachacek.library.Api.Http.Utils;
+import cz.uhk.janMachacek.library.Api.Facade;
 
 /**
  * Created by jan on 1.8.2016.
  */
 public class MessierData {
 
-    private Connector connector;
+    private Facade apiFacade;
     private HttpClient httpClient;
 
-    public MessierData(Connector connector) {
-        this.connector = connector;
+    public MessierData(Facade apiFacade) {
+        this.apiFacade = apiFacade;
         this.httpClient = new DefaultHttpClient();
     }
 
-    public void sync() throws EmptyCredentialsException {
-        try {
+    public void sync() {
 
-            String token = connector.getToken();
-            String url = Config.API_URL + Config.API_MESSIER_DATA + "?" + Config.API_ACCESS_TOKEN + "=" + token;
 
-            getData(url);
 
-        } catch (AccessTokenExpiredException e) {
 
+        String url = getUrl();
+
+        boolean next = true;
+        boolean refreshToken = false;
+        do {
             try {
-                connector.refreshAccessToken();
-                //getData(url);
-                sync();
-            } catch (ApiErrorException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
+                if(refreshToken) {
+                    Log.d("Response", "pokus o refersh tokenu");
+                    apiFacade.refreshAccessToken();
+                    url = getUrl();
+                    Log.d("Respone", "url = " + url);
+                }
+                getData(url);
+                next = false;
+            } catch (ApiErrorException e) {
+                e.printStackTrace();
+                Log.d("Response", "1/ " + e.toString());
+                next = false;
+            } catch (AccessTokenExpiredException e) {
+
+                Log.d("Response", "refersh token in loop" + e.toString());
+                refreshToken = true;
+                next = true;
+            }
+        } while (next == true);
+
+    }
+
+    private void getData(String url) throws ApiErrorException, AccessTokenExpiredException {
+
+        try {
+            Log.d("Response ", "URL: " + url);
+            HttpGet get = Response.messierDataRequest(url);
+            HttpResponse response = httpClient.execute(get);
+            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+            JSONObject jsonObject = new JSONObject(json);
+            //kontrola http statusu
+            int httpStatus = response.getStatusLine().getStatusCode();
+            if (httpStatus == 401) {
+                throw new AccessTokenExpiredException();
             }
 
-        } catch (ApiErrorException e) {
-            Log.d("Response", e.toString());
-        } catch (ClientProtocolException e) {
-            Log.d("Response", e.toString());
-        } catch (IOException e) {
-            Log.d("Response", e.toString());
-        } catch (JSONException e) {
-            Log.d("Response", e.toString());
+            JSONArray array = jsonObject.getJSONArray("list");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject json_data = array.getJSONObject(i);
+                Log.d("Response: CONST", json_data.getString("messier_id") + " " + json_data.getString("constellation"));
+            }
+
+            // polkud hlavička obsahuje "Link" a rel="next" vola metoda rekurzivně same sebe
+            HashMap<String, String> headers = Utils.convertHeadersToHashMap(response.getAllHeaders());
+
+            if (null != headers.get("Link")) {
+                String[] link = headers.get("Link").split(";");
+                if (link[1].matches("rel=\"next\"")) {
+                    String nextUrl = link[0].substring(1, link[0].length() - 1);
+                    getData(nextUrl);
+                }
+            }
+        } catch (AccessTokenExpiredException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ApiErrorException(e.getMessage(), e);
         }
     }
 
-    private void getData(String url) throws ApiErrorException, EmptyCredentialsException, IOException, JSONException {
-
-        Log.d("Response ", "URL: " + url);
-        HttpGet get = Response.messierDataRequest(url);
-        HttpResponse response = httpClient.execute(get);
-        String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-        JSONObject jsonObject = new JSONObject(json);
-        //kontrola http statusu
-        int httpStatus = response.getStatusLine().getStatusCode();
-        if (httpStatus == 401) {
-            throw new AccessTokenExpiredException();
-        }
-
-        JSONArray array = jsonObject.getJSONArray("list");
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject json_data = array.getJSONObject(i);
-            Log.d("Response: CONST", json_data.getString("messier_id") + " " + json_data.getString("constellation"));
-        }
-
-        // polkud hlavička obsahuje "Link" a rel="next" vola metoda rekurzivně same sebe
-        HashMap<String, String> headers = Utils.convertHeadersToHashMap(response.getAllHeaders());
-
-        if (null != headers.get("Link")) {
-            String[] link = headers.get("Link").split(";");
-            if (link[1].matches("rel=\"next\"")) {
-                String nextUrl = link[0].substring(1, link[0].length() - 1);
-                getData(nextUrl);
-            }
-        }
+    private String getUrl() {
+        Log.d("Response", "AT = " + apiFacade.getAccessToken());
+        return Config.API_URL + Config.API_MESSIER_DATA + "?" + Config.API_ACCESS_TOKEN + "=" + apiFacade.getAccessToken();
     }
 }
 

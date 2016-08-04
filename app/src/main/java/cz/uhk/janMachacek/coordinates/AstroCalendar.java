@@ -3,9 +3,9 @@ package cz.uhk.janMachacek.coordinates;
 import java.util.Calendar;
 
 /**
- * Tøída pro vıpoèty tıkající se rùznıch kalendáøù
+ * TÅ™ida pro vÃ½poÄty tÃ½kajÃ­cÃ­ se rÅ¯znÃ½ch kalendÃ¡Å™Å¯
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class AstroCalendar {
@@ -46,9 +46,9 @@ public class AstroCalendar {
 	}
 
 	public static double getSiderealTime(Calendar time) {
-		// tøída Calendar oznaèuje mìsíce indexem zaèínajícím na 0,
+		// tï¿½ï¿½da Calendar oznaï¿½uje mï¿½sï¿½ce indexem zaï¿½ï¿½najï¿½cï¿½m na 0,
 		// proto je
-		// potøeba vdy pøièíst 1
+		// potï¿½eba vï¿½dy pï¿½iï¿½ï¿½st 1
 		return getSiderealTime(time.get(Calendar.YEAR),
 				time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH),
 				time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE),

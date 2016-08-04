@@ -1,9 +1,9 @@
 package cz.uhk.janMachacek.coordinates;
 
 /**
- * Tøída reprezentující úhel
+ * TÅ™Ã­da reprezentujÃ­cÃ­ Ãºhel
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class Angle {

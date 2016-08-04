@@ -1,4 +1,4 @@
-package cz.uhk.janMachacek.library.ApiHttp;
+package cz.uhk.janMachacek.library.Api.Http;
 
 import org.apache.http.Header;
 

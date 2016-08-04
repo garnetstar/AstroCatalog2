@@ -5,16 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.util.Log;
+
+import java.util.Set;
 
 import cz.uhk.janMachacek.AbstactBaseActivity;
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
 import cz.uhk.janMachacek.Exception.WrongCredentialsException;
-import cz.uhk.janMachacek.R;
-import cz.uhk.janMachacek.model.Connector;
+import cz.uhk.janMachacek.library.Api.Facade;
+import cz.uhk.janMachacek.library.Sync.MessierData;
 
 /**
  * Created by jan on 2.8.2016.
@@ -23,7 +24,7 @@ public class Synchronization extends AsyncTask {
 
     private Context applicationContext;
     private SharedPreferences preferences;
-    private Connector connector;
+    private Facade apiFacade;
 
     public Synchronization(Context context, SharedPreferences preferences) {
         this.applicationContext = context;
@@ -33,7 +34,7 @@ public class Synchronization extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
 
-        connector = new Connector(preferences);
+        apiFacade = new Facade(preferences);
 
         sendStatus("Zahájena synchronizace");
 
@@ -45,13 +46,24 @@ public class Synchronization extends AsyncTask {
             e.printStackTrace();
         }
 
+        Set<String> syncIssues = preferences.getStringSet("sync_issues", null);
+
+        if (syncIssues.contains("1")) {
+
+            sendStatus("Synchronizují se messier data");
+            MessierData messierData = new MessierData(apiFacade);
+            messierData.sync();
+        }
+
+
+
         return null;
     }
 
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        // sendStatus("OK finished");
+        sendStatus("OK finished");
     }
 
     @Override
@@ -81,7 +93,7 @@ public class Synchronization extends AsyncTask {
         if (null == accessToken) {
 
             try {
-                connector.getTokenByLogin();
+                apiFacade.getTokenByLogin();
             } catch (EmptyCredentialsException e) {
                 sendStatus("Vyplňte přihlašovací jméno a heslo");
                 return false;

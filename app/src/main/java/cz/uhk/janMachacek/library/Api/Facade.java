@@ -1,15 +1,12 @@
-package cz.uhk.janMachacek.model;
+package cz.uhk.janMachacek.library.Api;
 
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,24 +14,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
-import cz.uhk.janMachacek.library.ApiHttp.Response;
-import cz.uhk.janMachacek.library.ApiHttp.Utils;
+import cz.uhk.janMachacek.Exception.WrongCredentialsException;
+import cz.uhk.janMachacek.library.Api.Http.Response;
+import cz.uhk.janMachacek.library.Api.Http.Utils;
 
 /**
  * Created by jan on 22.7.2016.
  */
-public class Connector {
+public class Facade {
 
     private SharedPreferences preferences;
 
-    public Connector(SharedPreferences preferences) {
+    public Facade(SharedPreferences preferences) {
         this.preferences = preferences;
     }
 
@@ -44,15 +39,16 @@ public class Connector {
 
         if (preferences.getString("access_token", null) == null) {
             // ziskat token z api
-            token = this.getTokenByLogin();
+            //    token = this.getTokenByLogin();
         } else {
             token = preferences.getString("access_token", null);
         }
 
-        return token;
+        //return token;
+        return "sss";
     }
 
-    public String getTokenByLogin() throws EmptyCredentialsException, ApiErrorException {
+    public void getTokenByLogin() throws EmptyCredentialsException, WrongCredentialsException, ApiErrorException {
 
         String accessToken, refreshToken, login, pass;
         SharedPreferences.Editor editor = preferences.edit();
@@ -67,15 +63,9 @@ public class Connector {
         Log.d("Response ", "pass: " + pass);
         HttpClient httpClient = new DefaultHttpClient();
 
-        HttpPost httpPost = new HttpPost(Config.API_URL + Config.API_TOKEN);
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-        nameValuePairs.add(new BasicNameValuePair("login", login));
-        nameValuePairs.add(new BasicNameValuePair("password", pass));
-        nameValuePairs.add(new BasicNameValuePair(Config.API_GRANT_TYPE, "password"));
-        nameValuePairs.add(new BasicNameValuePair("client_id", Config.API_CLIENT_ID));
-
         try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            HttpPost httpPost = Response.accessTokenByCredentials(login, pass);
 
             HttpResponse response = httpClient.execute(httpPost);
 
@@ -85,7 +75,7 @@ public class Connector {
             int httpStatus = response.getStatusLine().getStatusCode();
             if (httpStatus >= 400) {
                 String message = jsonObject.getString("message");
-                throw new ApiErrorException(message + ": wrong credentials");
+                throw new WrongCredentialsException(message + ": wrong credentials");
             }
 
             Log.d("Response", json);
@@ -97,26 +87,28 @@ public class Connector {
             editor.putString("access_token", accessToken);
             editor.putString("refresh_token", refreshToken);
             editor.commit();
-            return accessToken;
-
+        } catch (WrongCredentialsException e) {
+            throw e;
         } catch (Exception e) {
             throw new ApiErrorException(e.getMessage(), e);
         }
     }
 
-    public void refreshAccessToken() throws ApiErrorException, IOException {
+    public void refreshAccessToken() throws ApiErrorException {
 
         String refreshToken = preferences.getString(Config.API_REFRESH_TOKEN, null);
-
-        HttpPost post = Response.refreshToken(refreshToken);
-        HttpClient httpClient = new DefaultHttpClient();
-
-        HttpResponse response = httpClient.execute(post);
-
-        String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-
-        JSONObject jsonObject = null;
         try {
+            HttpPost post = Response.refreshToken(refreshToken);
+            HttpClient httpClient = new DefaultHttpClient();
+
+            HttpResponse response = httpClient.execute(post);
+
+            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+
+            Log.d("Response", json);
+
+            JSONObject jsonObject = null;
+
             jsonObject = new JSONObject(json);
 
             //kontrola http statusu
@@ -129,9 +121,13 @@ public class Connector {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString(Config.API_ACCESS_TOKEN, accessToken);
             editor.commit();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             throw new ApiErrorException(e.getMessage(), e);
         }
+    }
+
+    public String getAccessToken() {
+        return preferences.getString(Config.API_ACCESS_TOKEN, null);
     }
 
 

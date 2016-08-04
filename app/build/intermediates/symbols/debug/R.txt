@@ -4,10 +4,13 @@ int array astro_object_values 0x7f080002
 int array astro_object_visibility_default_values 0x7f080003
 int array astro_object_visibility_names 0x7f080004
 int array astro_object_visibility_values 0x7f080005
-int array pref_example_list_titles 0x7f080006
-int array pref_example_list_values 0x7f080007
-int array pref_sync_frequency_titles 0x7f080008
-int array pref_sync_frequency_values 0x7f080009
+int array astro_sync_default_values 0x7f080006
+int array astro_sync_names 0x7f080007
+int array astro_sync_values 0x7f080008
+int array pref_example_list_titles 0x7f080009
+int array pref_example_list_values 0x7f08000a
+int array pref_sync_frequency_titles 0x7f08000b
+int array pref_sync_frequency_values 0x7f08000c
 int attr circleCrop 0x7f010002
 int attr imageAspectRatio 0x7f010001
 int attr imageAspectRatioAdjust 0x7f010000

@@ -15,10 +15,13 @@ public final class R {
         public static final int astro_object_visibility_default_values=0x7f080003;
         public static final int astro_object_visibility_names=0x7f080004;
         public static final int astro_object_visibility_values=0x7f080005;
-        public static final int pref_example_list_titles=0x7f080006;
-        public static final int pref_example_list_values=0x7f080007;
-        public static final int pref_sync_frequency_titles=0x7f080008;
-        public static final int pref_sync_frequency_values=0x7f080009;
+        public static final int astro_sync_default_values=0x7f080006;
+        public static final int astro_sync_names=0x7f080007;
+        public static final int astro_sync_values=0x7f080008;
+        public static final int pref_example_list_titles=0x7f080009;
+        public static final int pref_example_list_values=0x7f08000a;
+        public static final int pref_sync_frequency_titles=0x7f08000b;
+        public static final int pref_sync_frequency_values=0x7f08000c;
     }
     public static final class attr {
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
