@@ -6,6 +6,9 @@ import cz.uhk.janMachacek.coordinates.Utils;
 import cz.uhk.janMachacek.library.Async.Synchronization;
 import cz.uhk.janMachacek.model.DataFacade;
 
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,6 +31,10 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+
+
+
+
 /**
  * Abstraktní activity implementující společné metody
  *
@@ -46,6 +53,8 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
     protected ProgressDialog progresDialog;
 
+    private android.accounts.AccountManager aManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +68,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         facade = new DataFacade(this, getAssets());
-
 
     }
 

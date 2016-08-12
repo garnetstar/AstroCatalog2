@@ -3,114 +3,118 @@ package cz.uhk.janMachacek.library;
 import cz.uhk.janMachacek.coordinates.Angle;
 
 /**
- * Tøída reprezentující jeden astronomický objekt
- * 
- * @author Jan Macháèek
+ * Tï¿½ï¿½da reprezentujï¿½cï¿½ jeden astronomickï¿½ objekt
  *
+ * @author Jan Machï¿½ï¿½ek
  */
 public class AstroObject {
-	int id;
-	String name;
-	String constellation;
-	int type;
-	cz.uhk.janMachacek.coordinates.Angle rightAscension;
-	Angle declination;
-	double magnitude;
-	double distance;
-	String azimuth;
-	String altitude;
-	String hourAngle;
-	
-	
+    int id;
+    String name;
+    String constellation;
+    int type;
+    cz.uhk.janMachacek.coordinates.Angle rightAscension;
+    Angle declination;
+    double magnitude;
+    double distance;
+    String azimuth;
+    String altitude;
+    String hourAngle;
 
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public double getDistance() {
-		return distance;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setDistance(double distance) {
-		this.distance = distance;
-	}
+    public double getDistance() {
+        return distance;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getConstellation() {
-		return constellation;
-	}
+    public AstroObject setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-	public void setConstellation(String constellation) {
-		this.constellation = constellation;
-	}
+    public String getConstellation() {
+        return constellation;
+    }
 
-	public int getType() {
-		return type;
-	}
+    public AstroObject setConstellation(String constellation) {
+        this.constellation = constellation;
+        return this;
+    }
 
-	public void setType(int type) {
-		this.type = type;
-	}
+    public int getType() {
+        return type;
+    }
 
-	public Angle getRightAscension() {
-		return rightAscension;
-	}
+    public AstroObject setType(int type) {
+        this.type = type;
+        return this;
+    }
 
-	public void setRightAscension(Angle rightAscension) {
-		this.rightAscension = rightAscension;
-	}
+    public Angle getRightAscension() {
+        return rightAscension;
+    }
 
-	public Angle getDeclination() {
-		return declination;
-	}
+    public AstroObject setRightAscension(Angle rightAscension) {
+        this.rightAscension = rightAscension;
+        return this;
+    }
 
-	public void setDeclination(Angle declination) {
-		this.declination = declination;
-	}
+    public Angle getDeclination() {
+        return declination;
+    }
 
-	public double getMagnitude() {
-		return magnitude;
-	}
+    public void setDeclination(Angle declination) {
+        this.declination = declination;
+    }
 
-	public void setMagnitude(double magnitude) {
-		this.magnitude = magnitude;
-	}
+    public double getMagnitude() {
+        return magnitude;
+    }
 
-	public String getAzimuth() {
-		return azimuth;
-	}
+    public AstroObject setMagnitude(double magnitude) {
+        this.magnitude = magnitude;
+        return this;
+    }
 
-	public void setAzimuth(String azimuth) {
-		this.azimuth = azimuth;
-	}
+    public String getAzimuth() {
+        return azimuth;
+    }
 
-	public String getAltitude() {
-		return altitude;
-	}
+    public AstroObject setAzimuth(String azimuth) {
+        this.azimuth = azimuth;
+        return this;
+    }
 
-	public void setAltitude(String altitude) {
-		this.altitude = altitude;
-	}
+    public String getAltitude() {
+        return altitude;
+    }
 
-	public String getHourAngle() {
-		return hourAngle;
-	}
+    public AstroObject setAltitude(String altitude) {
+        this.altitude = altitude;
+        return this;
+    }
 
-	public void setHourAngle(String hourAngle) {
-		this.hourAngle = hourAngle;
-	}
-	
-	
-	
+    public String getHourAngle() {
+        return hourAngle;
+    }
+
+    public void setHourAngle(String hourAngle) {
+        this.hourAngle = hourAngle;
+    }
+
+
 }

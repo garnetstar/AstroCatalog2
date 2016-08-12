@@ -3,18 +3,24 @@ package cz.uhk.janMachacek;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Set;
+
 import cz.uhk.janMachacek.UI.AstroObjectAdapter;
 import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Coordinates;
 import cz.uhk.janMachacek.coordinates.Timer;
 import cz.uhk.janMachacek.library.AstroObject;
 import cz.uhk.janMachacek.model.AstroDbHelper;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,31 +28,35 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Activita pro zobrazen� seznamu objekt�
  *
  * @author Jan Mach��ek
- *
  */
 public class ObjectListActivity extends AbstactBaseActivity implements
-		OnSharedPreferenceChangeListener {
+        OnSharedPreferenceChangeListener {
 
-	private AstroObjectAdapter adapter;
+    private AstroObjectAdapter adapter;
+    public final static String REFRESH_OBJECTS_LIST = "ObjectListActivity.refreshObject";
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		// pristup k preferencim
-		preference.registerOnSharedPreferenceChangeListener(this);
+        // pristup k preferencim
+        preference.registerOnSharedPreferenceChangeListener(this);
 
-		setContentView(R.layout.astro_list);
-	}
+        setContentView(R.layout.astro_list);
+    }
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        registerReceiver(new RefreshBroudcastReceiver(), new IntentFilter(REFRESH_OBJECTS_LIST));
 
 //		Button b = (Button) findViewById(R.id.button2);
 //
@@ -57,140 +67,151 @@ public class ObjectListActivity extends AbstactBaseActivity implements
 //				startActivityForResult(i,0);
 //			}
 //		});
-	}
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		createObjects();
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        createObjects();
+    }
 
-	private void createObjects() {
+    private void createObjects() {
 
-		String filtering = preference.getString("setting_filtering", null);
+        String filtering = preference.getString("setting_filtering", null);
 
-		if (filtering.equals("1")) {
-			Cursor cursor = getCursorByPreferences();
+        if (filtering.equals("1")) {
+            Cursor cursor = getCursorByPreferences();
 
-			ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
+            ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
-			// TODO Android 2 str.217
-			if (cursor.moveToFirst()) {
-				do {
-					AstroObject object = createObjectFromCursor(cursor);
-					astroObjects.add(object);
-				} while (cursor.moveToNext());
-			}
+            // TODO Android 2 str.217
+            if (cursor.moveToFirst()) {
+                do {
+                    AstroObject object = createObjectFromCursor(cursor);
+                    astroObjects.add(object);
+                } while (cursor.moveToNext());
+            }
 
-			facade.close();
+            facade.close();
 
-			renderObjects(astroObjects);
+            renderObjects(astroObjects);
 
-		} else {
-			//showProgressDialog("", "Ur�ov�n� aktu�ln� polohy");
-			findLocation();
-		}
-	}
+        } else {
+            //showProgressDialog("", "Ur�ov�n� aktu�ln� polohy");
+            findLocation();
+        }
+    }
 
-	private Cursor getCursorByPreferences() {
-		Set<String> s = preference.getStringSet("setting_object_types", null);
+    private Cursor getCursorByPreferences() {
+        Set<String> s = preference.getStringSet("setting_object_types", null);
 
-		Integer maxMagnitude = preference.getInt("setting_max_magnitude", 0);
+        Integer maxMagnitude = preference.getInt("setting_max_magnitude", 0);
 
-		Cursor cursor = facade.getAll(s, Integer.toString(maxMagnitude));
+        Cursor cursor = facade.getAll(s, Integer.toString(maxMagnitude));
 
-		return cursor;
+        return cursor;
 
-	}
+    }
 
-	private void renderObjects(ArrayList<AstroObject> objects) {
-		ListView astroObjectList = (ListView) findViewById(R.id.listAstroObjects);
+    private void renderObjects(ArrayList<AstroObject> objects) {
+        ListView astroObjectList = (ListView) findViewById(R.id.listAstroObjects);
 
-		adapter = new AstroObjectAdapter(this, objects);
+        adapter = new AstroObjectAdapter(this, objects);
 
-		astroObjectList.setAdapter(adapter);
-		astroObjectList.setOnItemClickListener(new OnItemClickListener() {
+        astroObjectList.setAdapter(adapter);
+        astroObjectList.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				AstroObject item = adapter.getItem(position);
-				Intent intent = new Intent(getApplicationContext(),
-						ObjectDetatilActivity.class);
-				intent.putExtra(AstroDbHelper.KEY_OBJECT_ID, item.getId());
-				startActivityForResult(intent, 0);
-			}
-		});
-	}
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                AstroObject item = adapter.getItem(position);
+                Intent intent = new Intent(getApplicationContext(),
+                        ObjectDetatilActivity.class);
+                intent.putExtra(AstroDbHelper.KEY_OBJECT_ID, item.getId());
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
 
-	private AstroObject createObjectFromCursor(Cursor cursor) {
-		AstroObject object = new AstroObject();
-		object.setId(cursor.getInt(0));
-		object.setName(cursor.getString(1));
-		object.setRightAscension(new Angle(cursor.getDouble(2)));
-		object.setDeclination(new Angle(cursor.getDouble(3)));
-		object.setConstellation(cursor.getString(4));
-		object.setType(cursor.getInt(5));
-		object.setMagnitude(cursor.getDouble(6));
-		return object;
-	}
+    private AstroObject createObjectFromCursor(Cursor cursor) {
+        AstroObject object = new AstroObject();
+        object.setId(cursor.getInt(0));
+        object.setName(cursor.getString(1));
+        object.setRightAscension(new Angle(cursor.getDouble(2)));
+        object.setDeclination(new Angle(cursor.getDouble(3)));
+        object.setConstellation(cursor.getString(4));
+        object.setType(cursor.getInt(5));
+        object.setMagnitude(cursor.getDouble(6));
+        return object;
+    }
 
-	@Override
-	public void onLocationChanged(Location location) {
+    @Override
+    public void onLocationChanged(Location location) {
 
-		Calendar actualUT0 = Timer.getActualUTC();
-		Angle latitude = new Angle(location.getLatitude());
-		Angle longitude = new Angle(location.getLongitude());
+        Calendar actualUT0 = Timer.getActualUTC();
+        Angle latitude = new Angle(location.getLatitude());
+        Angle longitude = new Angle(location.getLongitude());
 
-		hideProgressDialog();
-		showLocation(latitude, longitude);
+        hideProgressDialog();
+        showLocation(latitude, longitude);
 
-		Cursor cursor = getCursorByPreferences();
+        Cursor cursor = getCursorByPreferences();
 
-		ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
+        ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
-		if (cursor.moveToFirst()) {
-			do {
-				Angle rightAscension = new Angle(cursor.getDouble(2));
-				Angle declination = new Angle(cursor.getDouble(3));
-				Angle hourAngle = Coordinates.getHourAngle(actualUT0,
-						longitude, rightAscension);
-				Angle altitude = Coordinates.getAltitude(hourAngle,
-						declination, latitude);
-				if (altitude.getDecimalDegree() < 0)
-					continue;
+        if (cursor.moveToFirst()) {
+            do {
+                Angle rightAscension = new Angle(cursor.getDouble(2));
+                Angle declination = new Angle(cursor.getDouble(3));
+                Angle hourAngle = Coordinates.getHourAngle(actualUT0,
+                        longitude, rightAscension);
+                Angle altitude = Coordinates.getAltitude(hourAngle,
+                        declination, latitude);
+                if (altitude.getDecimalDegree() < 0)
+                    continue;
 
-				AstroObject object = createObjectFromCursor(cursor);
-				astroObjects.add(object);
-			} while (cursor.moveToNext());
-		}
+                AstroObject object = createObjectFromCursor(cursor);
+                astroObjects.add(object);
+            } while (cursor.moveToNext());
+        }
 
-		facade.close();
+        facade.close();
 
-		renderObjects(astroObjects);
+        renderObjects(astroObjects);
 
-	}
+    }
 
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-		createObjects();
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                                          String key) {
+        createObjects();
 
-	}
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent = new Intent();
-		intent.setClass(ObjectListActivity.this, SettingsActivity.class);
-		startActivityForResult(intent, 0);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent();
+        intent.setClass(ObjectListActivity.this, SettingsActivity.class);
+        startActivityForResult(intent, 0);
 
-		return true;
-	}
+        return true;
+    }
+
+
+    public class RefreshBroudcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("Response", "Success - REFRESG !!!!");
+            createObjects();
+            Log.d("Response", "Success - REFRESG OK");
+        }
+    }
 
 }

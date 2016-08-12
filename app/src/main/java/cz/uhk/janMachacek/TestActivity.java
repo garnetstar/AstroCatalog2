@@ -98,10 +98,10 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
 
         @Override
         protected String doInBackground(String... strings) {
-
-            MessierData syncMessierData = new MessierData(apiFacade);
-
-                syncMessierData.sync();
+//
+//            MessierData syncMessierData = new MessierData(apiFacade);
+//
+//                syncMessierData.sync();
 
             return null;
         }

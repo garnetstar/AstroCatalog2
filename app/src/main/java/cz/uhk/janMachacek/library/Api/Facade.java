@@ -33,20 +33,20 @@ public class Facade {
         this.preferences = preferences;
     }
 
-    public String getToken() throws EmptyCredentialsException, ApiErrorException {
-
-        String token;
-
-        if (preferences.getString("access_token", null) == null) {
-            // ziskat token z api
-            //    token = this.getTokenByLogin();
-        } else {
-            token = preferences.getString("access_token", null);
-        }
-
-        //return token;
-        return "sss";
-    }
+//    public String getToken() throws EmptyCredentialsException, ApiErrorException {
+//
+//        String token;
+//
+//        if (preferences.getString("access_token", null) == null) {
+//            // ziskat token z api
+//            //    token = this.getTokenByLogin();
+//        } else {
+//            token = preferences.getString("access_token", null);
+//        }
+//
+//        //return token;
+//        return "sss";
+//    }
 
     public void getTokenByLogin() throws EmptyCredentialsException, WrongCredentialsException, ApiErrorException {
 

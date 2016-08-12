@@ -8,9 +8,9 @@ import android.content.res.AssetManager;
 import cz.uhk.janMachacek.coordinates.Angle;
 
 /**
- * Tøída pro pøevod vstupních dat z plain textu do ArrayList<AstroObject>
+ * Tï¿½ï¿½da pro pï¿½evod vstupnï¿½ch dat z plain textu do ArrayList<AstroObject>
  * 
- * @author Jan Macháèek
+ * @author Jan Machï¿½ï¿½ek
  *
  */
 public class AssetParser {
@@ -60,6 +60,7 @@ public class AssetParser {
 			switch (state) {
 			case COL_NAME:
 				current = new AstroObject();
+
 				current.name = "M" + Integer.parseInt(st.nextToken());
 				state = COL_NGC;
 				break;
@@ -81,7 +82,7 @@ public class AssetParser {
 				break;
 			case COL_RA_MIN:
 				minute = Double.parseDouble(st.nextToken());
-				//pøevod z hodin na stupnì
+				//pï¿½evod z hodin na stupnï¿½
 				Angle angleHour = new Angle(degree, minute, true);
 				current.setRightAscension(new Angle(angleHour.getDecimalDegree()*15));
 				state = COL_DEC_DEG;
@@ -118,6 +119,7 @@ public class AssetParser {
 				break;
 			}
 		}
+
 		return list;
 	}
 }

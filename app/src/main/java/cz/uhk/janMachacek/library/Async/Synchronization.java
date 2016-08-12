@@ -1,11 +1,15 @@
 package cz.uhk.janMachacek.library.Async;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Set;
 
@@ -14,6 +18,7 @@ import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
 import cz.uhk.janMachacek.Exception.WrongCredentialsException;
+import cz.uhk.janMachacek.ObjectListActivity;
 import cz.uhk.janMachacek.library.Api.Facade;
 import cz.uhk.janMachacek.library.Sync.MessierData;
 
@@ -34,28 +39,42 @@ public class Synchronization extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
 
-        apiFacade = new Facade(preferences);
+        ConnectivityManager cmr = (ConnectivityManager) applicationContext.getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cmr.getActiveNetworkInfo();
 
-        sendStatus("Zahájena synchronizace");
+        if (!(networkInfo != null && networkInfo.isConnected())) {
+            sendStatus("Internetoré spojení není k dispozici, synchronizace nebude zahájena");
+        } else {
 
-        try {
-            if (checkAccessToken()) {
-                sendStatus("AT is " + preferences.getString(Config.API_ACCESS_TOKEN, null));
+
+            apiFacade = new Facade(preferences);
+
+            sendStatus("Zahájena synchronizace");
+
+            try {
+                if (checkAccessToken()) {
+                    sendStatus("AT is " + preferences.getString(Config.API_ACCESS_TOKEN, null));
+
+                    Set<String> syncIssues = preferences.getStringSet("sync_issues", null);
+
+                    if (syncIssues.contains("1")) {
+
+                        sendStatus("Synchronizují se messier data");
+                        MessierData messierData = new MessierData(apiFacade, applicationContext);
+                        messierData.sync();
+                        sendStatus("Messier data byla synchronizována");
+
+                        Intent intent = new Intent();
+                        intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
+
+                        Log.d("Response", "SEND BROADCAST");
+                        applicationContext.sendBroadcast(intent);
+                    }
+                }
+            } catch (ApiErrorException e) {
+                e.printStackTrace();
             }
-        } catch (ApiErrorException e) {
-            e.printStackTrace();
         }
-
-        Set<String> syncIssues = preferences.getStringSet("sync_issues", null);
-
-        if (syncIssues.contains("1")) {
-
-            sendStatus("Synchronizují se messier data");
-            MessierData messierData = new MessierData(apiFacade);
-            messierData.sync();
-        }
-
-
 
         return null;
     }
@@ -63,7 +82,7 @@ public class Synchronization extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        sendStatus("OK finished");
+        // sendStatus("OK finished");
     }
 
     @Override

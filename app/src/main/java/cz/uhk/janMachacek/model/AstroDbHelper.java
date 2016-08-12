@@ -12,9 +12,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 
 /**
- * Tøída pro vytvoøení databáze a naplnìní defaultními daty
+ * Tï¿½ï¿½da pro vytvoï¿½enï¿½ databï¿½ze a naplnï¿½nï¿½ defaultnï¿½mi daty
  * 
- * @author Jan Macháèek
+ * @author Jan Machï¿½ï¿½ek
  *
  */
 public class AstroDbHelper extends SQLiteOpenHelper {
@@ -51,27 +51,33 @@ public class AstroDbHelper extends SQLiteOpenHelper {
 		assetManager = manager;
 	}
 
+	public AstroDbHelper(Context context) {
+		super(context, DATABASE_NAME, null, VERSION);
+	}
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		try {
+	//	try {
 			db.execSQL(CREATE_TABLE_OBJECT);
 
-			for (AstroObject astroObject : getObjectData()) {
-				ContentValues cv = new ContentValues(8);
-				cv.put(KEY_OBJECT_NAME, astroObject.getName());
-				cv.put(KEY_OBJECT_MAG, astroObject.getMagnitude());
-				cv.put(KEY_OBJECT_RA, astroObject.getRightAscension().getDecimalDegree());
-				cv.put(KEY_OBJECT_DEC, astroObject.getDeclination().getDecimalDegree());
-				cv.put(KEY_OBJECT_TYPE, astroObject.getType());
-				cv.put(KEY_OBJECT_CONSTELLATION, astroObject.getConstellation());
-				cv.put(KEY_OBJECT_DIST, astroObject.getDistance());
-				db.insert(TABLE_OBJECT_NAME, null, cv);
-			}
+//			for (AstroObject astroObject : getObjectData()) {
+//				ContentValues cv = new ContentValues(8);
+//				cv.put(KEY_OBJECT_NAME, astroObject.getName());
+//				cv.put(KEY_OBJECT_MAG, astroObject.getMagnitude());
+//				cv.put(KEY_OBJECT_RA, astroObject.getRightAscension().getDecimalDegree());
+//				cv.put(KEY_OBJECT_DEC, astroObject.getDeclination().getDecimalDegree());
+//				cv.put(KEY_OBJECT_TYPE, astroObject.getType());
+//				cv.put(KEY_OBJECT_CONSTELLATION, astroObject.getConstellation());
+//				cv.put(KEY_OBJECT_DIST, astroObject.getDistance());
+//				db.insert(TABLE_OBJECT_NAME, null, cv);
+//			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		//} catch (IOException e) {
+			//e.printStackTrace();
+		//}
 	}
+
+
 
 	private ArrayList<AstroObject> getObjectData() throws IOException {
 		AssetParser parser = new AssetParser(assetManager);
