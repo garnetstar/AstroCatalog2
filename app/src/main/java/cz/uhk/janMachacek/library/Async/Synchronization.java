@@ -59,6 +59,7 @@ public class Synchronization extends AsyncTask {
             apiAuthenticator = new ApiAuthenticator(preferences);
 
             sendStatus("Zahájena synchronizace");
+            Log.d("astro", "////////// Zahájena synchronizace");
 
             final AccountManager am = AccountManager.get(applicationContext);
             final String authTok;
@@ -66,9 +67,11 @@ public class Synchronization extends AsyncTask {
 //            am.invalidateAuthToken(applicationContext.getString(R.string.accountType), "63432a2e2b147caba4ff003df139e1784058b30bc56c439aed26457207ce2b08");
             Log.d("Response", "Accounts " + Integer.toString(accounts.length));
 
+
+
             if (accounts.length > 0) {
                 Bundle options = new Bundle();
-                am.getAuthToken(accounts[0], "baerer", options, null, new AccountManagerCallback<Bundle>() {
+                am.getAuthToken(accounts[0], "baerer", options, true, new AccountManagerCallback<Bundle>() {
                     @Override
                     public void run(AccountManagerFuture<Bundle> accountManagerFuture) {
                         Bundle bundle;
@@ -90,8 +93,10 @@ public class Synchronization extends AsyncTask {
                         Log.d("Response", "BIM>>> " + am.getUserData(accounts[0], AuthenticatorActivity.REFRESH_TOKEN));
                         Log.d("Response", "heslo>>> " + am.getUserData(accounts[0], AuthenticatorActivity.PASSWORD));
 
-                        SyncMessier sm = new SyncMessier(am);
-                        sm.execute(new String[]{authToken});
+                        if (authToken != null) {
+                            SyncMessier sm = new SyncMessier(am);
+                            sm.execute(new String[]{authToken});
+                        }
 
 
                     }

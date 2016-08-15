@@ -11,6 +11,9 @@ import cz.uhk.janMachacek.coordinates.Timer;
 import cz.uhk.janMachacek.library.AstroObject;
 import cz.uhk.janMachacek.model.AstroDbHelper;
 
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -57,6 +60,8 @@ public class ObjectListActivity extends AbstactBaseActivity implements
         super.onStart();
 
         registerReceiver(new RefreshBroudcastReceiver(), new IntentFilter(REFRESH_OBJECTS_LIST));
+
+
 
 //		Button b = (Button) findViewById(R.id.button2);
 //
@@ -208,10 +213,11 @@ public class ObjectListActivity extends AbstactBaseActivity implements
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("Response", "Success - REFRESG !!!!");
             createObjects();
-            Log.d("Response", "Success - REFRESG OK");
         }
     }
+
+
+
 
 }

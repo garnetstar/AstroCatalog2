@@ -39,6 +39,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         setContentView(R.layout.act_login);
 
         accountManager = AccountManager.get(getBaseContext());
+        String accountName = getIntent().getStringExtra(LOGIN);
+        if (accountName != null) {
+            ((TextView)findViewById(R.id.accountName)).setText(accountName);
+        }
 
         findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,21 +112,34 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
         final Account account = new Account(login, accountType);
 
-        Bundle data = new Bundle();
-        data.putString(AccountManager.KEY_ACCOUNT_NAME, intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME));
-        data.putString(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN));
-        data.putString(PASSWORD, intent.getStringExtra(PASSWORD));
+        if (getIntent().getBooleanExtra(NEW_ACCOUNT, false)) {
 
-        accountManager.addAccountExplicitly(account, password, data);
-        accountManager.setAuthToken(account, "baerer", authToken);
+
+            Bundle data = new Bundle();
+            data.putString(AccountManager.KEY_ACCOUNT_NAME, intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME));
+            data.putString(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN));
+            data.putString(PASSWORD, intent.getStringExtra(PASSWORD));
+
+            accountManager.addAccountExplicitly(account, password, data);
+            accountManager.setAuthToken(account, "baerer", authToken);
+        }
+        else{
+            Log.d("astro", "UPDATE ACCOUNT ONLY");
+            accountManager.setPassword(account, password);
+        }
 
         /** @todo nevim zda to je tady k necemu **/
-//        Intent intent = new Intent();
-//        intent.putExtras(data);
-//        setAccountAuthenticatorResult(intent.getExtras());
-//        setResult(RESULT_OK, intent);
+       // Intent intent1 = new Intent();
+     //   intent1.putExtras(data);
+        setAccountAuthenticatorResult(intent.getExtras());
+        setResult(RESULT_OK, intent);
 
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("astro", "!!!! onActivityResult");
+    }
 }

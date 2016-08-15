@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
+import cz.uhk.janMachacek.Exception.InvalidateRefreshTokenException;
 import cz.uhk.janMachacek.Exception.WrongCredentialsException;
 import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
@@ -124,7 +125,7 @@ public class ApiAuthenticator {
         }
     }
 
-    public static String[] getAccessTokenByRefreshToken(String refreshToken) throws ApiErrorException, WrongCredentialsException {
+    public static String[] getAccessTokenByRefreshToken(String refreshToken) throws ApiErrorException, InvalidateRefreshTokenException {
 
         Log.d("astro", "method> getAccessTokenByRefreshToken");
 
@@ -146,7 +147,7 @@ public class ApiAuthenticator {
             int httpStatus = response.getStatusLine().getStatusCode();
             if (httpStatus >= 400) {
                 String message = jsonObject.getString("message");
-                throw new WrongCredentialsException(message + ": wrong credentials");
+                throw new InvalidateRefreshTokenException(message);
             }
             String accessToken = jsonObject.getString(Config.API_ACCESS_TOKEN);
             refreshToken = jsonObject.getString(Config.API_REFRESH_TOKEN);
@@ -156,8 +157,8 @@ public class ApiAuthenticator {
             ret[1] = refreshToken;
             return ret;
 
-        }catch (WrongCredentialsException e) {
-            throw new WrongCredentialsException(e.getMessage());
+        }catch (InvalidateRefreshTokenException e) {
+            throw e;
         }catch (Exception e) {
             e.printStackTrace();
             return null;

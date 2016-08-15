@@ -6,6 +6,7 @@ import cz.uhk.janMachacek.coordinates.Utils;
 import cz.uhk.janMachacek.library.Async.Synchronization;
 import cz.uhk.janMachacek.model.DataFacade;
 
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
@@ -54,7 +55,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     protected ProgressDialog progresDialog;
 
     private android.accounts.AccountManager aManager;
-
+    private AccountManager mAccountManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,14 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         facade = new DataFacade(this, getAssets());
+
+        mAccountManager = AccountManager.get(this);
+
+        if(numberOfAccounts() < 1) {
+            addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
+        }
+
+
 
     }
 
@@ -187,6 +196,30 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     void startRepeatingTask() {
         mHandlerTask.run();
 
+    }
+
+
+    private void addNewAccount(String accountType, String authTokenType) {
+
+
+
+        final AccountManagerFuture<Bundle> future = mAccountManager.addAccount(accountType, authTokenType, null, null, this, new AccountManagerCallback<Bundle>() {
+            @Override
+            public void run(AccountManagerFuture<Bundle> future) {
+                try {
+                    Bundle bnd = future.getResult();
+                    Log.d("astro", "AddNewAccount Bundle is " + bnd);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, null);
+    }
+
+    private int numberOfAccounts() {
+        Account[] accounts = mAccountManager.getAccountsByType(getBaseContext().getString(R.string.accountType));
+        return accounts.length;
     }
 
 }

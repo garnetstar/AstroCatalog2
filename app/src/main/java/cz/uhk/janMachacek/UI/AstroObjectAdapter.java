@@ -14,9 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /**
- * Adaprér pro zobrazení seznamu objektù 
+ * AdaprÃ©r pro zobrazenÃ­ seznamu objektÅ¯
  *  
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class AstroObjectAdapter extends ArrayAdapter<AstroObject> {
