@@ -52,5 +52,9 @@
     <string name="login">Login</string>
     <string name="password">Heslo</string>
 
+    <!-- accountType -->
+    <string name="accountType">cz.uhk.janMachacek.astroCatalog</string>
+
+
 
 </resources>

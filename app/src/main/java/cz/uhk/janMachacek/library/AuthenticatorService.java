@@ -3,16 +3,15 @@ package cz.uhk.janMachacek.library;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 /**
- * Created by jan on 10.8.2016.
+ * @author Jan Macháček
+ * Created on 10.8.2016.
  */
-public class AstroAuthService extends Service {
-    @Nullable
+public class AuthenticatorService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
-        AstroAuthenticator authenticator = new AstroAuthenticator(this);
+        AstroAccountAuthenticator authenticator = new AstroAccountAuthenticator(this);
         return authenticator.getIBinder();
     }
 }

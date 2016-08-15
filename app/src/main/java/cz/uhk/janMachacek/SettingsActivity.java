@@ -7,9 +7,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 /**
- * Activity pro spr·vu settings
+ * Activity pro spr√°vu settings
  * 
- * @author Jan Mach·Ëek
+ * @author Jan Mach√°ƒçek
  *
  */
 public class SettingsActivity extends PreferenceActivity {

@@ -17,10 +17,8 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
 import cz.uhk.janMachacek.UI.AlertFragment;
-import cz.uhk.janMachacek.library.Sync.MessierData;
-import cz.uhk.janMachacek.library.Api.Facade;
+import cz.uhk.janMachacek.library.Api.ApiAuthenticator;
 
 public class TestActivity extends AbstactBaseActivity implements AlertFragment.NoticeDialogListener {
 
@@ -30,7 +28,7 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
      */
     private GoogleApiClient client;
 
-    private Facade apiFacade;
+    private ApiAuthenticator apiApiAuthenticator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,7 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
         setContentView(R.layout.activity_test);
 
         //connecctor
-        apiFacade = new Facade(preference);
+        apiApiAuthenticator = new ApiAuthenticator(preference);
 
         TextView v = (TextView) findViewById(R.id.testTextView);
         TextView statusCode = (TextView) findViewById(R.id.statusCode);
@@ -99,7 +97,7 @@ public class TestActivity extends AbstactBaseActivity implements AlertFragment.N
         @Override
         protected String doInBackground(String... strings) {
 //
-//            MessierData syncMessierData = new MessierData(apiFacade);
+//            MessierData syncMessierData = new MessierData(apiApiAuthenticator);
 //
 //                syncMessierData.sync();
 

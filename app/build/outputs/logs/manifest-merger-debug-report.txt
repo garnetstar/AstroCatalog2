@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:2:1-72:12
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:2:1-75:12
 	package
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:3:5-33
 		INJECTED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml
@@ -33,122 +33,130 @@ uses-permission#android.permission.AUTHENTICATE_ACCOUNTS
 ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:11:5-79
 	android:name
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:11:22-77
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:12:5-71
+	android:name
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:12:22-68
+uses-permission#android.permission.USE_CREDENTIALS
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:13:5-74
+	android:name
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:13:22-71
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:12:5-81
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:14:5-81
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:12:22-78
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:14:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:13:5-80
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:15:5-80
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:13:22-77
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:15:22-77
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:14:5-79
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:16:5-79
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:14:22-76
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:16:22-76
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:15:5-79
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:17:5-79
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:15:22-76
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:17:22-76
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:16:5-67
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:18:5-67
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:16:22-64
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:18:22-64
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:19:5-75
+	android:name
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:19:22-72
 uses-feature#android.hardware.sensor.accelerometer
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:18:5-20:35
-	android:required
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:20:9-32
-	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:19:9-61
-uses-feature#android.hardware.sensor.compass
 ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:21:5-23:35
 	android:required
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:23:9-32
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:22:9-55
-android:uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:25:5-83
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:22:9-61
+uses-feature#android.hardware.sensor.compass
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:24:5-26:35
+	android:required
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:26:9-32
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:25:30-80
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:25:9-55
 application
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:27:5-68:19
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:30:5-71:19
 MERGED from [com.android.support:support-v4:22.2.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-appindexing:8.1.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\AndroidManifest.xml:19:5-20
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:22.2.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:30:9-41
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:33:9-41
 	android:allowBackup
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:28:9-35
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:31:9-35
 	android:icon
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:29:9-45
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:32:9-45
 	android:theme
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:31:9-40
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:34:9-40
 activity#cz.uhk.janMachacek.ObjectListActivity
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:32:9-40:20
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:35:9-43:20
 	android:label
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:34:13-45
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:37:13-45
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:33:13-47
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:36:13-47
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:35:13-39:29
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:38:13-42:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:36:17-69
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:39:17-69
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:36:25-66
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:39:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:38:17-77
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:41:17-77
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:38:27-74
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:41:27-74
 activity#cz.uhk.janMachacek.AuthenticatorActivity
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:41:9-59
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:44:9-59
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:41:19-56
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:44:19-56
 activity#cz.uhk.janMachacek.SettingsActivity
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:42:9-44:61
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:45:9-47:61
 	android:label
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:44:13-49
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:47:13-49
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:43:13-45
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:46:13-45
 activity#cz.uhk.janMachacek.ObjectDetatilActivity
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:45:9-47:78
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:48:9-50:78
 	android:label
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:47:13-66
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:50:13-66
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:46:13-50
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:49:13-50
 activity#cz.uhk.janMachacek.PointerActivity
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:48:9-51:61
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:51:9-54:61
 	android:screenOrientation
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:51:13-49
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:54:13-49
 	android:label
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:50:13-59
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:53:13-59
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:49:13-44
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:52:13-44
 activity#cz.uhk.janMachacek.TestActivity
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:52:9-54:68
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:55:9-57:68
 	android:label
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:54:13-56
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:57:13-56
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:53:13-41
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:56:13-41
 meta-data#com.google.android.gms.version
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:56:9-58:69
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:59:9-61:69
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:21:9-23:69
 	android:value
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:58:13-66
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:61:13-66
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:57:13-58
-service#cz.uhk.janMachacek.library.AstroAuthService
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:60:9-66:19
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:60:13-58
+service#cz.uhk.janMachacek.library.AuthenticatorService
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:63:9-69:19
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:60:18-58
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:63:18-62
 intent-filter#android.accounts.AccountAuthenticator
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:61:13-63:29
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:64:13-66:29
 action#android.accounts.AccountAuthenticator
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:62:17-80
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:65:17-80
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:62:25-77
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:65:25-77
 meta-data#android.accounts.AccountAuthenticator
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:64:13-65:62
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:67:13-68:57
 	android:resource
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:65:17-59
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:68:17-54
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:64:24-76
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:67:24-76

@@ -4,28 +4,23 @@ import android.content.Context;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
-import cz.uhk.janMachacek.Exception.EmptyCredentialsException;
 import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
-import cz.uhk.janMachacek.library.Api.Facade;
+import cz.uhk.janMachacek.library.Api.ApiAuthenticator;
 import cz.uhk.janMachacek.library.AstroObject;
-import cz.uhk.janMachacek.model.AstroDbHelper;
 import cz.uhk.janMachacek.model.DataFacade;
 
 /**
@@ -33,14 +28,53 @@ import cz.uhk.janMachacek.model.DataFacade;
  */
 public class MessierData {
 
-    private Facade apiFacade;
+    private ApiAuthenticator apiAuthenticator;
     private HttpClient httpClient;
     private Context context;
 
-    public MessierData(Facade apiFacade, Context context) {
-        this.apiFacade = apiFacade;
+    public MessierData(ApiAuthenticator apiAuthenticator, Context context) {
+        this.apiAuthenticator = apiAuthenticator;
         this.httpClient = new DefaultHttpClient();
         this.context = context;
+    }
+
+    public MessierData(){
+
+    }
+
+    public void sync(String accessToken, Context context) throws AccessTokenExpiredException {
+
+        Log.d("astro", "static sync start");
+
+        String url = getUrl(accessToken);
+
+        boolean next = true;
+        boolean refreshToken = false;
+
+        try {
+//                if (refreshToken) {
+//                    Log.d("Response", "pokus o refersh tokenu");
+//                    apiAuthenticator.refreshAccessToken();
+//                    url = getUrl();
+//                    Log.d("Respone", "url = " + url);
+//                }
+
+            ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
+
+            getData(url, astroObjects);
+
+            DataFacade db = new DataFacade(context);
+            db.stuffMessierData(astroObjects);
+            Log.d("Response", "Size = " + Integer.toString(astroObjects.size()));
+
+            next = false;
+        } catch (ApiErrorException e) {
+            e.printStackTrace();
+            Log.d("Response", "1/ " + e.toString());
+            next = false;
+        }
+
+
     }
 
     public void sync() {
@@ -54,14 +88,14 @@ public class MessierData {
             try {
                 if (refreshToken) {
                     Log.d("Response", "pokus o refersh tokenu");
-                    apiFacade.refreshAccessToken();
+                    apiAuthenticator.refreshAccessToken();
                     url = getUrl();
                     Log.d("Respone", "url = " + url);
                 }
 
                 ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
-               getData(url, astroObjects);
+                getData(url, astroObjects);
 
                 DataFacade db = new DataFacade(context);
                 db.stuffMessierData(astroObjects);
@@ -70,7 +104,7 @@ public class MessierData {
                 next = false;
             } catch (ApiErrorException e) {
                 e.printStackTrace();
-                Log.d("Response", "1/ " + e.toString());
+                Log.d("Response", "1/ " + e.toString() + " " + e.getMessage());
                 next = false;
             } catch (AccessTokenExpiredException e) {
 
@@ -87,6 +121,7 @@ public class MessierData {
         try {
             Log.d("Response ", "URL: " + url);
             HttpGet get = Response.messierDataRequest(url);
+            HttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(get);
             String json = Utils.convertInputStreamToString(response.getEntity().getContent());
             JSONObject jsonObject = new JSONObject(json);
@@ -114,7 +149,7 @@ public class MessierData {
                 Integer ra_deg = json_data.getInt("ra_deg");
                 Double ra_min = json_data.getDouble("ra_min");
                 Angle angleHour = new Angle(ra_deg, ra_min, true);
-                astroObject.setRightAscension(new Angle(angleHour.getDecimalDegree()*15));
+                astroObject.setRightAscension(new Angle(angleHour.getDecimalDegree() * 15));
 
                 Double dec_min = json_data.getDouble("dec_min");
                 Integer dec_deg = Integer.parseInt(json_data.getString("dec_deg").replaceFirst("\\+", ""));
@@ -146,17 +181,22 @@ public class MessierData {
         } catch (AccessTokenExpiredException e) {
             throw e;
         } catch (Exception e) {
+
+            Log.d("astro", "getData exception " + e.toString());
             throw new ApiErrorException(e.getMessage(), e);
         }
-
 
 
         return astroObjects;
     }
 
     private String getUrl() {
-        Log.d("Response", "AT = " + apiFacade.getAccessToken());
-        return Config.API_URL + Config.API_MESSIER_DATA + "?" + Config.API_ACCESS_TOKEN + "=" + apiFacade.getAccessToken();
+        Log.d("Response", "AT = " + apiAuthenticator.getAccessToken());
+        return Config.API_URL + Config.API_MESSIER_DATA + "?" + Config.API_ACCESS_TOKEN + "=" + apiAuthenticator.getAccessToken();
+    }
+
+    private static String getUrl(String accessToken) {
+        return Config.API_URL + Config.API_MESSIER_DATA + "?" + Config.API_ACCESS_TOKEN + "=" + accessToken;
     }
 }
 

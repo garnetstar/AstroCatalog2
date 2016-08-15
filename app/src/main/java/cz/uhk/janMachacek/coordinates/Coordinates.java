@@ -3,9 +3,9 @@ package cz.uhk.janMachacek.coordinates;
 import java.util.Calendar;
 
 /**
- * Tøída pro vıpoèet dynamickıch astronomickıch souøadnic
+ * TÅ™Ã­da pro vÃ½poÄet dynamickÃ½ch astronomickÃ½ch souÅ™adnic
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class Coordinates {

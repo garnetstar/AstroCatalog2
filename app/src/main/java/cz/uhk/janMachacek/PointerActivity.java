@@ -21,9 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Activita pro zobrazenÌ prvk˘ pro navigaci na objekt
+ * Activita pro zobrazen√≠ prvk≈Ø pro navigaci na objekt
  * 
- * @author Jan Mach·Ëek
+ * @author Jan Mach√°ƒçek
  *
  */
 public class PointerActivity extends Activity implements 
@@ -126,7 +126,7 @@ public class PointerActivity extends Activity implements
 		if (sensors.size() < 1) {
 			Toast.makeText(
 					getBaseContext(),
-					"V·ö p¯Ìstroj nepobsahuje senzor Magnetic Field, funkce k urËenÌ orientace nebudou fungovat spr·vnÏ.",
+					"VÔøΩ pÔøΩÔøΩstroj nepobsahuje senzor Magnetic Field, funkce k urÔøΩenÔøΩ orientace nebudou fungovat sprÔøΩvnÔøΩ.",
 					Toast.LENGTH_LONG).show();
 		}
 	}

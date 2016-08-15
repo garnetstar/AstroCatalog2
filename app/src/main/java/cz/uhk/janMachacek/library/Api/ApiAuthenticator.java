@@ -1,5 +1,6 @@
 package cz.uhk.janMachacek.library.Api;
 
+import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
@@ -25,28 +27,56 @@ import cz.uhk.janMachacek.library.Api.Http.Utils;
 /**
  * Created by jan on 22.7.2016.
  */
-public class Facade {
+public class ApiAuthenticator {
 
     private SharedPreferences preferences;
 
-    public Facade(SharedPreferences preferences) {
+    public ApiAuthenticator(SharedPreferences preferences) {
         this.preferences = preferences;
     }
 
-//    public String getToken() throws EmptyCredentialsException, ApiErrorException {
-//
-//        String token;
-//
-//        if (preferences.getString("access_token", null) == null) {
-//            // ziskat token z api
-//            //    token = this.getTokenByLogin();
-//        } else {
-//            token = preferences.getString("access_token", null);
-//        }
-//
-//        //return token;
-//        return "sss";
-//    }
+    /**
+     * @param login
+     * @param password
+     * @return
+     * @throws WrongCredentialsException
+     * @throws ApiErrorException
+     */
+    public static String[] getTokenByLogin(String login, String password) throws WrongCredentialsException, ApiErrorException {
+
+        Log.d("astro", "GET auth_token");
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        try {
+
+            HttpPost httpPost = Response.accessTokenByCredentials(login, password);
+            HttpResponse response = httpClient.execute(httpPost);
+
+            String json = convertInputStreamToString(response.getEntity().getContent());
+            JSONObject jsonObject = new JSONObject(json);
+            //kontrola http statusu
+            int httpStatus = response.getStatusLine().getStatusCode();
+            if (httpStatus >= 400) {
+                String message = jsonObject.getString("message");
+                throw new WrongCredentialsException(message + ": wrong credentials");
+            }
+
+            Log.d("astro", json);
+
+            String accessToken = jsonObject.getString("access_token");
+            String refreshToken = jsonObject.getString("refresh_token");
+            String[] ret = new String[2];
+            ret[0] = accessToken;
+            ret[1] = refreshToken;
+            return ret;
+
+        } catch (WrongCredentialsException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ApiErrorException(e.getMessage(), e);
+        }
+    }
 
     public void getTokenByLogin() throws EmptyCredentialsException, WrongCredentialsException, ApiErrorException {
 
@@ -91,6 +121,46 @@ public class Facade {
             throw e;
         } catch (Exception e) {
             throw new ApiErrorException(e.getMessage(), e);
+        }
+    }
+
+    public static String[] getAccessTokenByRefreshToken(String refreshToken) throws ApiErrorException, WrongCredentialsException {
+
+        Log.d("astro", "method> getAccessTokenByRefreshToken");
+
+        HttpPost post = null;
+        try {
+            post = Response.refreshToken(refreshToken);
+
+            HttpClient httpClient = new DefaultHttpClient();
+
+            HttpResponse response = httpClient.execute(post);
+
+            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+
+            Log.d("astro", json);
+
+            JSONObject jsonObject = new JSONObject(json);
+
+            //kontrola http statusu
+            int httpStatus = response.getStatusLine().getStatusCode();
+            if (httpStatus >= 400) {
+                String message = jsonObject.getString("message");
+                throw new WrongCredentialsException(message + ": wrong credentials");
+            }
+            String accessToken = jsonObject.getString(Config.API_ACCESS_TOKEN);
+            refreshToken = jsonObject.getString(Config.API_REFRESH_TOKEN);
+
+            String[] ret = new String[2];
+            ret[0] = accessToken;
+            ret[1] = refreshToken;
+            return ret;
+
+        }catch (WrongCredentialsException e) {
+            throw new WrongCredentialsException(e.getMessage());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

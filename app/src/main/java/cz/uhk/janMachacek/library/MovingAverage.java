@@ -1,9 +1,9 @@
 package cz.uhk.janMachacek.library;
 
 /**
- * Tøída pro vyhlazování dat metodou SMA
+ * TÅ™Ã­da pro vyhlazovÃ¡vÃ­ dat metodou SMA
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class MovingAverage {

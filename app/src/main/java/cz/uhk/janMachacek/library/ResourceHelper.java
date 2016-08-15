@@ -5,9 +5,9 @@ import android.content.res.Resources;
 import android.util.SparseArray;
 
 /**
- * Helper pro pøevod hodnot z resource na objekt tøídy SparseArray
+ * Helper pro pÅ™evod hodnot z resource na objekt tÅ™Ã­dy SparseArray
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class ResourceHelper {

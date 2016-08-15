@@ -1,9 +1,9 @@
 package cz.uhk.janMachacek.coordinates;
 
 /**
- * Utility pro formátování dat z tøídy Angle
+ * Utility pro formÃ¡tovÃ¡nÃ­ dat z tÅ™Ã­dy Angle
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class Utils {
@@ -20,7 +20,7 @@ public class Utils {
 	
 	public static String getFormatedDegree(Angle angle) {
 		int[] degree = angle.getDegree();
-		String template = "%d° %d' %d''";
+		String template = "%dÂ° %d' %d''";
 		return String.format(template, degree[0], degree[1], degree[2]);
 	}
 }

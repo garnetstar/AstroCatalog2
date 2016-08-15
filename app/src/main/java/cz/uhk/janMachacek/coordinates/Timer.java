@@ -4,19 +4,19 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 /**
- * Tøída pro urèování aktuálního èasu
+ * TÅ™Ã­da pro urÄovÃ¡nÃ© aktuÃ¡lnÃ­ho Äasu
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class Timer {
 
 	/**
-	 * Zjištìní aktuálního univerzálního èasu (UTC)
+	 * ZjiÅ¡tÄ›nÃ­ aktuÃ¡lnÃ­ho univerzÃ¡lnÃ­ho Äasu (UTC)
 	 * @return Calendar
 	 */
 	public static Calendar getActualUTC() {
-		// èasová zóna odpovídající nultému poledníku
+		// ÄasovÃ¡ zÃ³na odpovÃ­dajÃ­cÃ­ nultÃ©mu polednÃ­ku
 		TimeZone timeZone = TimeZone.getTimeZone("Etc/GMT+0");
 
 		Calendar now = Calendar.getInstance();

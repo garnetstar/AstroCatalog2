@@ -1,9 +1,9 @@
 package cz.uhk.janMachacek.library;
 
 /**
- * Tøída pro vyhlazení dat pro azimut metodou SMA
+ * TÅ™Ã­da pro vyhlazenÃ¡ dat pro azimut metodou SMA
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class MovingAverageAzimuth {
