@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:2:1-76:12
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:2:1-74:12
 	package
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:3:5-33
 		INJECTED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml
@@ -82,7 +82,7 @@ ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\A
 	android:name
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:26:9-55
 application
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:31:5-72:19
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:31:5-70:19
 MERGED from [com.android.support:support-v4:22.2.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-appindexing:8.1.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\AndroidManifest.xml:19:5-20
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:20:5-24:19
@@ -135,32 +135,26 @@ ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\A
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:54:13-59
 	android:name
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:53:13-44
-activity#cz.uhk.janMachacek.TestActivity
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:56:9-58:68
-	android:label
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:58:13-56
-	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:57:13-41
 meta-data#com.google.android.gms.version
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:60:9-62:69
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:58:9-60:69
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:21:9-23:69
 	android:value
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:62:13-66
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:60:13-66
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:61:13-58
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:59:13-58
 service#cz.uhk.janMachacek.library.AuthenticatorService
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:64:9-70:19
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:62:9-68:19
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:64:18-62
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:62:18-62
 intent-filter#android.accounts.AccountAuthenticator
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:65:13-67:29
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:63:13-65:29
 action#android.accounts.AccountAuthenticator
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:66:17-80
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:64:17-80
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:66:25-77
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:64:25-77
 meta-data#android.accounts.AccountAuthenticator
-ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:68:13-69:57
+ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:66:13-67:57
 	android:resource
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:69:17-54
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:67:17-54
 	android:name
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:68:24-76
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:66:24-76

@@ -94,7 +94,7 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator {
                 return result;
 
             } catch (WrongCredentialsException e1) {
-                Log.d("astro", "WRONG CREDENTIALS EXCEPTION   +++");
+                Log.d("astro", "WRONG CREDENTIALS EXCEPTION  ***");
 
                 final Intent intent = new Intent(context, AuthenticatorActivity.class);
 

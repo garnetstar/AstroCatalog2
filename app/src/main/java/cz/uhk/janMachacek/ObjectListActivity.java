@@ -34,9 +34,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * Activita pro zobrazen� seznamu objekt�
+ * Activita pro zobrazení seznamu objektů
  *
- * @author Jan Mach��ek
+ * @author Jan Macháček
  */
 public class ObjectListActivity extends AbstactBaseActivity implements
         OnSharedPreferenceChangeListener {
@@ -59,19 +59,8 @@ public class ObjectListActivity extends AbstactBaseActivity implements
     protected void onStart() {
         super.onStart();
 
+        // registrace broadcast receiveru pro reload objektů
         registerReceiver(new RefreshBroudcastReceiver(), new IntentFilter(REFRESH_OBJECTS_LIST));
-
-
-
-//		Button b = (Button) findViewById(R.id.button2);
-//
-//		b.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				Intent i = new Intent(getBaseContext(), TestActivity.class);
-//				startActivityForResult(i,0);
-//			}
-//		});
     }
 
     @Override
@@ -102,7 +91,6 @@ public class ObjectListActivity extends AbstactBaseActivity implements
             renderObjects(astroObjects);
 
         } else {
-            //showProgressDialog("", "Ur�ov�n� aktu�ln� polohy");
             findLocation();
         }
     }

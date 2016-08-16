@@ -5,7 +5,6 @@ import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Utils;
 import cz.uhk.janMachacek.library.Async.Synchronization;
 import cz.uhk.janMachacek.model.DataFacade;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -25,16 +24,9 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
-
-
-
-
 
 /**
  * Abstraktní activity implementující společné metody
@@ -75,9 +67,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         if(numberOfAccounts() < 1) {
             addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
         }
-
-
-
     }
 
     protected void showProgressDialog(String title, String message) {
@@ -133,6 +122,9 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         return;
     }
 
+    /**
+     * registrace broadcast receiveru pro zobrazování message z jiných threadů
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -163,7 +155,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         public void onReceive(Context context, Intent intent) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-//				Toast.makeText(context, "Success - " + extras.getString("message"), Toast.LENGTH_LONG).show();
                 TextView syncStatus = (TextView) findViewById(R.id.sync_status);
                 syncStatus.setText(extras.getString("message"));
             }
@@ -173,6 +164,10 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     // !!! dulezita promenna, zajisti ze runnable job pojede jen v jedne instanci
     static boolean  runn = false;
 
+    /**
+     * spustení synchronizace na pozadi
+     * Později bude nahrazeno SyncAdapterem
+     */
     private Runnable mHandlerTask = new Runnable() {
 
         @Override
@@ -200,8 +195,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
 
     private void addNewAccount(String accountType, String authTokenType) {
-
-
 
         final AccountManagerFuture<Bundle> future = mAccountManager.addAccount(accountType, authTokenType, null, null, this, new AccountManagerCallback<Bundle>() {
             @Override

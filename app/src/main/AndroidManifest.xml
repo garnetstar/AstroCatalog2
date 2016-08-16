@@ -53,9 +53,7 @@
             android:name=".PointerActivity"
             android:label="@string/title_activity_pointer"
             android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"

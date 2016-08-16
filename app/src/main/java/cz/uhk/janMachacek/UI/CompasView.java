@@ -10,9 +10,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Vlastí View pro zobrazení kompasu 
+ * VlastÃ­ View pro zobrazenÃ­ kompasu
  *  
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class CompasView extends View {

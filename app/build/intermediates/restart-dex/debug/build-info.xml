@@ -4,54 +4,29 @@
     api-level="16"
     density="hdpi"
     format="7"
-    timestamp="22748174826176" >
+    timestamp="70438022769482" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="3907" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="119" />
     <task
         name="verifier"
-        duration="0" />
+        duration="73" />
 
-    <build timestamp="21949302744953" >
+    <artifact
+        location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="70438022769482" >
         <artifact
             location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
-    <build
-        timestamp="22366077591143"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\builds\debug\22366077591143\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build
-        timestamp="22515813979166"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\builds\debug\22515813979166\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build
-        timestamp="22723797348399"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\builds\debug\22723797348399\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build
-        timestamp="22731020189981"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\builds\debug\22731020189981\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build timestamp="22748174826176" />
 
 </instant-run>

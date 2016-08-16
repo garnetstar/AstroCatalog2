@@ -54,7 +54,7 @@ public class ApiAuthenticator {
             HttpPost httpPost = Response.accessTokenByCredentials(login, password);
             HttpResponse response = httpClient.execute(httpPost);
 
-            String json = convertInputStreamToString(response.getEntity().getContent());
+            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
             JSONObject jsonObject = new JSONObject(json);
             //kontrola http statusu
             int httpStatus = response.getStatusLine().getStatusCode();
@@ -100,7 +100,7 @@ public class ApiAuthenticator {
 
             HttpResponse response = httpClient.execute(httpPost);
 
-            String json = convertInputStreamToString(response.getEntity().getContent());
+            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
             JSONObject jsonObject = new JSONObject(json);
             //kontrola http statusu
             int httpStatus = response.getStatusLine().getStatusCode();
@@ -195,22 +195,5 @@ public class ApiAuthenticator {
         } catch (Exception e) {
             throw new ApiErrorException(e.getMessage(), e);
         }
-    }
-
-    public String getAccessToken() {
-        return preferences.getString(Config.API_ACCESS_TOKEN, null);
-    }
-
-
-    // convert inputstream to String
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
     }
 }

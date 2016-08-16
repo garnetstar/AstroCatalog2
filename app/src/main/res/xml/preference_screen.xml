@@ -28,19 +28,6 @@
         android:title="@string/max_magnitude"
         custom:min="1" />
 
-    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-        android:key="preference_screen_credentials"
-        android:title="Přihlašovací údaje">
-
-        <EditTextPreference
-            android:key="login"
-            android:title="Login" />
-
-        <EditTextPreference
-            android:inputType="textPassword"
-            android:key="password"
-            android:title="Heslo" />
-    </PreferenceScreen>
     <MultiSelectListPreference
         android:defaultValue="@array/astro_sync_default_values"
         android:entries="@array/astro_sync_names"

@@ -1,6 +1,8 @@
 package cz.uhk.janMachacek.library.Sync;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
+import cz.uhk.janMachacek.ObjectListActivity;
 import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
@@ -38,7 +41,7 @@ public class MessierData {
         this.context = context;
     }
 
-    public MessierData(){
+    public MessierData() {
 
     }
 
@@ -48,50 +51,18 @@ public class MessierData {
 
         String url = getUrl(accessToken);
 
-        boolean next = true;
-        boolean refreshToken = false;
 
         try {
-//                if (refreshToken) {
-//                    Log.d("Response", "pokus o refersh tokenu");
-//                    apiAuthenticator.refreshAccessToken();
-//                    url = getUrl();
-//                    Log.d("Respone", "url = " + url);
-//                }
 
-            ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
+            int serverVersion = getVersion(accessToken);
+            Log.d("astro", "MS VERSION=" + serverVersion);
 
-            getData(url, astroObjects);
+            // default preference
+            SharedPreferences preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
 
-            DataFacade db = new DataFacade(context);
-            db.stuffMessierData(astroObjects);
-            Log.d("Response", "Size = " + Integer.toString(astroObjects.size()));
-
-            next = false;
-        } catch (ApiErrorException e) {
-            e.printStackTrace();
-            Log.d("Response", "1/ " + e.toString());
-            next = false;
-        }
-
-
-    }
-
-    public void sync() {
-
-
-        String url = getUrl();
-
-        boolean next = true;
-        boolean refreshToken = false;
-        do {
-            try {
-                if (refreshToken) {
-                    Log.d("Response", "pokus o refersh tokenu");
-                    apiAuthenticator.refreshAccessToken();
-                    url = getUrl();
-                    Log.d("Respone", "url = " + url);
-                }
+            int deviceVersion = preferences.getInt("ms_version", 0);
+            Log.d("astro", "act>" + deviceVersion + " version>" + serverVersion);
+            if (deviceVersion < serverVersion) {
 
                 ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
@@ -101,19 +72,55 @@ public class MessierData {
                 db.stuffMessierData(astroObjects);
                 Log.d("Response", "Size = " + Integer.toString(astroObjects.size()));
 
-                next = false;
-            } catch (ApiErrorException e) {
-                e.printStackTrace();
-                Log.d("Response", "1/ " + e.toString() + " " + e.getMessage());
-                next = false;
-            } catch (AccessTokenExpiredException e) {
 
-                Log.d("Response", "refersh token in loop" + e.toString());
-                refreshToken = true;
-                next = true;
+                //aktualizovat verzi katalogu
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("ms_version", serverVersion);
+                editor.commit();
+                Log.d("astro", "set new version " + serverVersion);
+
+                //zobrazit aktuální data
+                Intent intent = new Intent();
+                intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
+                Log.d("Response", "SEND BROADCAST *");
+                context.sendBroadcast(intent);
             }
-        } while (next == true);
 
+        } catch (ApiErrorException e) {
+            e.printStackTrace();
+            Log.d("Response", "1/ " + e.toString());
+        }
+
+    }
+
+    private int getVersion(String accessToken) throws AccessTokenExpiredException, ApiErrorException {
+
+        String url = getVersionUrl(accessToken);
+
+        Log.d("astro ", "GET VERSION MESSIER " + url);
+
+        try {
+            HttpGet get = Response.messierDataRequest(url);
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpResponse response = httpClient.execute(get);
+            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+            Log.d("astro", json);
+            JSONObject jsonObject = new JSONObject(json);
+            //kontrola http statusu
+            int httpStatus = response.getStatusLine().getStatusCode();
+            if (httpStatus == 401) {
+                throw new AccessTokenExpiredException();
+            }
+            int version = jsonObject.getInt("version");
+            return version;
+
+        } catch (AccessTokenExpiredException e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("astro", "7894554" + e.toString() + " " + e.getMessage());
+            throw new ApiErrorException(e.getMessage(), e);
+        }
     }
 
     private ArrayList<AstroObject> getData(String url, ArrayList<AstroObject> astroObjects) throws ApiErrorException, AccessTokenExpiredException {
@@ -190,13 +197,12 @@ public class MessierData {
         return astroObjects;
     }
 
-    private String getUrl() {
-        Log.d("Response", "AT = " + apiAuthenticator.getAccessToken());
-        return Config.API_URL + Config.API_MESSIER_DATA + "?" + Config.API_ACCESS_TOKEN + "=" + apiAuthenticator.getAccessToken();
-    }
-
     private static String getUrl(String accessToken) {
         return Config.API_URL + Config.API_MESSIER_DATA + "?" + Config.API_ACCESS_TOKEN + "=" + accessToken;
+    }
+
+    private static String getVersionUrl(String accessToken) {
+        return Config.API_URL + Config.API_MESSIER_DATA + "/version?" + Config.API_ACCESS_TOKEN + "=" + accessToken;
     }
 }
 

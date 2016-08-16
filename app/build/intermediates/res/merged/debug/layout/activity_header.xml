@@ -1,26 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="New Button"-->
-        <!--android:id="@+id/button2"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--/>-->
-    
+
        <TextView
         android:id="@+id/actual_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ssssssss" />
+        android:text="" />
     
     <TextView
         android:id="@+id/actual_location_provider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="dddddddddd" />
+        android:text="" />
 
 
 

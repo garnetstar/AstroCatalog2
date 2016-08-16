@@ -10,9 +10,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Vlastní View pro urèení vıšky nad obzorem
+ * VlastnÃ­ View pro urÄenÃ­ vÃ½Å¡ky nad obzorem
  * 
- * @author Jan Macháèek
+ * @author Jan MachÃ¡Äek
  *
  */
 public class HorizontView extends View {
@@ -96,7 +96,7 @@ public class HorizontView extends View {
 		float realHeight = height / 90 * (angle + 1);
 		float point = height / 90;
 
-		// stupnice vıšky nad obzorem
+		// stupnice vï¿½ï¿½ky nad obzorem
 		for (int i = 0; i <= 90; i += 15) {
 			float iHeight = i * point;
 			canvas.drawLine(5 + offsetLeft, iHeight + offsetTop,
@@ -108,14 +108,14 @@ public class HorizontView extends View {
 		canvas.drawLine(10 + offsetLeft,  0 + offsetTop, 10 + offsetLeft, point
 				* 90 + offsetTop, circlePaint);
 		
-		// poadovaná vıška nad obzorem
+		// poï¿½adovanï¿½ vï¿½ï¿½ka nad obzorem
 		canvas.drawCircle(10 + offsetLeft, altitude * point + offsetTop, 16,
 				circlePaint);
 		
 		canvas.drawCircle(10 + offsetLeft, altitude * point + offsetTop, 12,
 				circlePaintBlack);
 		
-		// pohyblivı ukazatel vıšky nad obzorem
+		// pohyblivï¿½ ukazatel vï¿½ï¿½ky nad obzorem
 		canvas.drawCircle(10 + offsetLeft, realHeight + offsetTop, 10,
 				pointer);
 

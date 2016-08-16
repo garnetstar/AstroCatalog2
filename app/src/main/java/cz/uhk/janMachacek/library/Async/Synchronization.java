@@ -58,16 +58,10 @@ public class Synchronization extends AsyncTask {
 
             apiAuthenticator = new ApiAuthenticator(preferences);
 
-            sendStatus("Zahájena synchronizace");
-            Log.d("astro", "////////// Zahájena synchronizace");
-
             final AccountManager am = AccountManager.get(applicationContext);
             final String authTok;
             final Account[] accounts = am.getAccountsByType(applicationContext.getString(R.string.accountType));
-//            am.invalidateAuthToken(applicationContext.getString(R.string.accountType), "63432a2e2b147caba4ff003df139e1784058b30bc56c439aed26457207ce2b08");
             Log.d("Response", "Accounts " + Integer.toString(accounts.length));
-
-
 
             if (accounts.length > 0) {
                 Bundle options = new Bundle();
@@ -89,44 +83,14 @@ public class Synchronization extends AsyncTask {
                             return;
                         }
                         String authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
-                        Log.d("Response", "Received authentication token " + authToken);
-                        Log.d("Response", "BIM>>> " + am.getUserData(accounts[0], AuthenticatorActivity.REFRESH_TOKEN));
-                        Log.d("Response", "heslo>>> " + am.getUserData(accounts[0], AuthenticatorActivity.PASSWORD));
 
                         if (authToken != null) {
                             SyncMessier sm = new SyncMessier(am);
                             sm.execute(new String[]{authToken});
                         }
-
-
                     }
                 }, null);
             }
-
-
-//            try {
-//                if (checkAccessToken()) {
-//                    sendStatus("AT is " + preferences.getString(Config.API_ACCESS_TOKEN, null));
-//
-//                    Set<String> syncIssues = preferences.getStringSet("sync_issues", null);
-//
-//                    if (syncIssues.contains("1")) {
-//
-//                        sendStatus("Synchronizují se messier data");
-//                        MessierData messierData = new MessierData(apiAuthenticator, applicationContext);
-//                        messierData.sync();
-//                        sendStatus("Messier data byla synchronizována");
-//
-//                        Intent intent = new Intent();
-//                        intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
-//
-//                        Log.d("Response", "SEND BROADCAST");
-//                        applicationContext.sendBroadcast(intent);
-//                    }
-//                }
-//            } catch (ApiErrorException e) {
-//                e.printStackTrace();
-//            }
         }
 
         return null;
@@ -143,15 +107,18 @@ public class Synchronization extends AsyncTask {
         protected Object doInBackground(Object[] objects) {
 
             String accessToken = objects[0].toString();
-            Log.d("astro", "///////// SyncMessier");
+            Log.d("astro", "SyncMessier");
             MessierData ms = new MessierData();
             try {
+                sendStatus("Probíhá synchronizace Messierova katalogu");
                 ms.sync(accessToken, applicationContext);
-                Intent intent = new Intent();
-                intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
+//                Intent intent = new Intent();
+//                intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
 
-                Log.d("Response", "SEND BROADCAST");
-                applicationContext.sendBroadcast(intent);
+                sendStatus("Synchronizace Messierova katalogu dokončena");
+
+           //     Log.d("Response", "SEND BROADCAST");
+            //    applicationContext.sendBroadcast(intent);
             } catch (AccessTokenExpiredException e) {
 
                 Log.d("astro", "INVALIDATE: " + accessToken);
@@ -186,25 +153,5 @@ public class Synchronization extends AsyncTask {
 
         applicationContext.sendBroadcast(intent);
 
-    }
-
-    private boolean checkAccessToken() throws ApiErrorException {
-
-        String accessToken = preferences.getString(Config.API_ACCESS_TOKEN, null);
-
-        // pokud ještě nebyl použit access token
-        if (null == accessToken) {
-
-            try {
-                apiAuthenticator.getTokenByLogin();
-            } catch (EmptyCredentialsException e) {
-                sendStatus("Vyplňte přihlašovací jméno a heslo");
-                return false;
-            } catch (WrongCredentialsException e) {
-                sendStatus("Přihlašovací údaje nejsou platné" + e.getMessage());
-                return false;
-            }
-            return true;
-        } else return true;
     }
 }
