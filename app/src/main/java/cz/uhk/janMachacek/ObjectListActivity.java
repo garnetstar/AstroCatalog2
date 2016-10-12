@@ -197,8 +197,7 @@ public class ObjectListActivity extends AbstactBaseActivity implements
     }
 
 
-    public class RefreshBroudcastReceiver extends BroadcastReceiver {
-
+    private class RefreshBroudcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             createObjects();

@@ -19,7 +19,6 @@ public class Utils
         String result = "";
         while((line = bufferedReader.readLine()) != null)
             result += line;
-
         inputStream.close();
         return result;
     }

@@ -287,6 +287,8 @@ containing a value of this type.
         public static final int pref_headers=0x7f040004;
         public static final int pref_notification=0x7f040005;
         public static final int preference_screen=0x7f040006;
+        public static final int sync_adapter=0x7f040007;
+        public static final int sync_diary_adapter=0x7f040008;
     }
     public static final class styleable {
         /** Attributes that can be used with a LoadingImageView.

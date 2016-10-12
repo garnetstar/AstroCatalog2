@@ -18,6 +18,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Sync Adapter -->
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
@@ -59,6 +63,19 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <provider
+            android:name="cz.uhk.janMachacek.library.AstroContentProvider"
+            android:authorities="cz.uhk.janMachacek.astro.provider"
+            android:exported="false"
+            android:label="AstroCatalog"
+            android:syncable="true" />
+        <provider
+            android:name="cz.uhk.janMachacek.library.AstroDiaryContentProvider"
+            android:authorities="cz.uhk.janMachacek.astro.diaryProvider"
+            android:exported="false"
+            android:label="Diary"
+            android:syncable="true" />
+
         <service android:name="cz.uhk.janMachacek.library.AuthenticatorService" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -67,6 +84,28 @@
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
+        </service>
+        <service
+            android:name="cz.uhk.janMachacek.library.AstroSyncService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter" />
+        </service>
+        <service
+            android:name="cz.uhk.janMachacek.library.AstroDiarySyncService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_diary_adapter" />
         </service>
     </application>
 

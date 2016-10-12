@@ -63,7 +63,7 @@ public class ApiAuthenticator {
                 throw new WrongCredentialsException(message + ": wrong credentials");
             }
 
-            Log.d("astro", json);
+            Log.d("astro", "getTokenByLogin"  + json);
 
             String accessToken = jsonObject.getString("access_token");
             String refreshToken = jsonObject.getString("refresh_token");
@@ -139,7 +139,7 @@ public class ApiAuthenticator {
 
             String json = Utils.convertInputStreamToString(response.getEntity().getContent());
 
-            Log.d("astro", json);
+            Log.d("astro", "ssddgg" +  json);
 
             JSONObject jsonObject = new JSONObject(json);
 

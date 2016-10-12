@@ -124,6 +124,8 @@ public class Synchronization extends AsyncTask {
                 Log.d("astro", "INVALIDATE: " + accessToken);
                 accountManager.invalidateAuthToken(applicationContext.getString(R.string.accountType), accessToken);
                 e.printStackTrace();
+            } catch (ApiErrorException e) {
+                e.printStackTrace();
             }
             return null;
         }

@@ -1,8 +1,11 @@
 package cz.uhk.janMachacek.library.Sync;
 
+import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.RemoteException;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -23,6 +26,9 @@ import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
 import cz.uhk.janMachacek.library.Api.ApiAuthenticator;
+import cz.uhk.janMachacek.library.AstroAccountAuthenticator;
+import cz.uhk.janMachacek.library.AstroContentProvider;
+import cz.uhk.janMachacek.library.AstroContract;
 import cz.uhk.janMachacek.library.AstroObject;
 import cz.uhk.janMachacek.model.DataFacade;
 
@@ -45,66 +51,109 @@ public class MessierData {
 
     }
 
-    public void sync(String accessToken, Context context) throws AccessTokenExpiredException {
+    /**
+     * @deprecated
+     * @param accessToken
+     * @param context
+     * @throws AccessTokenExpiredException
+     * @throws ApiErrorException
+     */
+    public void sync(String accessToken, Context context) throws AccessTokenExpiredException, ApiErrorException {
 
         Log.d("astro", "static sync start");
 
         String url = getUrl(accessToken);
 
+        int serverVersion = getVersion(accessToken);
+        Log.d("astro", "MS VERSION=" + serverVersion);
 
-        try {
+        // default preference
+        SharedPreferences preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
 
-            int serverVersion = getVersion(accessToken);
-            Log.d("astro", "MS VERSION=" + serverVersion);
+        int deviceVersion = preferences.getInt("ms_version", 0);
+        Log.d("astro", "act>" + deviceVersion + " version>" + serverVersion);
+        if (deviceVersion < serverVersion) {
 
-            // default preference
-            SharedPreferences preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
+            ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
-            int deviceVersion = preferences.getInt("ms_version", 0);
-            Log.d("astro", "act>" + deviceVersion + " version>" + serverVersion);
-            if (deviceVersion < serverVersion) {
+            getData(url, astroObjects);
 
-                ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
-
-                getData(url, astroObjects);
-
-                DataFacade db = new DataFacade(context);
-                db.stuffMessierData(astroObjects);
-                Log.d("Response", "Size = " + Integer.toString(astroObjects.size()));
+            DataFacade db = new DataFacade(context);
+            db.stuffMessierData(astroObjects);
+            Log.d("Response", "Size = " + Integer.toString(astroObjects.size()));
 
 
-                //aktualizovat verzi katalogu
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt("ms_version", serverVersion);
-                editor.commit();
-                Log.d("astro", "set new version " + serverVersion);
+            //aktualizovat verzi katalogu
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("ms_version", serverVersion);
+            editor.commit();
+            Log.d("astro", "set new version " + serverVersion);
 
-                //zobrazit aktuální data
-                Intent intent = new Intent();
-                intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
-                Log.d("Response", "SEND BROADCAST *");
-                context.sendBroadcast(intent);
+            //zobrazit aktuální data
+            Intent intent = new Intent();
+            intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
+            Log.d("Response", "SEND BROADCAST *");
+            context.sendBroadcast(intent);
+        }
+    }
+
+    public ArrayList<AstroObject> getMessierData(String accessToken, Context context, ContentProviderClient providerClient) throws AccessTokenExpiredException, ApiErrorException {
+
+        Log.d("astro", "static sync start");
+
+        String url = getUrl(accessToken);
+
+        int serverVersion = getVersion(accessToken);
+        Log.d("astro", "MS VERSION=" + serverVersion);
+
+        // default preference
+        SharedPreferences preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
+
+        int deviceVersion = preferences.getInt("ms_version", 0);
+        Log.d("astro", "act>" + deviceVersion + " version>" + serverVersion);
+
+        if(true){
+//        if (deviceVersion < serverVersion) {
+
+            ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
+
+            getData(url, astroObjects);
+
+            try {
+                providerClient.update(Uri.parse(AstroContract.CONTENT_URI + "/messier"),null,null, null);
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
 
-        } catch (ApiErrorException e) {
-            e.printStackTrace();
-            Log.d("Response", "1/ " + e.toString());
-        }
+            //aktualizovat verzi katalogu
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("ms_version", serverVersion);
+            editor.commit();
+            Log.d("astro", "set new version " + serverVersion);
 
+            //zobrazit aktuální data
+            Intent intent = new Intent();
+            intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
+            Log.d("Response", "SEND BROADCAST *");
+            context.sendBroadcast(intent);
+            return astroObjects;
+        }
+        return null;
     }
+
 
     private int getVersion(String accessToken) throws AccessTokenExpiredException, ApiErrorException {
 
         String url = getVersionUrl(accessToken);
 
-        Log.d("astro ", "GET VERSION MESSIER " + url);
+        Log.d("astro ", "GET VERSION MESSIER 1 " + url);
 
         try {
             HttpGet get = Response.messierDataRequest(url);
             HttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(get);
             String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-            Log.d("astro", json);
+            Log.d("astro", "version > " + json);
             JSONObject jsonObject = new JSONObject(json);
             //kontrola http statusu
             int httpStatus = response.getStatusLine().getStatusCode();

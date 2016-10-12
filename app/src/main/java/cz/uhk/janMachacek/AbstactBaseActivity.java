@@ -131,8 +131,10 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
         registerReceiver(new MyReciever(), new IntentFilter(FILTER));
 
-        if(!runn)
-        startRepeatingTask();
+
+        //zakaz naivni synchronizace
+        //if(!runn)
+        //startRepeatingTask();
     }
 
     protected void showLocation(Angle latitude, Angle longitude) {
@@ -169,7 +171,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
      * Později bude nahrazeno SyncAdapterem
      */
     private Runnable mHandlerTask = new Runnable() {
-
         @Override
         public void run() {
             runn = true;
@@ -183,9 +184,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
                 e.printStackTrace();
                 runn = false;
             }
-
         }
-
     };
 
     void startRepeatingTask() {
