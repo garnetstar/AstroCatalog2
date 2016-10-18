@@ -1,8 +1,10 @@
-package cz.uhk.janMachacek.library;
+package cz.uhk.janMachacek.Service;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+
+import cz.uhk.janMachacek.library.AstroAccountAuthenticator;
 
 /**
  * @author Jan Macháček

@@ -8,12 +8,9 @@ import cz.uhk.janMachacek.UI.AstroObjectAdapter;
 import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Coordinates;
 import cz.uhk.janMachacek.coordinates.Timer;
-import cz.uhk.janMachacek.library.AstroObject;
-import cz.uhk.janMachacek.model.AstroDbHelper;
+import cz.uhk.janMachacek.Model.AstroObject;
+import cz.uhk.janMachacek.Model.AstroDbHelper;
 
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -23,15 +20,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * Activita pro zobrazení seznamu objektů

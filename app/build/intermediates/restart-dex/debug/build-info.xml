@@ -4,29 +4,37 @@
     api-level="16"
     density="hdpi"
     format="7"
-    timestamp="13586692246541" >
+    timestamp="11930124561667"
+    verifier="COMPATIBLE" >
 
     <task
         name="javac"
-        duration="304" />
+        duration="298" />
     <task
         name="instant-run-dex"
-        duration="0" />
+        duration="647" />
     <task
         name="instant-run-transform"
-        duration="20" />
+        duration="47" />
     <task
         name="verifier"
-        duration="22" />
+        duration="3" />
 
     <artifact
-        location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
-        type="MAIN" />
+        location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\reload-dex\debug\classes.dex"
+        type="RELOAD_DEX" />
 
-    <build timestamp="13586692246541" >
+    <build timestamp="11755339965908" >
         <artifact
             location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
+    </build>
+    <build
+        timestamp="11930124561667"
+        verifier="COMPATIBLE" >
+        <artifact
+            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\reload-dex\debug\classes.dex"
+            type="RELOAD_DEX" />
     </build>
 
 </instant-run>

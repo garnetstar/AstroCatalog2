@@ -1,4 +1,4 @@
-package cz.uhk.janMachacek.library;
+package cz.uhk.janMachacek.library.Synchronization;
 
 import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;

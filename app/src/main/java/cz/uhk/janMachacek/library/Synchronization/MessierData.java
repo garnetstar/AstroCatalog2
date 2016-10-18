@@ -1,4 +1,4 @@
-package cz.uhk.janMachacek.library.Sync;
+package cz.uhk.janMachacek.library.Synchronization;
 
 import android.content.ContentProviderClient;
 import android.content.Context;
@@ -26,11 +26,9 @@ import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
 import cz.uhk.janMachacek.library.Api.ApiAuthenticator;
-import cz.uhk.janMachacek.library.AstroAccountAuthenticator;
-import cz.uhk.janMachacek.library.AstroContentProvider;
-import cz.uhk.janMachacek.library.AstroContract;
-import cz.uhk.janMachacek.library.AstroObject;
-import cz.uhk.janMachacek.model.DataFacade;
+import cz.uhk.janMachacek.AstroContract;
+import cz.uhk.janMachacek.Model.AstroObject;
+import cz.uhk.janMachacek.Model.ObjectDataFacade;
 
 /**
  * Created by jan on 1.8.2016.
@@ -40,6 +38,7 @@ public class MessierData {
     private ApiAuthenticator apiAuthenticator;
     private HttpClient httpClient;
     private Context context;
+    private int actualVersion;
 
     public MessierData(ApiAuthenticator apiAuthenticator, Context context) {
         this.apiAuthenticator = apiAuthenticator;
@@ -48,7 +47,7 @@ public class MessierData {
     }
 
     public MessierData() {
-
+        actualVersion = 0;
     }
 
     /**
@@ -78,7 +77,7 @@ public class MessierData {
 
             getData(url, astroObjects);
 
-            DataFacade db = new DataFacade(context);
+            ObjectDataFacade db = new ObjectDataFacade(context);
             db.stuffMessierData(astroObjects);
             Log.d("Response", "Size = " + Integer.toString(astroObjects.size()));
 
@@ -111,9 +110,9 @@ public class MessierData {
 
         int deviceVersion = preferences.getInt("ms_version", 0);
         Log.d("astro", "act>" + deviceVersion + " version>" + serverVersion);
+        actualVersion = serverVersion;
 
-        if(true){
-//        if (deviceVersion < serverVersion) {
+        if (deviceVersion < serverVersion) {
 
             ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
@@ -139,6 +138,10 @@ public class MessierData {
             return astroObjects;
         }
         return null;
+    }
+
+    public int getActualVersion() {
+        return actualVersion;
     }
 
 

@@ -1,10 +1,9 @@
-package cz.uhk.janMachacek.model;
+package cz.uhk.janMachacek.Model;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 import cz.uhk.janMachacek.coordinates.Angle;
-import cz.uhk.janMachacek.library.AstroObject;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,20 +12,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Fas�da pro p��stup k datab�zi
+ * Fasáda pro přístup k databázi
  *
- * @author Jan Mach��ek
+ * @author Jan Macháček
  */
-public class DataFacade {
+public class ObjectDataFacade {
 
     private AstroDbHelper helper;
 
-    public DataFacade(Context context, AssetManager assetManager) {
+    public ObjectDataFacade(Context context, AssetManager assetManager) {
         super();
         helper = new AstroDbHelper(context, assetManager);
     }
 
-    public DataFacade(Context context) {
+    public ObjectDataFacade(Context context) {
         super();
         helper = new AstroDbHelper(context);
     }

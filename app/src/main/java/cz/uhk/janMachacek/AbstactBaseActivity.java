@@ -3,8 +3,7 @@ package cz.uhk.janMachacek;
 
 import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Utils;
-import cz.uhk.janMachacek.library.Async.Synchronization;
-import cz.uhk.janMachacek.model.DataFacade;
+import cz.uhk.janMachacek.Model.ObjectDataFacade;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -26,7 +25,6 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Date;
 
 /**
  * Abstraktní activity implementující společné metody
@@ -40,7 +38,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     private Handler mHandler = new Handler();
 
     protected LocationManager locationManager;
-    protected DataFacade facade;
+    protected ObjectDataFacade facade;
     protected SharedPreferences preference;
     protected String locationProviderName = "none";
 
@@ -48,6 +46,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
     private android.accounts.AccountManager aManager;
     private AccountManager mAccountManager;
+    protected Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +59,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        facade = new DataFacade(this, getAssets());
+        facade = new ObjectDataFacade(this, getAssets());
 
         mAccountManager = AccountManager.get(this);
 
@@ -170,25 +169,25 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
      * spustení synchronizace na pozadi
      * Později bude nahrazeno SyncAdapterem
      */
-    private Runnable mHandlerTask = new Runnable() {
-        @Override
-        public void run() {
-            runn = true;
-            try {
-                Date date = new Date();
-                Log.d("Response", "execution" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-                Synchronization sync = new Synchronization(getApplicationContext(), preference);
-                sync.execute();
-                mHandler.postDelayed(mHandlerTask, 30000);
-            } catch (Exception e) {
-                e.printStackTrace();
-                runn = false;
-            }
-        }
-    };
+//    private Runnable mHandlerTask = new Runnable() {
+//        @Override
+//        public void run() {
+//            runn = true;
+//            try {
+//                Date date = new Date();
+//                Log.d("Response", "execution" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+//                Synchronization sync = new Synchronization(getApplicationContext(), preference);
+//                sync.execute();
+//                mHandler.postDelayed(mHandlerTask, 30000);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                runn = false;
+//            }
+//        }
+//    };
 
     void startRepeatingTask() {
-        mHandlerTask.run();
+        //mHandlerTask.run();
 
     }
 
@@ -200,6 +199,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
             public void run(AccountManagerFuture<Bundle> future) {
                 try {
                     Bundle bnd = future.getResult();
+
                     Log.d("astro", "AddNewAccount Bundle is " + bnd);
 
                 } catch (Exception e) {
@@ -211,6 +211,9 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
     private int numberOfAccounts() {
         Account[] accounts = mAccountManager.getAccountsByType(getBaseContext().getString(R.string.accountType));
+        if(accounts.length > 0) {
+            this.account = accounts[0];
+        }
         return accounts.length;
     }
 

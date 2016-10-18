@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import android.content.res.AssetManager;
 import cz.uhk.janMachacek.coordinates.Angle;
+import cz.uhk.janMachacek.Model.AstroObject;
 
 /**
  * T��da pro p�evod vstupn�ch dat z plain textu do ArrayList<AstroObject>
@@ -61,7 +62,7 @@ public class AssetParser {
 			case COL_NAME:
 				current = new AstroObject();
 
-				current.name = "M" + Integer.parseInt(st.nextToken());
+				current.setName("M" + Integer.parseInt(st.nextToken()));
 				state = COL_NGC;
 				break;
 			case COL_NGC:

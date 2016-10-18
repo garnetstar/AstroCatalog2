@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <!-- Sync Adapter -->
     <uses-permission
         android:name="android.permission.READ_SYNC_STATS" />
@@ -41,7 +43,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ObjectListActivity"
+            android:name=".HomePage"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,6 +52,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".AuthenticatorActivity" />
+        <activity
+            android:name=".ObjectListActivity"
+            android:label="@string/title_object_list"></activity>
+        <activity
+            android:name=".DiaryActivity"
+            android:label="@string/title_diary"></activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/app_settings"></activity>
@@ -67,7 +75,7 @@
             android:value="@integer/google_play_services_version" />
 
         <provider
-            android:name=".library.AstroContentProvider"
+            android:name=".Model.CatalogContentProvider"
             android:authorities="cz.uhk.janMachacek.astro.provider"
             android:label="AstroCatalog"
 
@@ -75,14 +83,14 @@
             android:syncable="true"/>
 
         <provider
-            android:name=".library.AstroDiaryContentProvider"
+            android:name=".Model.DiaryContentProvider"
             android:authorities="cz.uhk.janMachacek.astro.diaryProvider"
             android:label="Diary"
 
             android:exported="false"
             android:syncable="true"/>
 
-        <service android:name=".library.AuthenticatorService">
+        <service android:name=".Service.AuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -91,25 +99,25 @@
         </service>
 
         <service
-            android:name=".library.AstroSyncService"
+            android:name=".Service.AstroSyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
             <meta-data
                 android:name="android.content.SyncAdapter"
-                android:resource="@xml/sync_adapter" />
+                android:resource="@xml/sync_adapter_catalog" />
         </service>
 
         <service
-            android:name=".library.AstroDiarySyncService"
+            android:name=".Service.AstroDiarySyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
             <meta-data
                 android:name="android.content.SyncAdapter"
-                android:resource="@xml/sync_diary_adapter" />
+                android:resource="@xml/sync_adapter_diary" />
         </service>
 
     </application>

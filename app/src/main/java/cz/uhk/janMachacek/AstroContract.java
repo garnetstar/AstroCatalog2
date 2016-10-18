@@ -1,4 +1,4 @@
-package cz.uhk.janMachacek.library;
+package cz.uhk.janMachacek;
 
 import android.net.Uri;
 

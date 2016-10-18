@@ -1,4 +1,6 @@
-package cz.uhk.janMachacek.library;
+package cz.uhk.janMachacek.Model;
+
+import android.content.ContentValues;
 
 import cz.uhk.janMachacek.coordinates.Angle;
 
@@ -114,6 +116,22 @@ public class AstroObject {
 
     public void setHourAngle(String hourAngle) {
         this.hourAngle = hourAngle;
+    }
+
+    /**
+     * Prevod na ContentValue objekt
+     * @return ContentValue
+     */
+    public ContentValues getContentValues() {
+        ContentValues cv = new ContentValues(8);
+        cv.put(AstroDbHelper.KEY_OBJECT_NAME, getName());
+        cv.put(AstroDbHelper.KEY_OBJECT_MAG, getMagnitude());
+        cv.put(AstroDbHelper.KEY_OBJECT_RA, getRightAscension().getDecimalDegree());
+        cv.put(AstroDbHelper.KEY_OBJECT_DEC, getDeclination().getDecimalDegree());
+        cv.put(AstroDbHelper.KEY_OBJECT_TYPE, getType());
+        cv.put(AstroDbHelper.KEY_OBJECT_CONSTELLATION, getConstellation());
+        cv.put(AstroDbHelper.KEY_OBJECT_DIST, getDistance());
+        return cv;
     }
 
 

@@ -1,23 +1,25 @@
-package cz.uhk.janMachacek.library;
+package cz.uhk.janMachacek.Service;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import cz.uhk.janMachacek.Model.CatalogSyncAdapter;
+
 /**
  * @author Jan Macháček
  *         Created on 3.10.2016.
  */
-public class AstroDiarySyncService extends Service {
+public class AstroSyncService extends Service {
 
     private static final Object sSyncAdapterLock = new Object();
-    private static AstroDiarySyncAdapter sSyncAdapter = null;
+    private static CatalogSyncAdapter sSyncAdapter = null;
 
     @Override
     public void onCreate() {
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
-                sSyncAdapter = new AstroDiarySyncAdapter(getApplicationContext(), true);
+                sSyncAdapter = new CatalogSyncAdapter(getApplicationContext(), true);
             }
         }
     }

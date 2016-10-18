@@ -4,9 +4,9 @@ import java.util.List;
 
 import cz.uhk.janMachacek.UI.CompasView;
 import cz.uhk.janMachacek.UI.HorizontView;
-import cz.uhk.janMachacek.library.AstroObject;
+import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.library.ResourceHelper;
-import cz.uhk.janMachacek.model.DataFacade;
+import cz.uhk.janMachacek.Model.ObjectDataFacade;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -41,7 +41,7 @@ public class PointerActivity extends Activity implements
 	private CompasView compassView;
 	private HorizontView horizontView;
 	
-	private DataFacade facade;
+	private ObjectDataFacade facade;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class PointerActivity extends Activity implements
 
 		setContentView(R.layout.activity_pointer);
 		
-		facade = new DataFacade(this, getAssets());
+		facade = new ObjectDataFacade(this, getAssets());
 
 		Intent intent = getIntent();
 

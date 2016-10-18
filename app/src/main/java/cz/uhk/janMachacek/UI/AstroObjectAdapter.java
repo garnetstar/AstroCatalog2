@@ -3,7 +3,7 @@ package cz.uhk.janMachacek.UI;
 import java.util.ArrayList;
 
 import cz.uhk.janMachacek.R;
-import cz.uhk.janMachacek.library.AstroObject;
+import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.library.ResourceHelper;
 import android.content.Context;
 import android.util.SparseArray;

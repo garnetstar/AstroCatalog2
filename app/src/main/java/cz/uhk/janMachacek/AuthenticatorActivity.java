@@ -122,13 +122,23 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
             accountManager.addAccountExplicitly(account, password, data);
             accountManager.setAuthToken(account, "baerer", authToken);
+
+            //spustit synchronizaci
+            getApplicationContext().getContentResolver().setMasterSyncAutomatically(true);
+            getApplicationContext().getContentResolver().setIsSyncable(account, "cz.uhk.janMachacek.astro.diaryProvider", 1);
+            getApplicationContext().getContentResolver().setIsSyncable(account, "cz.uhk.janMachacek.astro.provider", 1);
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, "cz.uhk.janMachacek.astro.diaryProvider",true);
+
+            getApplicationContext().getContentResolver().addPeriodicSync(account,  "cz.uhk.janMachacek.astro.diaryProvider", new Bundle(), 10);
+            getApplicationContext().getContentResolver().addPeriodicSync(account,  "cz.uhk.janMachacek.astro.provider", new Bundle(), 10);
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, "cz.uhk.janMachacek.astro.provider",true);
         }
         else{
             Log.d("astro", "UPDATE ACCOUNT ONLY");
             accountManager.setPassword(account, password);
         }
 
-        /** @todo nevim zda to je tady k necemu **/
+        /** @TODO nevim zda to je tady k necemu **/
        // Intent intent1 = new Intent();
      //   intent1.putExtras(data);
         setAccountAuthenticatorResult(intent.getExtras());

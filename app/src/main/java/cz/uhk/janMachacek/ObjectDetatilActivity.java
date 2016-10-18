@@ -6,12 +6,10 @@ import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Coordinates;
 import cz.uhk.janMachacek.coordinates.Timer;
 import cz.uhk.janMachacek.coordinates.Utils;
-import cz.uhk.janMachacek.library.AstroObject;
+import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.library.ResourceHelper;
-import cz.uhk.janMachacek.model.AstroDbHelper;
+import cz.uhk.janMachacek.Model.AstroDbHelper;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Activity pro zobrazení detailu objektu
