@@ -5,16 +5,16 @@ import android.content.ContentValues;
 import cz.uhk.janMachacek.coordinates.Angle;
 
 /**
- * T��da reprezentuj�c� jeden astronomick� objekt
+ * Třída reprezentující jeden astronomický objekt
  *
- * @author Jan Mach��ek
+ * @author Jan Macháček
  */
 public class AstroObject {
     int id;
     String name;
     String constellation;
     int type;
-    cz.uhk.janMachacek.coordinates.Angle rightAscension;
+    Angle rightAscension;
     Angle declination;
     double magnitude;
     double distance;

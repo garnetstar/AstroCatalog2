@@ -8,15 +8,9 @@ import android.net.Uri;
  */
 public class AstroContract {
 
-    /**
-     * The authority of the lentitems provider.
-     */
-    public static final String AUTHORITY =
-            "cz.uhk.janMachacek.astro";
-    /**
-     * The content URI for the top-level
-     * lentitems authority.
-     */
-    public static final Uri CONTENT_URI =
-            Uri.parse("content://" + AUTHORITY);
+    public static final String CATALOG_AUTHORITY = "cz.uhk.janMachacek.astro.provider";
+    public static final String DIARY_AUTHORITY = "cz.uhk.janMachacek.astro.diaryProvider";
+
+    public static final Uri CATALOG_URI = Uri.parse("content://" + CATALOG_AUTHORITY);
+    public static final Uri DIARY_URI =  Uri.parse("content://" + DIARY_AUTHORITY);
 }

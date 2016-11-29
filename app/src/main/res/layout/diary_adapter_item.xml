@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/diary_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false" >
+
+    <LinearLayout
+        android:id="@+id/dl3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/diary_from"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text=""
+            android:textColor="#ffffffff"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:typeface="monospace"
+            />
+
+        <LinearLayout
+            android:id="@+id/l4"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="left"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/object_magnitude_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Od: "
+                android:layout_marginRight="2dp"
+                android:textColor="@color/yellow_text"
+                />
+
+            <TextView
+                android:id="@+id/diary_time_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text=""
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/s13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Délka: "
+                android:layout_marginRight="4dp"
+                android:textColor="@color/yellow_text"
+                />
+
+            <TextView
+                android:id="@+id/diary_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#ffffff" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/object_typ"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="ccccccccc"-->
+                <!--android:textColor="@color/yellow_text" />-->
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/l2"
+        android:layout_width="54dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right" >
+
+        <TextView
+            android:id="@+id/diary_guid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>

@@ -56,6 +56,9 @@
             android:name=".ObjectListActivity"
             android:label="@string/title_object_list"></activity>
         <activity
+            android:name=".DiaryEditActivity"
+            android:label="@string/title_diary"></activity>
+        <activity
             android:name=".DiaryActivity"
             android:label="@string/title_diary"></activity>
         <activity

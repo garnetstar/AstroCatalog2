@@ -41,7 +41,7 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
         TextView view = (TextView) this.view;
         TextView hiddenView = (TextView) this.hiddenView;
 
-        view.setText(String.format("%02d.%02d.%04d", day, month, year));
-        hiddenView.setText(String.format("%04d-%02d-%02d", year, month, day));
+        view.setText(String.format("%02d.%02d.%04d", day, month + 1, year));
+        hiddenView.setText(String.format("%04d-%02d-%02d", year, month + 1, day));
     }
 }

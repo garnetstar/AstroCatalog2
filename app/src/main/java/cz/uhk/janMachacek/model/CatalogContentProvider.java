@@ -27,9 +27,7 @@ public class CatalogContentProvider extends ContentProvider {
     // prepare the UriMatcher
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(AstroContract.AUTHORITY,
-                "messier",
-                MESSIER);
+        URI_MATCHER.addURI(AstroContract.CATALOG_AUTHORITY, "messier", MESSIER);
     }
 
     private AstroDbHelper dbHelper;
@@ -81,7 +79,7 @@ public class CatalogContentProvider extends ContentProvider {
                 Log.d("astro", values.toString());
                 if (id != -1)
                     getContext().getContentResolver().notifyChange(uri, null);
-                return AstroContract.CONTENT_URI.buildUpon().appendPath(String.valueOf(id)).build();
+                return AstroContract.CATALOG_URI.buildUpon().appendPath(String.valueOf(id)).build();
             }
             default: {
                 throw new UnsupportedOperationException("URI: " + uri + " not supported.");
@@ -98,6 +96,8 @@ public class CatalogContentProvider extends ContentProvider {
         int rowsDeleted = -1;
         int token = URI_MATCHER.match(uri);
 
+        Log.d("astro", "DDD " + uri);
+
         switch (token) {
             case MESSIER:
                 rowsDeleted = db.delete(dbHelper.TABLE_OBJECT_NAME, selection, selectionArgs);
@@ -110,7 +110,7 @@ public class CatalogContentProvider extends ContentProvider {
         Log.d("astro", "delete OBSERVER ???");
         return rowsDeleted;
     }
-
+//    content://cz.uhk.janMachacek.astro.provider/messier
     /*
      * update() always returns "no rows affected" (0)
      */

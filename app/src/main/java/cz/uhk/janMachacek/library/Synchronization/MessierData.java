@@ -119,7 +119,7 @@ public class MessierData {
             getData(url, astroObjects);
 
             try {
-                providerClient.update(Uri.parse(AstroContract.CONTENT_URI + "/messier"),null,null, null);
+                providerClient.update(Uri.parse(AstroContract.CATALOG_URI + "/messier"),null,null, null);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -218,11 +218,8 @@ public class MessierData {
                     dec_deg = dec_deg * -1;
                 }
                 astroObject.setDeclination(new Angle(dec_deg, dec_min, positive));
-
                 astroObject.setMagnitude(json_data.getDouble("magnitude"));
-
                 astroObject.setDistance(json_data.getDouble("distance"));
-
                 astroObjects.add(astroObject);
             }
 

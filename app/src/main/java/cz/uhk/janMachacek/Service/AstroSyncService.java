@@ -4,7 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import cz.uhk.janMachacek.Model.CatalogSyncAdapter;
+import cz.uhk.janMachacek.library.Synchronization.CatalogSyncAdapter;
 
 /**
  * @author Jan Macháček

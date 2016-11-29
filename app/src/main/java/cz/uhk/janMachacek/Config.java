@@ -13,6 +13,9 @@ public class Config {
     // url pro messierData
     public static final String API_MESSIER_DATA = "/messierData";
 
+    //url pro download diary
+    public static final String API_DIARY_DATA = "/diary";
+
     public static final String API_LOGIN = "login";
     public static final String API_PASSWORD = "password";
     public static final String API_GRANT_TYPE = "grant_type";

@@ -4,7 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import cz.uhk.janMachacek.library.Synchronization.AstroDiarySyncAdapter;
+import cz.uhk.janMachacek.library.Synchronization.DiarySyncAdapter;
 
 /**
  * @author Jan Macháček
@@ -13,13 +13,13 @@ import cz.uhk.janMachacek.library.Synchronization.AstroDiarySyncAdapter;
 public class AstroDiarySyncService extends Service {
 
     private static final Object sSyncAdapterLock = new Object();
-    private static AstroDiarySyncAdapter sSyncAdapter = null;
+    private static DiarySyncAdapter sSyncAdapter = null;
 
     @Override
     public void onCreate() {
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
-                sSyncAdapter = new AstroDiarySyncAdapter(getApplicationContext(), true);
+                sSyncAdapter = new DiarySyncAdapter(getApplicationContext(), true);
             }
         }
     }

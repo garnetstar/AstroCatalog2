@@ -50,6 +50,9 @@
             android:name="cz.uhk.janMachacek.ObjectListActivity"
             android:label="@string/title_object_list" />
         <activity
+            android:name="cz.uhk.janMachacek.DiaryEditActivity"
+            android:label="@string/title_diary" />
+        <activity
             android:name="cz.uhk.janMachacek.DiaryActivity"
             android:label="@string/title_diary" />
         <activity

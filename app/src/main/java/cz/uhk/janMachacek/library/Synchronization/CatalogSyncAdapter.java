@@ -1,4 +1,4 @@
-package cz.uhk.janMachacek.Model;
+package cz.uhk.janMachacek.library.Synchronization;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 //import cz.uhk.janMachacek.R;
+import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.ObjectListActivity;
 import cz.uhk.janMachacek.R;
 import cz.uhk.janMachacek.AstroContract;
-import cz.uhk.janMachacek.library.Synchronization.MessierData;
 
 /**
  * @author Jan Macháček
@@ -64,7 +64,7 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
             // pokud prisla nejaka data
             if (messierData != null) {
                 //smazat vse
-                provider.delete(Uri.parse(AstroContract.CONTENT_URI + "/messier"), null, null);
+                provider.delete(Uri.parse(AstroContract.CATALOG_URI + "/messier"), null, null);
 
                 // Vlozit data ziskana ze serveru
                 int i = 0;
@@ -73,7 +73,7 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
                     newValues[i++] = oneValue.getContentValues();
                 }
 
-                provider.bulkInsert(Uri.parse(AstroContract.CONTENT_URI + "/messier"), newValues);
+                provider.bulkInsert(Uri.parse(AstroContract.CATALOG_URI + "/messier"), newValues);
                 Log.d("astro", "UPDATED msdata = " + messierData.toString());
 
                 //aktualizovat verzi katalogu
@@ -102,7 +102,7 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
 //
 //            // Get shows from the local storage
 //            ArrayList localTvShows = new ArrayList();
-//            Cursor curTvShows = provider.query(TvShowsContract.CONTENT_URI, null, null, null, null);
+//            Cursor curTvShows = provider.query(TvShowsContract.CATALOG_URI, null, null, null, null);
 //            if (curTvShows != null) {
 //                while (curTvShows.moveToNext()) {
 //                    localTvShows.add(TvShow.fromCursor(curTvShows));

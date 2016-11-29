@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cz.uhk.janMachacek.library.AssetParser;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,11 +36,17 @@ public class AstroDbHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_DIARY_NAME = "diary";
     public static final String KEY_DIARY_ID = "_id";
+    public static final String KEY_DIARY_GUID = "guid";
+    public static final String KEY_DIARY_USER_ID = "userId";
     public static final String KEY_DIARY_FROM = "timeFrom";
     public static final String KEY_DIARY_TO = "timeTo";
-    public static final String KEY_DIARY_DEC = "declination";
-    public static final String KEY_DIARY_RA = "rightAscension";
+    public static final String KEY_DIARY_LAT = "latitude";
+    public static final String KEY_DIARY_LON = "longitude";
+    public static final String KEY_DIARY_SYNC_OK = "diarySyncOk";
 
+    public static final String TABLE_SETTINGS_NAME = "settings";
+    public static final String KEY_SETTINGS_KEY = "key";
+    public static final String KEY_SETTINGS_VALUE = "value";
 
     public static final String CREATE_TABLE_OBJECT = "create table "
             + TABLE_OBJECT_NAME + "(" + KEY_OBJECT_ID
@@ -53,10 +60,17 @@ public class AstroDbHelper extends SQLiteOpenHelper {
     public static final String CREATE_TABLE_DIARY = "create table "
             + TABLE_DIARY_NAME + "(" +
             KEY_DIARY_ID + " integer primary key autoincrement, " +
+            KEY_DIARY_GUID + " text unique, " +
             KEY_DIARY_FROM + " text not null, " +
             KEY_DIARY_TO + " text not null, " +
-            KEY_DIARY_DEC + " decimal not null, " +
-            KEY_DIARY_RA + " decimal not null)";
+            KEY_DIARY_LAT + " decimal, " +
+            KEY_DIARY_LON + " decimal," +
+            KEY_DIARY_SYNC_OK + " integer not null)";
+
+    public static final String CREATE_TABLE_SETTINGS = "create table "
+            + TABLE_SETTINGS_NAME + "(" +
+            KEY_SETTINGS_KEY + " text not null, " +
+            KEY_SETTINGS_VALUE + " integer not null)";
 
     private AssetManager assetManager;
 
@@ -75,13 +89,20 @@ public class AstroDbHelper extends SQLiteOpenHelper {
         //	try {
         db.execSQL(CREATE_TABLE_OBJECT);
         db.execSQL(CREATE_TABLE_DIARY);
+        db.execSQL(CREATE_TABLE_SETTINGS);
+
+        // naplnění tabulky settings
+        ContentValues cv = new ContentValues(2);
+        cv.put(KEY_SETTINGS_KEY, "client_counter");
+        cv.put(KEY_SETTINGS_VALUE, 0);
+        db.insert(TABLE_SETTINGS_NAME, null, cv);
 
 //			for (AstroObject astroObject : getObjectData()) {
 //				ContentValues cv = new ContentValues(8);
 //				cv.put(KEY_OBJECT_NAME, astroObject.getName());
 //				cv.put(KEY_OBJECT_MAG, astroObject.getMagnitude());
-//				cv.put(KEY_OBJECT_RA, astroObject.getRightAscension().getDecimalDegree());
-//				cv.put(KEY_OBJECT_DEC, astroObject.getDeclination().getDecimalDegree());
+//				cv.put(KEY_OBJECT_RA, astroObject.getLognitude().getDecimalDegree());
+//				cv.put(KEY_OBJECT_DEC, astroObject.getLatitude().getDecimalDegree());
 //				cv.put(KEY_OBJECT_TYPE, astroObject.getType());
 //				cv.put(KEY_OBJECT_CONSTELLATION, astroObject.getConstellation());
 //				cv.put(KEY_OBJECT_DIST, astroObject.getDistance());
