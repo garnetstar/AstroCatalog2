@@ -189,6 +189,7 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_diary">Denník</string>
+    <string name="title_diary_detail">Denník detail</string>
     <string name="title_object_list">ObjectList</string>
     <style name="AppBaseTheme" parent="android:Theme.Black">
     </style>

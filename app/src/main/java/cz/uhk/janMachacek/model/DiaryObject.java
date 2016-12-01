@@ -2,6 +2,8 @@ package cz.uhk.janMachacek.Model;
 
 import android.content.ContentValues;
 
+import java.text.ParseException;
+
 import cz.uhk.janMachacek.coordinates.Angle;
 
 /**
@@ -12,12 +14,14 @@ import cz.uhk.janMachacek.coordinates.Angle;
  */
 public class DiaryObject {
 
+    private int id;
     private String guid;
     private String from;
     private String to;
     private Angle latitude;
     private Angle lognitude;
     private Integer syncOk;
+    private DateTimeObject fromObject, toObject;
 
     public void setFrom(String from) {
         this.from = from;
@@ -67,9 +71,27 @@ public class DiaryObject {
         this.guid = guid;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public DateTimeObject getFromObject() throws ParseException {
+        DateTimeObject object = new DateTimeObject(getFrom());
+        return object;
+    }
+
+    public DateTimeObject getToObject() throws ParseException {
+        DateTimeObject object = new DateTimeObject(getTo());
+        return object;
+    }
 
     public ContentValues getContentValues() {
         ContentValues cv = new ContentValues(8);
+//        cv.put(AstroDbHelper.KEY_DIARY_ID, getId());
         cv.put(AstroDbHelper.KEY_DIARY_GUID, getGuid());
         cv.put(AstroDbHelper.KEY_DIARY_FROM, getFrom());
         cv.put(AstroDbHelper.KEY_DIARY_TO, getTo());
@@ -80,7 +102,8 @@ public class DiaryObject {
     }
 
     public String toString() {
-        return "guid=" + getGuid() +
+        return
+                "id=" + getId() + " guid=" + getGuid() +
                 ", from=" + getFrom() +
                 ", to =" + getTo() +
                 ", syncOK=" + Integer.toString(getSyncOk())

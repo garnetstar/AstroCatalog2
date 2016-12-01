@@ -85,12 +85,12 @@ public class DiaryData {
             for (int i = 0; i < array.length(); i++) {
                 DiaryObject diaryObject = new DiaryObject();
                 JSONObject json_data = array.getJSONObject(i);
-
                 diaryObject.setGuid(json_data.getString("guid"));
                 diaryObject.setFrom(json_data.getString("from"));
                 diaryObject.setTo(json_data.getString("to"));
                 diaryObject.setSyncOk(1);
 
+                Log.d("astro", "XXXXX " + diaryObject.getId());
                 newData.add(diaryObject);
                 Log.d("Response: DIARY", json_data.getString("guid") + " " + json_data.getString("from"));
 

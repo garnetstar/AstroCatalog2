@@ -105,24 +105,24 @@ containing a value of this type.
     public static final class id {
         public static final int accountName=0x7f0d0003;
         public static final int accountPassword=0x7f0d0004;
-        public static final int action_settings=0x7f0d0053;
-        public static final int actual_latitude=0x7f0d0045;
+        public static final int action_settings=0x7f0d0055;
+        public static final int actual_latitude=0x7f0d0047;
         public static final int actual_location=0x7f0d0006;
         public static final int actual_location_provider=0x7f0d0007;
-        public static final int actual_longitude=0x7f0d0046;
+        public static final int actual_longitude=0x7f0d0048;
         public static final int adjust_height=0x7f0d0000;
         public static final int adjust_width=0x7f0d0001;
         public static final int altitude=0x7f0d0029;
         public static final int azimuth=0x7f0d0028;
-        public static final int button=0x7f0d0044;
+        public static final int button=0x7f0d0046;
         public static final int buttonAdd=0x7f0d002d;
-        public static final int buttonDiary=0x7f0d0049;
+        public static final int buttonDiary=0x7f0d004b;
         public static final int compas=0x7f0d001d;
         public static final int constellation=0x7f0d0024;
-        public static final int dateFrom=0x7f0d003b;
-        public static final int dateFromDatabase=0x7f0d003d;
-        public static final int dateTo=0x7f0d003f;
-        public static final int dateToDatabase=0x7f0d0041;
+        public static final int dateFrom=0x7f0d003d;
+        public static final int dateFromDatabase=0x7f0d003f;
+        public static final int dateTo=0x7f0d0041;
+        public static final int dateToDatabase=0x7f0d0043;
         public static final int detail_constellation=0x7f0d0014;
         public static final int detail_object_altitude=0x7f0d0018;
         public static final int detail_object_azimuth=0x7f0d001a;
@@ -139,15 +139,17 @@ containing a value of this type.
         public static final int diary_item=0x7f0d002f;
         public static final int diary_length=0x7f0d0036;
         public static final int diary_time_from=0x7f0d0034;
+        public static final int diarys_sync_ok=0x7f0d0039;
         public static final int dl3=0x7f0d0030;
-        public static final int form_location=0x7f0d0043;
+        public static final int edit_diary_form=0x7f0d003a;
+        public static final int form_location=0x7f0d0045;
         public static final int horizont=0x7f0d0021;
         public static final int hourAngle=0x7f0d002a;
-        public static final int imageButton2=0x7f0d004a;
-        public static final int katalog=0x7f0d0048;
-        public static final int konec=0x7f0d003e;
+        public static final int imageButton2=0x7f0d004c;
+        public static final int katalog=0x7f0d004a;
+        public static final int konec=0x7f0d0040;
         public static final int l2=0x7f0d0037;
-        public static final int l3=0x7f0d004c;
+        public static final int l3=0x7f0d004e;
         public static final int l4=0x7f0d0032;
         public static final int latitude=0x7f0d0026;
         public static final int listAstroObjects=0x7f0d0022;
@@ -157,20 +159,20 @@ containing a value of this type.
         public static final int name=0x7f0d0023;
         public static final int none=0x7f0d0002;
         public static final int object_constellation=0x7f0d001f;
-        public static final int object_item=0x7f0d004b;
-        public static final int object_magnitude=0x7f0d004d;
+        public static final int object_item=0x7f0d004d;
+        public static final int object_magnitude=0x7f0d004f;
         public static final int object_magnitude_label=0x7f0d0033;
         public static final int object_name=0x7f0d001e;
-        public static final int object_typ=0x7f0d004e;
+        public static final int object_typ=0x7f0d0050;
         public static final int object_type=0x7f0d0020;
         public static final int password=0x7f0d002c;
         public static final int pointer_button_view=0x7f0d001b;
-        public static final int relative_layout=0x7f0d0047;
+        public static final int relative_layout=0x7f0d0049;
         public static final int s13=0x7f0d0035;
-        public static final int seek_bar=0x7f0d0051;
+        public static final int seek_bar=0x7f0d0053;
         public static final int submit=0x7f0d0005;
-        public static final int sync_status=0x7f0d0052;
-        public static final int textView=0x7f0d0039;
+        public static final int sync_status=0x7f0d0054;
+        public static final int textView=0x7f0d003b;
         public static final int textView1=0x7f0d0009;
         public static final int textView11=0x7f0d000f;
         public static final int textView12=0x7f0d0013;
@@ -180,12 +182,12 @@ containing a value of this type.
         public static final int textView2=0x7f0d0019;
         public static final int textView3=0x7f0d0017;
         public static final int textView4=0x7f0d0015;
-        public static final int textView5=0x7f0d003a;
-        public static final int textView6=0x7f0d0042;
-        public static final int text_dialog_message=0x7f0d004f;
-        public static final int text_progress=0x7f0d0050;
-        public static final int timeFrom=0x7f0d003c;
-        public static final int timeTo=0x7f0d0040;
+        public static final int textView5=0x7f0d003c;
+        public static final int textView6=0x7f0d0044;
+        public static final int text_dialog_message=0x7f0d0051;
+        public static final int text_progress=0x7f0d0052;
+        public static final int timeFrom=0x7f0d003e;
+        public static final int timeTo=0x7f0d0042;
         public static final int type=0x7f0d0027;
     }
     public static final class integer {
@@ -307,7 +309,8 @@ containing a value of this type.
         public static final int title_activity_settings=0x7f060056;
         public static final int title_activity_test=0x7f060057;
         public static final int title_diary=0x7f060058;
-        public static final int title_object_list=0x7f060059;
+        public static final int title_diary_detail=0x7f060059;
+        public static final int title_object_list=0x7f06005a;
     }
     public static final class style {
         /**  API 11 theme customizations can go here. 

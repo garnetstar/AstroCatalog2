@@ -97,9 +97,9 @@ public class DiaryContentProvider extends ContentProvider {
 
         switch (token) {
             case DIARY: {
-                long id = db.insertOrThrow(dbHelper.TABLE_DIARY_NAME, null, values);
                 Log.d("astro", "INSERT diary");
                 Log.d("astro", values.toString());
+                long id = db.insertOrThrow(dbHelper.TABLE_DIARY_NAME, null, values);
                 if (id != -1)
                     getContext().getContentResolver().notifyChange(uri, null);
                 return AstroContract.CATALOG_URI.buildUpon().appendPath(String.valueOf(id)).build();
@@ -132,6 +132,7 @@ public class DiaryContentProvider extends ContentProvider {
 
         switch (token) {
             case DIARY: {
+                Log.d("astro", "UPDATE "  + values.toString());
                 return db.update(AstroDbHelper.TABLE_DIARY_NAME, values, where, whereArgs);
             }
             case SETTINGS: {

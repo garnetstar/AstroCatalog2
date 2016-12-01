@@ -50,6 +50,7 @@ public class DiaryObjectAdapter extends ArrayAdapter<DiaryObject> {
         TextView length = (TextView) row.findViewById(R.id.diary_length);
         TextView timeFrom = (TextView) row.findViewById(R.id.diary_time_from);
         TextView guid = (TextView) row.findViewById(R.id.diary_guid);
+        TextView sync_ok = (TextView) row.findViewById(R.id.diarys_sync_ok) ;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -67,31 +68,20 @@ public class DiaryObjectAdapter extends ArrayAdapter<DiaryObject> {
             Date endDate = dateFormat.parse(values.get(position).getTo());
 
             long difference = endDate.getTime() - startDate.getTime();
-            int hours = (int) (difference / (1000*60*60));
-            int min = (int) (difference - (1000*60*60*hours)) / (1000*60);
+            int hours = (int) (difference / (1000 * 60 * 60));
+            int min = (int) (difference - (1000 * 60 * 60 * hours)) / (1000 * 60);
 
 
             name.setText(df.format(date));
             timeFrom.setText(time.format(date).toString());
             length.setText(String.format("%02d:%02d", hours, min));
             guid.setText(values.get(position).getGuid());
+            sync_ok.setText(Integer.toString(values.get(position).getSyncOk()));
 
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-//        TextView constellation = (TextView) row
-//                .findViewById(R.id.object_constellation);
-//        TextView type = (TextView) row.findViewById(R.id.object_typ);
-//        TextView magnitude = (TextView) row.findViewById(R.id.object_magnitude);
-//
-//        name.setText(values.get(position).getName());
-//        constellation.setText(values.get(position).getConstellation());
-//        type.setText(typeMap.get(values.get(position).getType()));
-//        magnitude.setText(Double.toString(values.get(position).getMagnitude()));
-
         return row;
     }
 }

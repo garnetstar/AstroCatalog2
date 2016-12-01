@@ -20,6 +20,7 @@ import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Model.AstroDbHelper;
 import cz.uhk.janMachacek.Model.AstroObject;
+import cz.uhk.janMachacek.Model.DiaryFacade;
 import cz.uhk.janMachacek.Model.DiaryObject;
 
 /**
@@ -71,6 +72,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         DiaryData diaryData = new DiaryData(contentProviderClient, authToken);
 
         ArrayList<DiaryObject> diaryObjects = diaryData.getDataFromServer();
+        DiaryFacade facade = new DiaryFacade(contentProviderClient);
 
         // Vlozit data ziskana ze serveru
         int i = 0;
@@ -78,12 +80,15 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         for (DiaryObject serverObject : diaryObjects) {
             // newValues[i++] = oneValue.getContentValues();
             try {
+                Log.d("astro", "Insert will " + serverObject.toString());
+                Log.d("astro", "insert CV " + serverObject.getContentValues().toString());
                 contentProviderClient.insert(Uri.parse(AstroContract.DIARY_URI + "/diary_edit"), serverObject.getContentValues());
+                Log.d("astro", "Insert just now " + serverObject.toString());
             } catch (SQLiteConstraintException e) {
 
                 // doslo ke konfliktu, guid už v telefonu existuje
                 // ziskat záznam z databáze telefonu
-                DiaryObject deviceObject = getOneByGuid(serverObject.getGuid(), contentProviderClient);
+                DiaryObject deviceObject = facade.getOneByGuid(serverObject.getGuid());
                 // pokud je záznam synchronizovaný, syncOK = 1, provede se update
                 if (deviceObject.getSyncOk() == 1) {
                     String selection = AstroDbHelper.KEY_DIARY_GUID + "=?";
@@ -99,43 +104,6 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
             }
         }
         Log.d("astro", "INSERT diaryData = " + diaryObjects.toString());
-    }
-
-    /**
-     *
-     * @param guid
-     * @param providerClient
-     * @return
-     * @throws RemoteException
-     */
-    private DiaryObject getOneByGuid(String guid, ContentProviderClient providerClient) throws RemoteException {
-
-        ArrayList<DiaryObject> objects = new ArrayList<DiaryObject>();
-
-        String[] projection = new String[]{
-                AstroDbHelper.KEY_DIARY_GUID,
-                AstroDbHelper.KEY_DIARY_FROM,
-                AstroDbHelper.KEY_DIARY_TO,
-                AstroDbHelper.KEY_DIARY_SYNC_OK
-        };
-
-        String selection = AstroDbHelper.KEY_DIARY_GUID + "=?";
-        String[] selectionArgs = {guid};
-
-        Cursor c = providerClient.query(getUri(), projection, selection, selectionArgs, "DESC");
-
-        if (c.moveToFirst()) {
-            DiaryObject object = new DiaryObject();
-            object.setGuid(c.getString(0));
-            object.setFrom(c.getString(1));
-            object.setTo(c.getString(2));
-            object.setSyncOk(c.getInt(3));
-
-            Log.d("astro", object.toString());
-            return object;
-        }
-
-        return null;
     }
 
     /**
