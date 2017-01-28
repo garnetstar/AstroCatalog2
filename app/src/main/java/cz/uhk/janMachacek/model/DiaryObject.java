@@ -21,7 +21,11 @@ public class DiaryObject {
     private Angle latitude;
     private Angle lognitude;
     private Integer syncOk;
-    private DateTimeObject fromObject, toObject;
+    //private DateTimeObject fromObject, toObject;
+    private int deleted;
+    private int rowCounter;
+    private String timestamp;
+    private boolean isNew;
 
     public void setFrom(String from) {
         this.from = from;
@@ -79,6 +83,14 @@ public class DiaryObject {
         this.id = id;
     }
 
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
+    }
+
     public DateTimeObject getFromObject() throws ParseException {
         DateTimeObject object = new DateTimeObject(getFrom());
         return object;
@@ -87,6 +99,30 @@ public class DiaryObject {
     public DateTimeObject getToObject() throws ParseException {
         DateTimeObject object = new DateTimeObject(getTo());
         return object;
+    }
+
+    public int getRowCounter() {
+        return rowCounter;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    public void setRowCounter(int rowCounter) {
+        this.rowCounter = rowCounter;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public ContentValues getContentValues() {
@@ -98,6 +134,10 @@ public class DiaryObject {
         cv.put(AstroDbHelper.KEY_DIARY_LAT, getLatitude() == null ? null : getLatitude().getDecimalDegree());
         cv.put(AstroDbHelper.KEY_DIARY_LON, getLognitude() == null ? null : getLognitude().getDecimalDegree());
         cv.put(AstroDbHelper.KEY_DIARY_SYNC_OK, getSyncOk());
+        cv.put(AstroDbHelper.KEY_DIARY_DELETED, getDeleted());
+        cv.put(AstroDbHelper.KEY_DIARY_ROW_COUNTER, getRowCounter());
+        cv.put(AstroDbHelper.KEY_DIARY_TIMESTAMP, getTimestamp());
+
         return cv;
     }
 
@@ -106,7 +146,9 @@ public class DiaryObject {
                 "id=" + getId() + " guid=" + getGuid() +
                 ", from=" + getFrom() +
                 ", to =" + getTo() +
-                ", syncOK=" + Integer.toString(getSyncOk())
+                ", syncOK=" + Integer.toString(getSyncOk()) +
+                ", deleted=" + Integer.toString(getDeleted()) +
+                        ", row_counter=" + Integer.toString(getRowCounter())
                 ;
     }
 }

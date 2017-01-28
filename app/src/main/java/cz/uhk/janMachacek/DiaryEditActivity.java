@@ -24,6 +24,7 @@ import cz.uhk.janMachacek.Model.DiaryObject;
 import cz.uhk.janMachacek.UI.DatePicker;
 import cz.uhk.janMachacek.UI.TimePicker;
 import cz.uhk.janMachacek.coordinates.Angle;
+import cz.uhk.janMachacek.coordinates.Timer;
 import cz.uhk.janMachacek.coordinates.Utils;
 
 /**
@@ -228,6 +229,8 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                 val.setLatitude(new Angle(latitude));
                 val.setLognitude(new Angle(longitude));
                 val.setSyncOk(0);
+                // pri vložení nového záznamu i při updatu je třeba nastavit aktuální timestamp
+                val.setTimestamp(Timer.getTimestamp());
 
                 // ulozeni nebo update pomoci contetnt provideru
                 Uri uri = Uri.parse(AstroContract.DIARY_URI + "/diary_edit");
@@ -236,7 +239,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                 } else {
                     val.setId(this.object.getId());
                     val.setGuid(this.object.getGuid());
-
+                    val.setRowCounter(this.object.getRowCounter() );
                     String where = AstroDbHelper.KEY_DIARY_ID + "=?";
                     String[] whereArgs = {Integer.toString(val.getId())};
                     getContentResolver().update(uri, val.getContentValues(), where, whereArgs);
@@ -254,7 +257,6 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        Log.d("astro", "DELETE bude " + this.id);
 
         String selected = AstroDbHelper.KEY_DIARY_ID + "=?";
         String[] selectedArgs = {Integer.toString(this.id)};
@@ -264,6 +266,22 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
 
         getContentResolver().update(getUri(), cv, selected, selectedArgs);
         //navrat na vypis objektu
+        back();
+    }
+
+    /**
+     * Take care of popping the fragment back stack or finishing the activity
+     * as appropriate.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+
+    }
+
+    private void back() {
+        //navrat na vypis objektu
         Intent intent = new Intent(this, DiaryActivity.class);
         startActivity(intent);
     }
@@ -271,4 +289,5 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
     private Uri getUri() {
         return Uri.parse(AstroContract.DIARY_URI + "/diary_edit");
     }
+
 }

@@ -11,13 +11,16 @@ import android.util.Log;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import cz.uhk.janMachacek.AstroContract;
 import cz.uhk.janMachacek.Config;
@@ -25,6 +28,7 @@ import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.Model.DiaryObject;
+import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
 
 /**
@@ -35,6 +39,8 @@ public class DiaryData {
 
     private ContentProviderClient contentProvider;
     private String access_token;
+
+    private int serverCounter, nextId, userId;
 
     public DiaryData(ContentProviderClient contentProvider, String access_token) {
         this.contentProvider = contentProvider;
@@ -75,33 +81,78 @@ public class DiaryData {
                 throw new AccessTokenExpiredException();
             }
 
-            JSONArray array = jsonObject.getJSONArray("objects");
+
             int serverCounter = jsonObject.getInt("servercounter");
             int nextId = jsonObject.getInt("next_id");
-            Log.d("astro", "diary servercounter=" + Integer.toString(serverCounter) + " nextId=" + Integer.toString(nextId) + " pocet=" + Integer.toString(array.length()));
+            int userId = jsonObject.getInt("user_id");
+
+            setServerCounter(serverCounter);
+            setNextId(nextId);
+            setUserId(userId);
+
 
             ArrayList<DiaryObject> newData = new ArrayList<DiaryObject>();
 
-            for (int i = 0; i < array.length(); i++) {
-                DiaryObject diaryObject = new DiaryObject();
-                JSONObject json_data = array.getJSONObject(i);
-                diaryObject.setGuid(json_data.getString("guid"));
-                diaryObject.setFrom(json_data.getString("from"));
-                diaryObject.setTo(json_data.getString("to"));
-                diaryObject.setSyncOk(1);
+            try {
+                JSONArray array = jsonObject.getJSONArray("objects");
+                Log.d("astro", "diary servercounter=" + Integer.toString(serverCounter) + " nextId=" + Integer.toString(nextId) + " pocet=" + Integer.toString(array.length()));
 
-                Log.d("astro", "XXXXX " + diaryObject.getId());
-                newData.add(diaryObject);
-                Log.d("Response: DIARY", json_data.getString("guid") + " " + json_data.getString("from"));
+                for (int i = 0; i < array.length(); i++) {
+                    DiaryObject diaryObject = new DiaryObject();
+                    JSONObject json_data = array.getJSONObject(i);
+                    diaryObject.setGuid(json_data.getString("guid"));
+                    diaryObject.setFrom(json_data.getString("from"));
+                    diaryObject.setTo(json_data.getString("to"));
+                    diaryObject.setRowCounter(json_data.getInt("counter"));
+                    diaryObject.setTimestamp(json_data.getString("timestamp"));
+                    diaryObject.setDeleted(json_data.getInt("deleted"));
+                    diaryObject.setSyncOk(1);
 
+                    newData.add(diaryObject);
+                }
+            } catch (JSONException e) {
+                Log.d("astro", "JsonArray Errror");
+                e.printStackTrace();
             }
 
-            Log.d("astro", "newData=" + newData.toString());
             return newData;
+        } catch (AccessTokenExpiredException e) {
+            throw new AccessTokenExpiredException();
         } catch (Exception e) {
-            Log.d("astro", "getDiaryData exception " + e.toString());
+            Log.d("astro", "getDataFromServer exception " + e.toString());
             throw new ApiErrorException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * @todo dodělat reakci pokud dojde při uploadu na server k chybě - pokud se vrátí kod > 400
+     * @param objects
+     * @param clientCounter
+     */
+    public void sendDataToServer(ArrayList<DiaryObject> objects, int clientCounter) {
+
+        try {
+            HttpPost post = Response.diarySyncToServer(objects, clientCounter, access_token);
+
+            HttpClient httpClient = new DefaultHttpClient();
+
+            HttpResponse response = httpClient.execute(post);
+
+            //kontrola http statusu
+            int httpStatus = response.getStatusLine().getStatusCode();
+
+            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+
+            Log.d("astro", "REsponse po uploadu na server" + json + " STATUS=" + Integer.toString(httpStatus));
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("astro", "Error in sendDataToServer " + e.toString());
+        }
+
+
     }
 
     private String getDiaryDownloadUrl(int client_counter) {
@@ -125,5 +176,29 @@ public class DiaryData {
         }
 
         return client_counter;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
+    }
+
+    public int getServerCounter() {
+        return serverCounter;
+    }
+
+    public void setServerCounter(int serverCounter) {
+        this.serverCounter = serverCounter;
     }
 }

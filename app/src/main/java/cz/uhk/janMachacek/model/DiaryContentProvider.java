@@ -72,7 +72,6 @@ public class DiaryContentProvider extends ContentProvider {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         switch (token) {
             case DIARY: {
-                Log.d("astro", "query CONTEnt Provider");
                 Cursor c = db.query(AstroDbHelper.TABLE_DIARY_NAME, projection, selection, selectionArgs, null, null, AstroDbHelper.KEY_DIARY_FROM + " " + sortOrder);
                 return c;
             }
@@ -97,8 +96,6 @@ public class DiaryContentProvider extends ContentProvider {
 
         switch (token) {
             case DIARY: {
-                Log.d("astro", "INSERT diary");
-                Log.d("astro", values.toString());
                 long id = db.insertOrThrow(dbHelper.TABLE_DIARY_NAME, null, values);
                 if (id != -1)
                     getContext().getContentResolver().notifyChange(uri, null);
@@ -132,7 +129,6 @@ public class DiaryContentProvider extends ContentProvider {
 
         switch (token) {
             case DIARY: {
-                Log.d("astro", "UPDATE "  + values.toString());
                 return db.update(AstroDbHelper.TABLE_DIARY_NAME, values, where, whereArgs);
             }
             case SETTINGS: {

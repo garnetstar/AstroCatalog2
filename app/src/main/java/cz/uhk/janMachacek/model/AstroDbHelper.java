@@ -43,6 +43,8 @@ public class AstroDbHelper extends SQLiteOpenHelper {
     public static final String KEY_DIARY_LON = "longitude";
     public static final String KEY_DIARY_SYNC_OK = "diarySyncOk";
     public static final String KEY_DIARY_DELETED = "deleted";
+    public static final String KEY_DIARY_ROW_COUNTER = "rowCounter";
+    public static final String KEY_DIARY_TIMESTAMP = "timestamp";
 
     public static final String TABLE_SETTINGS_NAME = "settings";
     public static final String KEY_SETTINGS_KEY = "key";
@@ -66,6 +68,8 @@ public class AstroDbHelper extends SQLiteOpenHelper {
             KEY_DIARY_LAT + " decimal, " +
             KEY_DIARY_LON + " decimal," +
             KEY_DIARY_SYNC_OK + " integer not null, " +
+            KEY_DIARY_ROW_COUNTER + " integer not null, " +
+            KEY_DIARY_TIMESTAMP + " text not null, " +
             KEY_DIARY_DELETED + " integer default 0)";
 
     public static final String CREATE_TABLE_SETTINGS = "create table "

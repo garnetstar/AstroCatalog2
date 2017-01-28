@@ -1,6 +1,9 @@
 package cz.uhk.janMachacek;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
@@ -23,12 +26,24 @@ import cz.uhk.janMachacek.coordinates.Angle;
  */
 public class DiaryActivity extends AbstactBaseActivity {
 
+    public final static String REFRESH_DIARY_LIST = "DiaryActivity.refreshDiary";
+
     private DiaryObjectAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary);
+    }
+
+    /**
+     * registrace broadcast receiveru pro zobrazování message z jiných threadů
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // registrace broadcast receiveru pro reload objektů
+        registerReceiver(new RefreshBroudcastReceiver(), new IntentFilter(REFRESH_DIARY_LIST));
     }
 
     @Override
@@ -70,7 +85,7 @@ public class DiaryActivity extends AbstactBaseActivity {
         String[] selectionArgs = {"1"};
 
 
-        Cursor c = getContentResolver().query(uri, projection, selection, selectionArgs, "DESC");
+        Cursor c = getContentResolver().query(uri, projection, selection, selectionArgs, " DESC");
 
         if (c.moveToFirst()) {
             do {
@@ -114,5 +129,28 @@ public class DiaryActivity extends AbstactBaseActivity {
         o.setGuid(c.getString(5));
         o.setSyncOk(c.getInt(6));
         return o;
+    }
+
+    /**
+     * Take care of popping the fragment back stack or finishing the activity
+     * as appropriate.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+    }
+
+    private void back() {
+        //navrat na vypis objektu
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
+    }
+
+    private class RefreshBroudcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onResumeFragments();
+        }
     }
 }
