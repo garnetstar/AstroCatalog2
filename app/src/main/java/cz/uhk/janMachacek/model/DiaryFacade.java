@@ -64,7 +64,7 @@ public class DiaryFacade {
         if (cursor.moveToFirst()) {
             do {
                 DiaryObject o = createObjectFromCursor(cursor);
-                Log.d("astro", "TOServer " + o.toString());
+                Log.d("astro", "Bude se posílat na server: " + o.toString());
                 list.add(o);
             } while (cursor.moveToNext());
         }

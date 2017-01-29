@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 import cz.uhk.janMachacek.AstroContract;
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
+import cz.uhk.janMachacek.Exception.Api400ErrorException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.Model.DiaryObject;
@@ -59,7 +60,6 @@ public class DiaryData {
     }
 
     /**
-     *
      * @return
      * @throws AccessTokenExpiredException
      * @throws ApiErrorException
@@ -68,7 +68,7 @@ public class DiaryData {
 
         try {
 
-            Log.d("astro", "DIary URL = " + getDiaryDownloadUrl(getClientCounter()));
+            Log.d("astro", "URL pro stahovaní dat ze serveru: " + getDiaryDownloadUrl(getClientCounter()));
 
             HttpGet get = new HttpGet(getDiaryDownloadUrl(getClientCounter()));
             HttpClient httpClient = new DefaultHttpClient();
@@ -90,12 +90,12 @@ public class DiaryData {
             setNextId(nextId);
             setUserId(userId);
 
+            Log.d("astro", "diary servercounter=" + Integer.toString(serverCounter) + " nextId=" + Integer.toString(nextId));
 
             ArrayList<DiaryObject> newData = new ArrayList<DiaryObject>();
 
             try {
                 JSONArray array = jsonObject.getJSONArray("objects");
-                Log.d("astro", "diary servercounter=" + Integer.toString(serverCounter) + " nextId=" + Integer.toString(nextId) + " pocet=" + Integer.toString(array.length()));
 
                 for (int i = 0; i < array.length(); i++) {
                     DiaryObject diaryObject = new DiaryObject();
@@ -111,7 +111,7 @@ public class DiaryData {
                     newData.add(diaryObject);
                 }
             } catch (JSONException e) {
-                Log.d("astro", "JsonArray Errror");
+//                Log.d("astro", "JsonArray Errror -> " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -125,13 +125,13 @@ public class DiaryData {
     }
 
     /**
-     * @todo dodělat reakci pokud dojde při uploadu na server k chybě - pokud se vrátí kod > 400
      * @param objects
      * @param clientCounter
+     * @todo dodělat reakci pokud dojde při uploadu na server k chybě - pokud se vrátí kod > 400
      */
-    public void sendDataToServer(ArrayList<DiaryObject> objects, int clientCounter) {
+    public void sendDataToServer(ArrayList<DiaryObject> objects, int clientCounter) throws Api400ErrorException, IOException, JSONException {
 
-        try {
+//        try {
             HttpPost post = Response.diarySyncToServer(objects, clientCounter, access_token);
 
             HttpClient httpClient = new DefaultHttpClient();
@@ -143,15 +143,17 @@ public class DiaryData {
 
             String json = Utils.convertInputStreamToString(response.getEntity().getContent());
 
-            Log.d("astro", "REsponse po uploadu na server" + json + " STATUS=" + Integer.toString(httpStatus));
+//            Log.d("astro", );
 
+            if (httpStatus >= 400) {
+                String message = "REsponse po uploadu na server" + json + " STATUS=" + Integer.toString(httpStatus);
+                throw new Api400ErrorException(message);
+            }
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("astro", "Error in sendDataToServer " + e.toString());
-        }
-
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Log.d("astro", "Error in sendDataToServer " + e.toString());
+//        }
 
     }
 
@@ -168,7 +170,6 @@ public class DiaryData {
 
         if (c.moveToFirst()) {
             do {
-                Log.d("astro", c.getString(0) + " " + Integer.toString(c.getInt(1)));
                 if (c.getString(0).equals("client_counter")) {
                     client_counter = c.getInt(1);
                 }

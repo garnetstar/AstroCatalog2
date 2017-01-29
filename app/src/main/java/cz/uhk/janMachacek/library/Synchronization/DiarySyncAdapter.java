@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import cz.uhk.janMachacek.AstroContract;
 import cz.uhk.janMachacek.DiaryActivity;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
+import cz.uhk.janMachacek.Exception.Api400ErrorException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Model.AstroDbHelper;
 import cz.uhk.janMachacek.Model.DiaryFacade;
@@ -43,7 +44,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     @Override
-    public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult)  {
+    public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
 
         Log.d("astro", "Synchronizace diary_edit");
         Log.d("astro", contentProviderClient.getLocalContentProvider().getClass().toString());
@@ -53,19 +54,19 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         try {
             String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
-            Log.d("astro", "A");
+            Log.d("astro", "SYNC: zahájení synchronizace");
             diaryData = new DiaryData(contentProviderClient, authToken);
-            Log.d("astro", "B");
+            Log.d("astro", "SYNC: stahování dat ze serveru");
             syncFromServer(contentProviderClient);
-            Log.d("astro", "C");
+            Log.d("astro", "SYNC: odeslání dat ne server");
             syncToServer(contentProviderClient, diaryData.getNextId(), diaryData.getUserId());
-            Log.d("astro", "D");
+            Log.d("astro", "SYNC: synchronizace dokončena");
         } catch (AccessTokenExpiredException e) {
             //chyba http://stackoverflow.com/questions/14828998/how-to-show-sync-failed-message
+            Log.d("astro", "ERROR: neaktuální přihlašovací údaje");
             syncResult.stats.numAuthExceptions++;
             syncResult.delayUntil = 180;
         } catch (Exception e) {
-            Log.d("astro", "onPerformSync diary " + e.toString());
             e.printStackTrace();
         }
 
@@ -84,7 +85,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         // doplnit guid a rowCounter tam, kde chybí
         for (int i = 0; i < objects.size(); i++) {
 
-            if(objects.get(i).getGuid() == null) {
+            if (objects.get(i).getGuid() == null) {
                 nextId++;
                 String newGuid = Integer.toString(nextId) + "-" + Integer.toString(userId);
 
@@ -95,27 +96,27 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
             }
         }
 
-        // odeslat je na server
-        diaryData.sendDataToServer(objects,diaryData.getServerCounter());
+        try {
+            // odeslat je na server
+            diaryData.sendDataToServer(objects, diaryData.getServerCounter());
 
-        String selection = AstroDbHelper.KEY_DIARY_ID + "=?";
-        // ulozit nove guid a sync_ok do databaze pristroje
-        for(int i = 0; i < objects.size(); i++) {
-            String[] selectionArgs = {Integer.toString(objects.get(i).getId())};
-            objects.get(i).setSyncOk(1);
-            Log.d("astro", "SSSDDDFFF "  + objects.get(i).toString());
-            contentProviderClient.update(getUri(), objects.get(i).getContentValues(), selection, selectionArgs);
+            // pokud nedojde k chybě při stahování dat, je třeba uložit hodnoty do databáze přístroje
+            String selection = AstroDbHelper.KEY_DIARY_ID + "=?";
+            // ulozit nove guid a sync_ok do databaze pristroje
+            for (int i = 0; i < objects.size(); i++) {
+                String[] selectionArgs = {Integer.toString(objects.get(i).getId())};
+                objects.get(i).setSyncOk(1);
+
+                contentProviderClient.update(getUri(), objects.get(i).getContentValues(), selection, selectionArgs);
+                Log.d("astro", "Update SnyncOK=1: \n " + objects.get(i).toString());
+            }
+
+
+        } catch (Api400ErrorException e) {
+            Log.d("astro", "CONFLICT: " + e.getMessage());
+        } catch (Exception e) {
+            Log.d("astro", "ERROR: " + e.getMessage());
         }
-
-        // ulozit serverCounter do clientCounter
-
-
-//            //test
-            ContentValues val = new ContentValues();
-            val.put(AstroDbHelper.KEY_SETTINGS_VALUE, diaryData.getServerCounter());
-            contentProviderClient.update(Uri.parse(AstroContract.DIARY_URI + "/settings"),val,AstroDbHelper.KEY_SETTINGS_KEY + "=?", new String[]{"client_counter"});
-            Log.d("astro", "client counter is now = " + diaryData.getServerCounter());
-
     }
 
     /**
@@ -130,6 +131,12 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
 
         ArrayList<DiaryObject> diaryObjects = diaryData.getDataFromServer();
+
+        // ulozit serverCounter do clientCounter
+        ContentValues val = new ContentValues();
+        val.put(AstroDbHelper.KEY_SETTINGS_VALUE, diaryData.getServerCounter());
+        contentProviderClient.update(Uri.parse(AstroContract.DIARY_URI + "/settings"), val, AstroDbHelper.KEY_SETTINGS_KEY + "=?", new String[]{"client_counter"});
+        Log.d("astro", "client counter is now = " + diaryData.getServerCounter());
 
 
         // Vlozit data ziskana ze serveru
@@ -148,13 +155,15 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
                 DiaryObject deviceObject = facade.getOneByGuid(serverObject.getGuid());
                 // pokud je záznam synchronizovaný, syncOK = 1, provede se update
                 if (deviceObject.getSyncOk() == 1) {
-                    String selection = AstroDbHelper.KEY_DIARY_GUID + "=?";
-                    String[] selectionArgs = {serverObject.getGuid()};
-                    contentProviderClient.update(getUri(), serverObject.getContentValues(), selection, selectionArgs);
+//                    String selection = AstroDbHelper.KEY_DIARY_GUID + "=?";
+//                    String[] selectionArgs = {serverObject.getGuid()};
+//                    contentProviderClient.update(getUri(), serverObject.getContentValues(), selection, selectionArgs);
+                    saveObject(contentProviderClient, serverObject);
                     Log.d("astro", "Diary updated: " + serverObject.toString());
                 } else {
                     // pokud není záznam synchronizovaný, syncOK = 0, je třeba řešit konflikt
-                    solveConflict(deviceObject, new DiaryObject());
+
+                    solveConflict(contentProviderClient, deviceObject, serverObject);
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -174,13 +183,30 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
      * @param serverObject
      * @// TODO: 28.11.2016 dořešit konflikty
      */
-    private void solveConflict(DiaryObject deviceObject, DiaryObject serverObject) {
+    private void solveConflict(ContentProviderClient client, DiaryObject deviceObject, DiaryObject serverObject) throws RemoteException {
 
-        Log.d("astro", "Solve conflict on guid=" + deviceObject.getGuid());
+        Log.d("astro", "CONFLICT: Solve conflict on guid=" + deviceObject.getGuid());
+
+        // nastavit row counter
+        // podle timestamp  vyresit konflikt
+        serverObject.setRowCounter(diaryData.getServerCounter());
+        saveObject(client, serverObject);
 
     }
 
     private Uri getUri() {
         return Uri.parse(AstroContract.DIARY_URI + "/diary_edit");
+    }
+
+    /**
+     *
+     * @param client
+     * @param object
+     * @throws RemoteException
+     */
+    private void saveObject(ContentProviderClient client, DiaryObject object) throws RemoteException {
+        String selection = AstroDbHelper.KEY_DIARY_GUID + "=?";
+        String[] selectionArgs = {object.getGuid()};
+        client.update(getUri(), object.getContentValues(), selection, selectionArgs);
     }
 }

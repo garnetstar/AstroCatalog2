@@ -64,7 +64,7 @@ public class Response {
     public static HttpPost diarySyncToServer(ArrayList<DiaryObject> objects, int lastClientCounter, String access_token) throws JSONException, UnsupportedEncodingException {
 
         String url = Config.API_URL + Config.API_DIARY_DATA + "/" + Integer.toString(lastClientCounter) + "?access_token=" + access_token;
-        Log.d("astro", "RRR " + url);
+        Log.d("astro", "Url pro odesílání dat na server: " + url);
         HttpPost httpPost = new HttpPost(url);
 
         JSONObject jsonObject = new JSONObject();
@@ -86,7 +86,7 @@ public class Response {
             jsonArray.put(one);
         }
         jsonObject.put("objects", jsonArray);
-        Log.d("astro", "JSON " + jsonObject.toString());
+        Log.d("astro", "Objekty které se budou posílat na server " + jsonObject.toString());
 
         StringEntity se = new StringEntity(jsonObject.toString());
         se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
