@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,10 +64,8 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
         mAccountManager = AccountManager.get(this);
 
-        if(numberOfAccounts() < 1) {
-            addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
-        }
     }
+
 
     protected void showProgressDialog(String title, String message) {
         this.progresDialog = ProgressDialog.show(this, title, message, true);
@@ -130,6 +129,10 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
         registerReceiver(new MyReciever(), new IntentFilter(FILTER));
 
+
+        if(numberOfAccounts() < 1) {
+            addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
+        }
 
         //zakaz naivni synchronizace
         //if(!runn)
@@ -216,5 +219,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         }
         return accounts.length;
     }
+
 
 }

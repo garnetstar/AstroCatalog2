@@ -106,8 +106,9 @@ public class DiaryData {
                     diaryObject.setRowCounter(json_data.getInt("counter"));
                     diaryObject.setTimestamp(json_data.getString("timestamp"));
                     diaryObject.setDeleted(json_data.getInt("deleted"));
+                    diaryObject.setWeather(json_data.getString("weather"));
+                    diaryObject.setLog(json_data.getString("log"));
                     diaryObject.setSyncOk(1);
-
                     newData.add(diaryObject);
                 }
             } catch (JSONException e) {
@@ -124,6 +125,8 @@ public class DiaryData {
         }
     }
 
+
+
     /**
      * @param objects
      * @param clientCounter
@@ -135,6 +138,7 @@ public class DiaryData {
             HttpPost post = Response.diarySyncToServer(objects, clientCounter, access_token);
 
             HttpClient httpClient = new DefaultHttpClient();
+
 
             HttpResponse response = httpClient.execute(post);
 

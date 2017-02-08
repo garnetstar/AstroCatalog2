@@ -166,6 +166,8 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
                     solveConflict(contentProviderClient, deviceObject, serverObject);
                 }
             } catch (RemoteException e) {
+
+                Log.d("astro", "RemonteException: " + e.toString());
                 e.printStackTrace();
             }
         }

@@ -1,156 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/edit_diary_form"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Denník"
-        android:id="@+id/textView" />
-
-
-
-
-
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/edit_diary_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:weightSum="1">
 
         <TextView
-            android:layout_width="100dp"
-            android:layout_height="42dp"
-            android:text="Start"
-            android:id="@+id/textView5"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Denník"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="100dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="Start"
+                android:textSize="20dp"
+                android:textColor="@color/yellow_text"/>
+
+            <Button
+                android:id="@+id/dateFrom"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:onClick="showDatePickerDialogFrom"
+                android:text="datum" />
+
+            <Button
+                android:id="@+id/timeFrom"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:onClick="showTimePickerDialogFrom"
+                android:text="čas" />
+
+            <TextView
+                android:id="@+id/dateFromDatabase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/konec"
+                android:layout_width="100dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="Konec"
+                android:textSize="20dp"
+                android:textColor="@color/yellow_text"/>
+
+            <Button
+                android:id="@+id/dateTo"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:onClick="showDatePickerDialogTo"
+                android:text="datum" />
+
+            <Button
+                android:id="@+id/timeTo"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:onClick="showTimePickerDialogTo"
+                android:text="čas" />
+
+            <TextView
+                android:id="@+id/dateToDatabase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hidden value"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Popis pozorování"
+                android:textSize="20dp"
+                android:textColor="@color/yellow_text"/>
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textMultiLine"
+
+            android:singleLine="true"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+
+            android:lines="7"
+            android:maxLines="7"
+            android:scrollbars="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Počasí"
+                android:textSize="20dp"
+                android:textColor="@color/yellow_text"/>
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textMultiLine"
+
+            android:singleLine="true"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+
+            android:lines="2"
+            android:maxLines="2"
+            android:scrollbars="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Poloha"
+                android:textSize="20dp"
+                android:textColor="@color/yellow_text"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/form_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/common_signin_btn_light_text_default"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="Načítání polohy"
             android:textSize="20dp" />
 
         <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="datum"
-            android:id="@+id/dateFrom"
-            android:layout_gravity="center_vertical"
-            android:onClick="showDatePickerDialogFrom"/>
-
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="čas"
-            android:id="@+id/timeFrom"
-            android:layout_gravity="center_vertical"
-            android:onClick="showTimePickerDialogFrom"/>
-
-        <TextView android:id="@+id/dateFromDatabase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hidden value"
-            android:visibility="gone"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:weightSum="1"
-        android:layout_marginBottom="30dp">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="42dp"
-            android:text="Konec"
-            android:id="@+id/konec"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:textSize="20dp" />
-
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="datum"
-            android:id="@+id/dateTo"
-            android:layout_gravity="center_vertical"
-            android:onClick="showDatePickerDialogTo"/>
-
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="čas"
-            android:id="@+id/timeTo"
-            android:layout_gravity="center_vertical"
-            android:onClick="showTimePickerDialogTo"/>
-
-        <TextView android:id="@+id/dateToDatabase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hidden value"
-            android:visibility="gone"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-
-
-        <TextView
+            android:id="@+id/button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Poloha"
-            android:id="@+id/textView6"
             android:layout_gravity="center_horizontal"
-            android:textSize="20dp"/>
+            android:layout_marginTop="10dp"
+            android:onClick="save"
+            android:text="save" />
+
+        <TextView
+            android:id="@+id/actual_latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/actual_longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="gone" />
+
+
+
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Načítání polohy"
-        android:id="@+id/form_location"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:background="@color/common_signin_btn_light_text_default"
-        />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="save"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:onClick="save"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/actual_latitude"
-        android:visibility="gone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/actual_longitude"
-        android:visibility="gone" />
-
-
-</LinearLayout>
+</ScrollView>

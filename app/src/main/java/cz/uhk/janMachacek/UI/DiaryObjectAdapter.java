@@ -49,6 +49,8 @@ public class DiaryObjectAdapter extends ArrayAdapter<DiaryObject> {
         TextView name = (TextView) row.findViewById(R.id.diary_from);
         TextView length = (TextView) row.findViewById(R.id.diary_length);
         TextView timeFrom = (TextView) row.findViewById(R.id.diary_time_from);
+        TextView log = (TextView) row.findViewById(R.id.content);
+        TextView weather = (TextView) row.findViewById(R.id.weatherList);
         TextView guid = (TextView) row.findViewById(R.id.diary_guid);
         TextView sync_ok = (TextView) row.findViewById(R.id.diarys_sync_ok) ;
 
@@ -75,6 +77,8 @@ public class DiaryObjectAdapter extends ArrayAdapter<DiaryObject> {
             name.setText(df.format(date));
             timeFrom.setText(time.format(date).toString());
             length.setText(String.format("%02d:%02d", hours, min));
+            log.setText(values.get(position).getLog());
+            weather.setText(values.get(position).getWeather());
             guid.setText(values.get(position).getGuid());
             sync_ok.setText(Integer.toString(values.get(position).getSyncOk()));
 

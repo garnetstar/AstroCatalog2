@@ -2,11 +2,14 @@ package cz.uhk.janMachacek.library.Api.Http;
 
 import android.util.Log;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -14,10 +17,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.uhk.janMachacek.AstroContract;
 import cz.uhk.janMachacek.Config;
 import cz.uhk.janMachacek.Model.DiaryObject;
 
@@ -75,22 +80,41 @@ public class Response {
             one.put("from", objects.get(i).getFrom());
             one.put("to", objects.get(i).getTo());
             one.put("latitude", objects.get(i).getLatitude().getDecimalDegree());
-            one.put("longitude", objects.get(i).getLognitude().getDecimalDegree());
-            one.put("weather", null);
-            one.put("log", null);
+            one.put("longitude", objects.get(i).getLongitude().getDecimalDegree());
             one.put("notice", null);
             one.put("deleted", objects.get(i).getDeleted());
             one.put("row_counter", objects.get(i).getRowCounter());
             one.put("new", objects.get(i).isNew() ? 1 : 0);
+            one.put("weather", objects.get(i).getWeather().trim());
+            one.put("log", objects.get(i).getLog().trim());
 
             jsonArray.put(one);
         }
         jsonObject.put("objects", jsonArray);
         Log.d("astro", "Objekty které se budou posílat na server " + jsonObject.toString());
 
-        StringEntity se = new StringEntity(jsonObject.toString());
-        se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-        httpPost.setEntity(se);
+        // je třeba nastavit správné kódování kvůli kompatibilitě se serverem
+        httpPost.setEntity(new StringEntity(jsonObject.toString(), "UTF8"));
+        httpPost.setHeader("Content-type", "application/json");
         return httpPost;
+    }
+
+
+    public static JSONObject getWeatherData(double latitude, double longitude) throws IOException, JSONException {
+
+        String lat = "&lat=" + Double.toString(latitude);
+        String lon = "&lon=" + Double.toString(longitude);
+        String weatherUrl = AstroContract.weatherUri + "&appid=" + AstroContract.weatherApiKey + lat + lon;
+
+        Log.d("astro", "WEATHER> " + weatherUrl);
+        HttpGet get = new HttpGet(weatherUrl);
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpResponse response = httpClient.execute(get);
+        String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+        Log.d("astro", "WEATHER> JSON> " + json);
+        JSONObject jsonObject = new JSONObject(json);
+        return jsonObject;
+//        //kontrola http statusu
+//        int httpStatus = response.getStatusLine().getStatusCode();
     }
 }

@@ -83,7 +83,9 @@ public class DiaryFacade {
                 AstroDbHelper.KEY_DIARY_SYNC_OK,
                 AstroDbHelper.KEY_DIARY_DELETED,
                 AstroDbHelper.KEY_DIARY_ROW_COUNTER,
-                AstroDbHelper.KEY_DIARY_TIMESTAMP
+                AstroDbHelper.KEY_DIARY_TIMESTAMP,
+                AstroDbHelper.KEY_DIARY_WEATHER,
+                AstroDbHelper.KEY_DIARY_LOG
         };
 
         return projection;
@@ -97,11 +99,13 @@ public class DiaryFacade {
         o.setFrom(c.getString(2));
         o.setTo(c.getString(3));
         o.setLatitude(new Angle(c.getDouble(4)));
-        o.setLognitude(new Angle(c.getDouble(5)));
+        o.setLongitude(new Angle(c.getDouble(5)));
         o.setSyncOk(c.getInt(6));
         o.setDeleted(c.getInt(7));
         o.setRowCounter(c.getInt(8));
         o.setTimestamp(c.getString(9));
+        o.setWeather(c.getString(10));
+        o.setLog(c.getString(11));
         return o;
     }
 

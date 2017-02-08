@@ -15,7 +15,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import cz.uhk.janMachacek.Model.AstroDbHelper;
-import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.Model.DiaryObject;
 import cz.uhk.janMachacek.UI.DiaryObjectAdapter;
 import cz.uhk.janMachacek.coordinates.Angle;
@@ -79,7 +78,9 @@ public class DiaryActivity extends AbstactBaseActivity {
                 AstroDbHelper.KEY_DIARY_LAT,
                 AstroDbHelper.KEY_DIARY_LON,
                 AstroDbHelper.KEY_DIARY_GUID,
-                AstroDbHelper.KEY_DIARY_SYNC_OK};
+                AstroDbHelper.KEY_DIARY_SYNC_OK,
+                AstroDbHelper.KEY_DIARY_WEATHER,
+                AstroDbHelper.KEY_DIARY_LOG};
 
         String selection = AstroDbHelper.KEY_DIARY_DELETED + "<>?";
         String[] selectionArgs = {"1"};
@@ -125,9 +126,11 @@ public class DiaryActivity extends AbstactBaseActivity {
         o.setFrom(c.getString(1));
         o.setTo(c.getString(2));
         o.setLatitude(new Angle(c.getDouble(3)));
-        o.setLognitude(new Angle(c.getDouble(4)));
+        o.setLongitude(new Angle(c.getDouble(4)));
         o.setGuid(c.getString(5));
         o.setSyncOk(c.getInt(6));
+        o.setWeather(c.getString(7));
+        o.setLog(c.getString(8));
         return o;
     }
 

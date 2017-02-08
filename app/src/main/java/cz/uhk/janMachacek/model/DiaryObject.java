@@ -14,18 +14,10 @@ import cz.uhk.janMachacek.coordinates.Angle;
  */
 public class DiaryObject {
 
-    private int id;
-    private String guid;
-    private String from;
-    private String to;
-    private Angle latitude;
-    private Angle lognitude;
-    private Integer syncOk;
-    //private DateTimeObject fromObject, toObject;
-    private int deleted;
-    private int rowCounter;
-    private String timestamp;
+    private Angle latitude, longitude;
+    private int rowCounter, deleted, syncOk, id;
     private boolean isNew;
+    private String guid, from, to, timestamp, weather, log;
 
     public void setFrom(String from) {
         this.from = from;
@@ -39,8 +31,8 @@ public class DiaryObject {
         this.latitude = latitude;
     }
 
-    public void setLognitude(Angle lognitude) {
-        this.lognitude = lognitude;
+    public void setLongitude(Angle longitude) {
+        this.longitude = longitude;
     }
 
     public String getFrom() {
@@ -55,8 +47,8 @@ public class DiaryObject {
         return latitude;
     }
 
-    public Angle getLognitude() {
-        return lognitude;
+    public Angle getLongitude() {
+        return longitude;
     }
 
     public void setSyncOk(Integer syncOk) {
@@ -125,6 +117,22 @@ public class DiaryObject {
         this.timestamp = timestamp;
     }
 
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
+
     public ContentValues getContentValues() {
         ContentValues cv = new ContentValues(8);
 //        cv.put(AstroDbHelper.KEY_DIARY_ID, getId());
@@ -132,11 +140,13 @@ public class DiaryObject {
         cv.put(AstroDbHelper.KEY_DIARY_FROM, getFrom());
         cv.put(AstroDbHelper.KEY_DIARY_TO, getTo());
         cv.put(AstroDbHelper.KEY_DIARY_LAT, getLatitude() == null ? null : getLatitude().getDecimalDegree());
-        cv.put(AstroDbHelper.KEY_DIARY_LON, getLognitude() == null ? null : getLognitude().getDecimalDegree());
+        cv.put(AstroDbHelper.KEY_DIARY_LON, getLongitude() == null ? null : getLongitude().getDecimalDegree());
         cv.put(AstroDbHelper.KEY_DIARY_SYNC_OK, getSyncOk());
         cv.put(AstroDbHelper.KEY_DIARY_DELETED, getDeleted());
         cv.put(AstroDbHelper.KEY_DIARY_ROW_COUNTER, getRowCounter());
         cv.put(AstroDbHelper.KEY_DIARY_TIMESTAMP, getTimestamp());
+        cv.put(AstroDbHelper.KEY_DIARY_WEATHER, getWeather());
+        cv.put(AstroDbHelper.KEY_DIARY_LOG, getLog());
 
         return cv;
     }
@@ -148,8 +158,8 @@ public class DiaryObject {
                 ", to =" + getTo() +
                 ", syncOK=" + Integer.toString(getSyncOk()) +
                 ", deleted=" + Integer.toString(getDeleted()) +
-                        ", row_counter=" + Integer.toString(getRowCounter())
-                ;
+                        ", row_counter=" + Integer.toString(getRowCounter()) +
+                        ", log=" + getLog() + ", weather=" + getWeather();
     }
 }
 

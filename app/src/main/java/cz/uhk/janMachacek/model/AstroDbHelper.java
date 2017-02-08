@@ -45,6 +45,8 @@ public class AstroDbHelper extends SQLiteOpenHelper {
     public static final String KEY_DIARY_DELETED = "deleted";
     public static final String KEY_DIARY_ROW_COUNTER = "rowCounter";
     public static final String KEY_DIARY_TIMESTAMP = "timestamp";
+    public static final String KEY_DIARY_WEATHER = "weather";
+    public static final String KEY_DIARY_LOG = "log";
 
     public static final String TABLE_SETTINGS_NAME = "settings";
     public static final String KEY_SETTINGS_KEY = "key";
@@ -70,6 +72,8 @@ public class AstroDbHelper extends SQLiteOpenHelper {
             KEY_DIARY_SYNC_OK + " integer not null, " +
             KEY_DIARY_ROW_COUNTER + " integer not null, " +
             KEY_DIARY_TIMESTAMP + " text not null, " +
+            KEY_DIARY_WEATHER + " text, " +
+            KEY_DIARY_LOG + " log, " +
             KEY_DIARY_DELETED + " integer default 0)";
 
     public static final String CREATE_TABLE_SETTINGS = "create table "
@@ -106,7 +110,7 @@ public class AstroDbHelper extends SQLiteOpenHelper {
 //				ContentValues cv = new ContentValues(8);
 //				cv.put(KEY_OBJECT_NAME, astroObject.getName());
 //				cv.put(KEY_OBJECT_MAG, astroObject.getMagnitude());
-//				cv.put(KEY_OBJECT_RA, astroObject.getLognitude().getDecimalDegree());
+//				cv.put(KEY_OBJECT_RA, astroObject.getLongitude().getDecimalDegree());
 //				cv.put(KEY_OBJECT_DEC, astroObject.getLatitude().getDecimalDegree());
 //				cv.put(KEY_OBJECT_TYPE, astroObject.getType());
 //				cv.put(KEY_OBJECT_CONSTELLATION, astroObject.getConstellation());

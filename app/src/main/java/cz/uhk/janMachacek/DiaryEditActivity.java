@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,10 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-import cz.uhk.janMachacek.Exception.InvalidateRefreshTokenException;
 import cz.uhk.janMachacek.Model.AstroDbHelper;
 import cz.uhk.janMachacek.Model.DiaryFacade;
 import cz.uhk.janMachacek.Model.DiaryObject;
@@ -26,6 +30,9 @@ import cz.uhk.janMachacek.UI.TimePicker;
 import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Timer;
 import cz.uhk.janMachacek.coordinates.Utils;
+import cz.uhk.janMachacek.library.Api.Http.Response;
+
+
 
 /**
  * @author Jan Macháček
@@ -41,6 +48,8 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
     private int id;
 
     private DiaryObject object;
+
+    protected TextView weather;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,11 +91,19 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                     TextView actualLatitude = (TextView) findViewById(R.id.actual_latitude);
                     actualLatitude.setText(Double.toString(object.getLatitude().getDecimalDegree()));
                     TextView actualLongitude = (TextView) findViewById(R.id.actual_longitude);
-                    actualLongitude.setText(Double.toString(object.getLognitude().getDecimalDegree()));
+                    actualLongitude.setText(Double.toString(object.getLongitude().getDecimalDegree()));
 
-                    String possition = "Lat: " + Utils.getFormatedDegree(object.getLatitude()) + " Lon: " + Utils.getFormatedDegree(object.getLognitude());
+                    String possition = "Lat: " + Utils.getFormatedDegree(object.getLatitude()) + " Lon: " + Utils.getFormatedDegree(object.getLongitude());
                     TextView form_location = (TextView) findViewById(R.id.form_location);
                     form_location.setText(possition);
+
+                    //weather
+                    TextView weather = (TextView) findViewById(R.id.weather);
+                    weather.setText(object.getWeather());
+
+                    //log
+                    TextView log = (TextView) findViewById(R.id.log);
+                    log.setText(object.getLog());
 
                     if (!isNew) {
                         Button delete = new Button(this);
@@ -141,6 +158,9 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
             TextView hiddenLongitude = (TextView) findViewById(R.id.actual_longitude);
             hiddenLongitude.setText(Double.toString(longitude.getDecimalDegree()));
 
+           // získat data počasí
+                SendfeedbackJob job = new SendfeedbackJob(latitude.getDecimalDegree(), longitude.getDecimalDegree());
+                job.execute();
             hideProgressDialog();
         } else {
             //nastavit z databaze
@@ -210,6 +230,14 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         String textLongitude = formLongitude.getText().toString();
         Double longitude = Double.parseDouble(textLongitude);
 
+        //weather
+        TextView formWeather = (TextView) findViewById(R.id.weather);
+        String weather = formWeather.getText().toString();
+
+        // log
+        TextView formLog = (TextView) findViewById(R.id.log);
+        String log = formLog.getText().toString();
+
 
         SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -227,7 +255,9 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                 val.setFrom(from);
                 val.setTo(to);
                 val.setLatitude(new Angle(latitude));
-                val.setLognitude(new Angle(longitude));
+                val.setLongitude(new Angle(longitude));
+                val.setWeather(weather);
+                val.setLog(log);
                 val.setSyncOk(0);
                 // pri vložení nového záznamu i při updatu je třeba nastavit aktuální timestamp
                 val.setTimestamp(Timer.getTimestamp());
@@ -239,7 +269,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                 } else {
                     val.setId(this.object.getId());
                     val.setGuid(this.object.getGuid());
-                    val.setRowCounter(this.object.getRowCounter() );
+                    val.setRowCounter(this.object.getRowCounter());
                     String where = AstroDbHelper.KEY_DIARY_ID + "=?";
                     String[] whereArgs = {Integer.toString(val.getId())};
                     getContentResolver().update(uri, val.getContentValues(), where, whereArgs);
@@ -288,6 +318,50 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
 
     private Uri getUri() {
         return Uri.parse(AstroContract.DIARY_URI + "/diary_edit");
+    }
+
+    private class SendfeedbackJob extends AsyncTask<String, Void, String> {
+
+        private double lat, lon;
+        private String message;
+
+        public SendfeedbackJob(double lat, double lon) {
+            super();
+            this.lat = lat;
+            this.lon = lon;
+        }
+
+        @Override
+        protected String doInBackground(String[] params) {
+
+
+            try {
+                JSONObject json = Response.getWeatherData(lat, lon);
+                JSONObject main = json.getJSONObject("main");
+                String temp = main.getString("temp");
+
+                JSONArray weather = json.getJSONArray("weather");
+                String weatherMain = weather.getJSONObject(0).getString("main");
+                String description = weather.getJSONObject(0).getString("description");
+
+                this.message = weatherMain + ", " + description + ", " + temp + "°C";
+
+                Log.d("astro", message);
+
+            } catch (IOException e) {
+                Log.d("astro", "ERROR 123" + e.toString());
+            } catch (JSONException e) {
+                Log.d("astro", "ERROR 124" + e.toString());
+            }
+
+            return "ok";
+        }
+
+        @Override
+        protected void onPostExecute(String message) {
+            TextView weather = (TextView) findViewById(R.id.weather);
+            weather.setText(this.message);
+        }
     }
 
 }

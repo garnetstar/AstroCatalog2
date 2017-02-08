@@ -13,4 +13,7 @@ public class AstroContract {
 
     public static final Uri CATALOG_URI = Uri.parse("content://" + CATALOG_AUTHORITY);
     public static final Uri DIARY_URI =  Uri.parse("content://" + DIARY_AUTHORITY);
+
+    public static final String weatherUri = "http://api.openweathermap.org/data/2.5/weather?units=metric";
+    public static final String weatherApiKey = "edcc91c97986f06f830222a5aabf9084";
 }
