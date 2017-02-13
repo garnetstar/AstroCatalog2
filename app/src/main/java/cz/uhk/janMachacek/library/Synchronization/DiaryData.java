@@ -29,6 +29,7 @@ import cz.uhk.janMachacek.Exception.Api400ErrorException;
 import cz.uhk.janMachacek.Exception.ApiErrorException;
 import cz.uhk.janMachacek.Model.AstroObject;
 import cz.uhk.janMachacek.Model.DiaryObject;
+import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
 
@@ -80,8 +81,6 @@ public class DiaryData {
             if (httpStatus == 401) {
                 throw new AccessTokenExpiredException();
             }
-
-
             int serverCounter = jsonObject.getInt("servercounter");
             int nextId = jsonObject.getInt("next_id");
             int userId = jsonObject.getInt("user_id");
@@ -103,6 +102,8 @@ public class DiaryData {
                     diaryObject.setGuid(json_data.getString("guid"));
                     diaryObject.setFrom(json_data.getString("from"));
                     diaryObject.setTo(json_data.getString("to"));
+                    diaryObject.setLatitude(new Angle(json_data.getDouble("latitude")));
+                    diaryObject.setLongitude(new Angle(json_data.getDouble("longitude")));
                     diaryObject.setRowCounter(json_data.getInt("counter"));
                     diaryObject.setTimestamp(json_data.getString("timestamp"));
                     diaryObject.setDeleted(json_data.getInt("deleted"));
@@ -112,7 +113,7 @@ public class DiaryData {
                     newData.add(diaryObject);
                 }
             } catch (JSONException e) {
-//                Log.d("astro", "JsonArray Errror -> " + e.getMessage());
+                Log.d("astro", "JsonArray Errror -> " + e.getMessage());
                 e.printStackTrace();
             }
 

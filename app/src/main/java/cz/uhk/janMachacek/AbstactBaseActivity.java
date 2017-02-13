@@ -10,22 +10,28 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 /**
  * Abstraktní activity implementující společné metody
@@ -33,9 +39,12 @@ import android.widget.Toast;
  * @author Jan Mach??ek
  */
 abstract public class AbstactBaseActivity extends FragmentActivity implements
-        LocationListener {
+        LocationListener
+{
 
     public static final String FILTER = "astroIntent.broadcast";
+    public static final String FILTER_SHOW_MESSAGE = "astroIntent.show_message";
+    public static final String KEY_MESSAGE = "key_message";
     private Handler mHandler = new Handler();
 
     protected LocationManager locationManager;
@@ -48,6 +57,9 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     private android.accounts.AccountManager aManager;
     private AccountManager mAccountManager;
     protected Account account;
+
+    private final SyncReceiver messageReceiver = new SyncReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +76,10 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
         mAccountManager = AccountManager.get(this);
 
+
     }
+
+
 
 
     protected void showProgressDialog(String title, String message) {
@@ -130,13 +145,10 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         registerReceiver(new MyReciever(), new IntentFilter(FILTER));
 
 
+
         if(numberOfAccounts() < 1) {
             addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
         }
-
-        //zakaz naivni synchronizace
-        //if(!runn)
-        //startRepeatingTask();
     }
 
     protected void showLocation(Angle latitude, Angle longitude) {
@@ -164,6 +176,39 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
             }
         }
     }
+
+    public class SyncReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                String message = "RESUL SYNCHRONIZACE " + extras.getString("message");
+                Log.d("astro",message );
+//                Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+
+                // Create layout inflator object to inflate toast.xml file
+                LayoutInflater inflater = getLayoutInflater();
+
+                // Call toast.xml file for toast layout
+                View toastRoot = inflater.inflate(R.layout.toast, null);
+
+
+
+                Toast toast = new Toast(context);
+
+                // Set layout to toast
+                toast.setView(toastRoot);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+                        0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                TextView toastMessage = (TextView) toastRoot.findViewById(R.id.toastMessage);
+                toastMessage.setText(message);
+                toast.show();
+            }
+        }
+    }
+
 
     // !!! dulezita promenna, zajisti ze runnable job pojede jen v jedne instanci
     static boolean  runn = false;
@@ -206,6 +251,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
                     Log.d("astro", "AddNewAccount Bundle is " + bnd);
 
                 } catch (Exception e) {
+                    Log.d("astro", "FUTURE: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -221,4 +267,18 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(messageReceiver, new IntentFilter(FILTER_SHOW_MESSAGE));
+    }
+
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(messageReceiver);
+    }
 }

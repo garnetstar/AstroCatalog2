@@ -1,15 +1,21 @@
 package cz.uhk.janMachacek.UI;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,6 +87,9 @@ public class DiaryObjectAdapter extends ArrayAdapter<DiaryObject> {
             weather.setText(values.get(position).getWeather());
             guid.setText(values.get(position).getGuid());
             sync_ok.setText(Integer.toString(values.get(position).getSyncOk()));
+
+
+
 
 
         } catch (ParseException e) {

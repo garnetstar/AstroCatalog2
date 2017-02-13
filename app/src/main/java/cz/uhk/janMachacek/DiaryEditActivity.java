@@ -2,15 +2,19 @@ package cz.uhk.janMachacek;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +24,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import cz.uhk.janMachacek.Model.AstroDbHelper;
 import cz.uhk.janMachacek.Model.DiaryFacade;
 import cz.uhk.janMachacek.Model.DiaryObject;
@@ -31,7 +38,6 @@ import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Timer;
 import cz.uhk.janMachacek.coordinates.Utils;
 import cz.uhk.janMachacek.library.Api.Http.Response;
-
 
 
 /**
@@ -88,14 +94,12 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                     dateToDatabase.setText(object.getToObject().getDateToString());
 
                     // POSSITON
-                    TextView actualLatitude = (TextView) findViewById(R.id.actual_latitude);
+                    TextView actualLatitude = (TextView) findViewById(R.id.lat);
                     actualLatitude.setText(Double.toString(object.getLatitude().getDecimalDegree()));
-                    TextView actualLongitude = (TextView) findViewById(R.id.actual_longitude);
+                    TextView actualLongitude = (TextView) findViewById(R.id.lon);
                     actualLongitude.setText(Double.toString(object.getLongitude().getDecimalDegree()));
 
-                    String possition = "Lat: " + Utils.getFormatedDegree(object.getLatitude()) + " Lon: " + Utils.getFormatedDegree(object.getLongitude());
-                    TextView form_location = (TextView) findViewById(R.id.form_location);
-                    form_location.setText(possition);
+//                    String possition = "Lat: " + Utils.getFormatedDegree(object.getLatitude()) + " Lon: " + Utils.getFormatedDegree(object.getLongitude());
 
                     //weather
                     TextView weather = (TextView) findViewById(R.id.weather);
@@ -148,19 +152,26 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
             Angle latitude = new Angle(location.getLatitude());
             Angle longitude = new Angle(location.getLongitude());
 
-            String message = "Lat: " + Utils.getFormatedDegree(latitude) + " Lon: " + Utils.getFormatedDegree(longitude);
+//            String message = "Lat: " + Utils.getFormatedDegree(latitude) + " Lon: " + Utils.getFormatedDegree(longitude);
 
-            TextView form_location = (TextView) findViewById(R.id.form_location);
-            form_location.setText(message);
-            TextView hiddenLatitude = (TextView) findViewById(R.id.actual_latitude);
+            TextView hiddenLatitude = (TextView) findViewById(R.id.lat);
             hiddenLatitude.setText(Double.toString(latitude.getDecimalDegree()));
 
-            TextView hiddenLongitude = (TextView) findViewById(R.id.actual_longitude);
+            TextView hiddenLongitude = (TextView) findViewById(R.id.lon);
             hiddenLongitude.setText(Double.toString(longitude.getDecimalDegree()));
 
-           // získat data počasí
-                SendfeedbackJob job = new SendfeedbackJob(latitude.getDecimalDegree(), longitude.getDecimalDegree());
-                job.execute();
+//            TextView hiddenLatitude = (TextView) findViewById(R.id.actual_latitude);
+//            hiddenLatitude.setText(Double.toString(latitude.getDecimalDegree()));
+//
+//            TextView hiddenLongitude = (TextView) findViewById(R.id.actual_longitude);
+//            hiddenLongitude.setText(Double.toString(longitude.getDecimalDegree()));
+
+
+            // získat data počasí
+            SendfeedbackJob job = new SendfeedbackJob(latitude.getDecimalDegree(), longitude.getDecimalDegree());
+            job.execute();
+
+
             hideProgressDialog();
         } else {
             //nastavit z databaze
@@ -210,7 +221,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         newFragment.show(getFragmentManager(), "datePicker");
     }
 
-    public void save(View view) {
+    public void save(View view) throws RemoteException {
 
         TextView dateFrom = (TextView) findViewById(R.id.dateFromDatabase);
         TextView timeFrom = (TextView) findViewById(R.id.timeFrom);
@@ -222,11 +233,11 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         String to = String.format("%s %s:00", dateTo.getText(), timeTo.getText());
 
         // aktualni poloha
-        TextView formLatitude = (TextView) findViewById(R.id.actual_latitude);
+        TextView formLatitude = (TextView) findViewById(R.id.lat);
         String textLatitude = formLatitude.getText().toString();
         Double latitude = Double.parseDouble(textLatitude);
 
-        TextView formLongitude = (TextView) findViewById(R.id.actual_longitude);
+        TextView formLongitude = (TextView) findViewById(R.id.lon);
         String textLongitude = formLongitude.getText().toString();
         Double longitude = Double.parseDouble(textLongitude);
 
@@ -237,7 +248,6 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         // log
         TextView formLog = (TextView) findViewById(R.id.log);
         String log = formLog.getText().toString();
-
 
         SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -262,21 +272,33 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                 // pri vložení nového záznamu i při updatu je třeba nastavit aktuální timestamp
                 val.setTimestamp(Timer.getTimestamp());
 
+
                 // ulozeni nebo update pomoci contetnt provideru
                 Uri uri = Uri.parse(AstroContract.DIARY_URI + "/diary_edit");
                 if (isNew) {
                     getContentResolver().insert(uri, val.getContentValues());
                 } else {
-                    val.setId(this.object.getId());
-                    val.setGuid(this.object.getGuid());
-                    val.setRowCounter(this.object.getRowCounter());
-                    String where = AstroDbHelper.KEY_DIARY_ID + "=?";
-                    String[] whereArgs = {Integer.toString(val.getId())};
-                    getContentResolver().update(uri, val.getContentValues(), where, whereArgs);
+
+                    int actualServerCounter = getActualServerCounter(this.object.getId());
+                    Log.d("astro", "PREVENT BEFORE CONFLICT: object>" + this.object.getRowCounter() + " actual>" + actualServerCounter);
+                    if (this.object.getRowCounter() < actualServerCounter) {
+
+                        Toast.makeText(getBaseContext(), "Záznam nelze editovat, byl aktualizován serverem",Toast.LENGTH_LONG).show();
+
+                    } else {
+                        val.setId(this.object.getId());
+                        val.setGuid(this.object.getGuid());
+                        val.setRowCounter(this.object.getRowCounter());
+                        Log.d("astro", "Save Row Counter:" + this.object.getRowCounter());
+                        String where = AstroDbHelper.KEY_DIARY_ID + "=?";
+                        String[] whereArgs = {Integer.toString(val.getId())};
+                        getContentResolver().update(uri, val.getContentValues(), where, whereArgs);
+                        //navrat na vypis objektu
+                        Intent intent = new Intent(this, DiaryActivity.class);
+                        startActivity(intent);
+                    }
                 }
-                //navrat na vypis objektu
-                Intent intent = new Intent(this, DiaryActivity.class);
-                startActivity(intent);
+
             }
 
         } catch (ParseException e) {
@@ -284,6 +306,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
             Log.d("astro", "DATE ERROR bad format");
         }
     }
+
 
     @Override
     public void onClick(View view) {
@@ -320,10 +343,22 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         return Uri.parse(AstroContract.DIARY_URI + "/diary_edit");
     }
 
+    public int getActualServerCounter(int id) throws RemoteException {
+        DiaryFacade facade = new DiaryFacade(getContentResolver().acquireContentProviderClient(AstroContract
+                .DIARY_URI));
+        DiaryObject actualObject = facade.getOneById(id);
+        return actualObject.getRowCounter();
+    }
+
+
+    /**
+     * POcasi
+     */
     private class SendfeedbackJob extends AsyncTask<String, Void, String> {
 
         private double lat, lon;
         private String message;
+        private Bitmap bmp;
 
         public SendfeedbackJob(double lat, double lon) {
             super();
@@ -339,14 +374,34 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                 JSONObject json = Response.getWeatherData(lat, lon);
                 JSONObject main = json.getJSONObject("main");
                 String temp = main.getString("temp");
+                String humidity = main.getString("humidity");
+                String pressure = main.getString("pressure");
 
                 JSONArray weather = json.getJSONArray("weather");
                 String weatherMain = weather.getJSONObject(0).getString("main");
                 String description = weather.getJSONObject(0).getString("description");
 
-                this.message = weatherMain + ", " + description + ", " + temp + "°C";
+                this.message = weatherMain + ", " + description + ", " + temp + "°C"
+                        + ", " + "humidity: " + humidity + "%, "
+                        + "pressure: " + pressure + "hPa";
 
                 Log.d("astro", message);
+
+
+//                URL url = null;
+//                try {
+//                    url = new URL("http://openweathermap.org/img/w/10d.png");
+//                    try {
+//                        bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                }
+
 
             } catch (IOException e) {
                 Log.d("astro", "ERROR 123" + e.toString());
@@ -361,6 +416,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         protected void onPostExecute(String message) {
             TextView weather = (TextView) findViewById(R.id.weather);
             weather.setText(this.message);
+
         }
     }
 

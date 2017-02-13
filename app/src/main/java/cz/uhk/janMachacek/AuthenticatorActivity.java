@@ -17,6 +17,7 @@ import cz.uhk.janMachacek.library.Api.ApiAuthenticator;
 
 /**
  * Created by jan on 10.8.2016.
+ * https://sites.google.com/site/andsamples/concept-of-syncadapter-androidcontentabstractthreadedsyncadapter
  */
 public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
@@ -26,6 +27,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     public final static String PASSWORD = "PASSWORD";
     public final static String REFRESH_TOKEN = "REFRESH_TOKEN";
     public final static String WRONG_CREDENTIALS = "WRONG_CREDENTIALS";
+    public final static int PERIOD_OF_SYNC_SEC = 30;
 
     public final static String NEW_ACCOUNT = "IS_ADDING_ACCOUNT";
 
@@ -124,14 +126,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
             accountManager.setAuthToken(account, "baerer", authToken);
 
             //spustit synchronizaci
-            getApplicationContext().getContentResolver().setMasterSyncAutomatically(true);
-            getApplicationContext().getContentResolver().setIsSyncable(account, "cz.uhk.janMachacek.astro.diaryProvider", 1);
-            getApplicationContext().getContentResolver().setIsSyncable(account, "cz.uhk.janMachacek.astro.provider", 1);
-            getApplicationContext().getContentResolver().setSyncAutomatically(account, "cz.uhk.janMachacek.astro.diaryProvider",true);
+//            getApplicationContext().getContentResolver().setMasterSyncAutomatically(true);
+//            getApplicationContext().getContentResolver().setIsSyncable(account, AstroContract.DIARY_AUTHORITY, 1);
+//            getApplicationContext().getContentResolver().setIsSyncable(account, AstroContract.CATALOG_AUTHORITY, 1);
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.DIARY_AUTHORITY,true);
 
-            getApplicationContext().getContentResolver().addPeriodicSync(account,  "cz.uhk.janMachacek.astro.diaryProvider", new Bundle(), 10);
-            getApplicationContext().getContentResolver().addPeriodicSync(account,  "cz.uhk.janMachacek.astro.provider", new Bundle(), 10);
-            getApplicationContext().getContentResolver().setSyncAutomatically(account, "cz.uhk.janMachacek.astro.provider",true);
+            getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.DIARY_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
+            getApplicationContext().getContentResolver().addPeriodicSync(account,  AstroContract.CATALOG_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.CATALOG_AUTHORITY,true);
         }
         else{
             Log.d("astro", "UPDATE ACCOUNT ONLY");

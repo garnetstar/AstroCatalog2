@@ -13,9 +13,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import cz.uhk.janMachacek.AbstactBaseActivity;
 import cz.uhk.janMachacek.AstroContract;
 import cz.uhk.janMachacek.DiaryActivity;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
@@ -29,14 +31,20 @@ import cz.uhk.janMachacek.ObjectListActivity;
 /**
  * @author Jan Macháček
  *         Created on 12.10.2016.
+ *         https://developer.android.com/training/sync-adapters/creating-sync-adapter.html
+ *         http://stackoverflow.com/questions/11362233/syncadapter-syncresult
+ *         https://books.google.cz/books?id=NgTqCwAAQBAJ&pg=PA272&lpg=PA272&dq=android+getContentResolver().notifyChange&source=bl&ots=i3YRGv-ojU&sig=tXrfEWRhQMFH1jQooGmLjTKs4zA&hl=cs&sa=X&ved=0ahUKEwjRnof_kIrSAhWJthQKHcBMC1gQ6AEIUjAH#v=onepage&q=android%20getContentResolver().notifyChange&f=false
  */
 public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
+
 
     private final AccountManager mAccountManager;
 
     private DiaryData diaryData;
 
     private DiaryFacade facade;
+
+    private boolean syncFromServerOK = true;
 
     public DiarySyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -51,7 +59,6 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         facade = new DiaryFacade(contentProviderClient);
 
-
         try {
             String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
             Log.d("astro", "SYNC: zahájení synchronizace");
@@ -59,25 +66,29 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
             Log.d("astro", "SYNC: stahování dat ze serveru");
             syncFromServer(contentProviderClient);
             Log.d("astro", "SYNC: odeslání dat ne server");
-            syncToServer(contentProviderClient, diaryData.getNextId(), diaryData.getUserId());
-            Log.d("astro", "SYNC: synchronizace dokončena");
+            syncToServer(contentProviderClient, diaryData.getNextId(), diaryData.getUserId(), syncResult);
+
+
+            if (syncFromServerOK) {
+                //zobrazit stav synchronizace
+                Intent intent = new Intent();
+                intent.setAction(AbstactBaseActivity.FILTER_SHOW_MESSAGE);
+                intent.putExtra("message", "Synchronizace proběhla v pořádku");
+                getContext().sendBroadcast(intent);
+            } else {
+                Log.d("astro", "SYNC PROBLEM: synchronizace nebyla dokončena");
+            }
+
         } catch (AccessTokenExpiredException e) {
-            //chyba http://stackoverflow.com/questions/14828998/how-to-show-sync-failed-message
-            Log.d("astro", "ERROR: neaktuální přihlašovací údaje");
-            syncResult.stats.numAuthExceptions++;
-            syncResult.delayUntil = 180;
+            String message = "ERROR: neaktuální přihlašovací údaje " + e.getMessage();
+            syncProblem(syncResult, message);
         } catch (Exception e) {
+            syncProblem(syncResult, e.getMessage());
             e.printStackTrace();
         }
-
-
-//            //test
-//            ContentValues val = new ContentValues();
-//            val.put(AstroDbHelper.KEY_SETTINGS_VALUE, ++client_counter);
-//            contentProviderClient.update(uri,val,AstroDbHelper.KEY_SETTINGS_KEY + "=?", new String[]{"client_counter"});
     }
 
-    private void syncToServer(ContentProviderClient contentProviderClient, int nextId, int userId) throws RemoteException {
+    private void syncToServer(ContentProviderClient contentProviderClient, int nextId, int userId, SyncResult syncResult) throws RemoteException {
 
         // ziskat všechny objekty se sync_OK = 0
         ArrayList<DiaryObject> objects = facade.getObjectForSync();
@@ -113,9 +124,10 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
 
         } catch (Api400ErrorException e) {
-            Log.d("astro", "CONFLICT: " + e.getMessage());
+            String message = "CONFLICT: " + e.getMessage();
+            syncProblem(syncResult, message);
         } catch (Exception e) {
-            Log.d("astro", "ERROR: " + e.getMessage());
+            syncProblem(syncResult, e.getMessage());
         }
     }
 
@@ -201,7 +213,6 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     *
      * @param client
      * @param object
      * @throws RemoteException
@@ -211,4 +222,21 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         String[] selectionArgs = {object.getGuid()};
         client.update(getUri(), object.getContentValues(), selection, selectionArgs);
     }
+
+    private void syncProblem(SyncResult syncResult, String message) {
+        //chyba http://stackoverflow.com/questions/14828998/how-to-show-sync-failed-message
+//        syncResult.stats.numAuthExceptions++;
+
+        syncFromServerOK = false;
+        syncResult.stats.numConflictDetectedExceptions++;
+        syncResult.delayUntil = 30;
+
+        Log.d("astro", "SYNC CONFLICT: " + message);
+        Intent intent = new Intent();
+        intent.setAction(AbstactBaseActivity.FILTER_SHOW_MESSAGE);
+        intent.putExtra("message", message);
+        getContext().sendBroadcast(intent);
+
+    }
+
 }

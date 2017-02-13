@@ -4,58 +4,29 @@
     api-level="16"
     density="hdpi"
     format="7"
-    timestamp="16342541181053"
-    verifier="COMPATIBLE" >
+    timestamp="67864229070197" >
 
     <task
         name="javac"
-        duration="414" />
+        duration="10366" />
     <task
         name="instant-run-dex"
-        duration="542" />
+        duration="0" />
     <task
         name="instant-run-transform"
-        duration="21" />
+        duration="226" />
     <task
         name="verifier"
-        duration="2" />
+        duration="109" />
 
     <artifact
-        location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\reload-dex\debug\classes.dex"
-        type="RELOAD_DEX" />
+        location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
+        type="MAIN" />
 
-    <build timestamp="15326680774078" >
+    <build timestamp="67864229070197" >
         <artifact
             location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
-    </build>
-    <build
-        timestamp="15818496854859"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\builds\debug\15818496854859\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build
-        timestamp="15913334582779"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\builds\debug\15913334582779\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build
-        timestamp="16275347998968"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\builds\debug\16275347998968\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build
-        timestamp="16342541181053"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\intermediates\reload-dex\debug\classes.dex"
-            type="RELOAD_DEX" />
     </build>
 
 </instant-run>
