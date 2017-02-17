@@ -47,12 +47,4 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-    <string-array name="astro_sync_names">
-        <item>Databázi objektů</item>
-        <item>Astro denník</item>
-    </string-array>
-    <string-array name="astro_sync_default_values">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
 </resources>

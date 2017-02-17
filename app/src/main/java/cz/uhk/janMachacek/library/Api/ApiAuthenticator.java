@@ -26,6 +26,7 @@ import cz.uhk.janMachacek.library.Api.Http.Response;
 import cz.uhk.janMachacek.library.Api.Http.Utils;
 
 /**
+ * Třída zapouzdřuje obstarání auth-tokenu ze serveru
  * Created by jan on 22.7.2016.
  */
 public class ApiAuthenticator {
@@ -79,52 +80,6 @@ public class ApiAuthenticator {
         }
     }
 
-    public void getTokenByLogin() throws EmptyCredentialsException, WrongCredentialsException, ApiErrorException {
-
-        String accessToken, refreshToken, login, pass;
-        SharedPreferences.Editor editor = preferences.edit();
-
-        login = preferences.getString(Config.API_LOGIN, null);
-        pass = preferences.getString(Config.API_PASSWORD, null);
-
-        if (login == null || pass == null)
-            throw new EmptyCredentialsException();
-
-        Log.d("Response ", "login: " + login);
-        Log.d("Response ", "pass: " + pass);
-        HttpClient httpClient = new DefaultHttpClient();
-
-        try {
-
-            HttpPost httpPost = Response.accessTokenByCredentials(login, pass);
-
-            HttpResponse response = httpClient.execute(httpPost);
-
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-            JSONObject jsonObject = new JSONObject(json);
-            //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
-            if (httpStatus >= 400) {
-                String message = jsonObject.getString("message");
-                throw new WrongCredentialsException(message + ": wrong credentials");
-            }
-
-            Log.d("Response", json);
-
-            accessToken = jsonObject.getString("access_token");
-            refreshToken = jsonObject.getString("refresh_token");
-
-            //ulozit novy accessToken do preferenci
-            editor.putString("access_token", accessToken);
-            editor.putString("refresh_token", refreshToken);
-            editor.commit();
-        } catch (WrongCredentialsException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ApiErrorException(e.getMessage(), e);
-        }
-    }
-
     public static String[] getAccessTokenByRefreshToken(String refreshToken) throws ApiErrorException, InvalidateRefreshTokenException {
 
         Log.d("astro", "method> getAccessTokenByRefreshToken");
@@ -162,38 +117,6 @@ public class ApiAuthenticator {
         }catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public void refreshAccessToken() throws ApiErrorException {
-
-        String refreshToken = preferences.getString(Config.API_REFRESH_TOKEN, null);
-        try {
-            HttpPost post = Response.refreshToken(refreshToken);
-            HttpClient httpClient = new DefaultHttpClient();
-
-            HttpResponse response = httpClient.execute(post);
-
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-
-            Log.d("Response", json);
-
-            JSONObject jsonObject = null;
-
-            jsonObject = new JSONObject(json);
-
-            //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
-            if (httpStatus >= 400) {
-                String message = jsonObject.getString("message");
-                throw new ApiErrorException(message + ": wrong credentials");
-            }
-            String accessToken = jsonObject.getString(Config.API_ACCESS_TOKEN);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(Config.API_ACCESS_TOKEN, accessToken);
-            editor.commit();
-        } catch (Exception e) {
-            throw new ApiErrorException(e.getMessage(), e);
         }
     }
 }

@@ -60,11 +60,8 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator {
         Log.d("astro", "AcountAuthenticator getAuthToken()");
 
         AccountManager am = AccountManager.get(context);
-
         String refreshToken = am.getUserData(account, AuthenticatorActivity.REFRESH_TOKEN);
-
         String[] tokens;
-
 
         try {
             tokens = ApiAuthenticator.getAccessTokenByRefreshToken(refreshToken);

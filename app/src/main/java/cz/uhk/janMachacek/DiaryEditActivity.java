@@ -277,6 +277,9 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                 Uri uri = Uri.parse(AstroContract.DIARY_URI + "/diary_edit");
                 if (isNew) {
                     getContentResolver().insert(uri, val.getContentValues());
+                    //navrat na vypis objektu
+                    Intent intent = new Intent(this, DiaryActivity.class);
+                    startActivity(intent);
                 } else {
 
                     int actualServerCounter = getActualServerCounter(this.object.getId());
@@ -298,6 +301,8 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                         startActivity(intent);
                     }
                 }
+
+
 
             }
 

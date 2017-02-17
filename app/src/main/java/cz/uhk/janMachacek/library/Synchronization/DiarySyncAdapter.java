@@ -27,6 +27,7 @@ import cz.uhk.janMachacek.Model.AstroDbHelper;
 import cz.uhk.janMachacek.Model.DiaryFacade;
 import cz.uhk.janMachacek.Model.DiaryObject;
 import cz.uhk.janMachacek.ObjectListActivity;
+import cz.uhk.janMachacek.R;
 
 /**
  * @author Jan Macháček
@@ -44,7 +45,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
     private DiaryFacade facade;
 
-    private boolean syncFromServerOK = true;
+    private boolean syncFromServerOK;
 
     public DiarySyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -57,10 +58,13 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("astro", "Synchronizace diary_edit");
         Log.d("astro", contentProviderClient.getLocalContentProvider().getClass().toString());
 
+        syncFromServerOK = true;
+
         facade = new DiaryFacade(contentProviderClient);
+        String authToken = null;
 
         try {
-            String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+            authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
             Log.d("astro", "SYNC: zahájení synchronizace");
             diaryData = new DiaryData(contentProviderClient, authToken);
             Log.d("astro", "SYNC: stahování dat ze serveru");
@@ -70,6 +74,9 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
 
             if (syncFromServerOK) {
+                //zobrazit aktuální data
+                refreshDiaryList();
+
                 //zobrazit stav synchronizace
                 Intent intent = new Intent();
                 intent.setAction(AbstactBaseActivity.FILTER_SHOW_MESSAGE);
@@ -81,6 +88,8 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         } catch (AccessTokenExpiredException e) {
             String message = "ERROR: neaktuální přihlašovací údaje " + e.getMessage();
+            mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
+            // poslat spravne cislo chyby
             syncProblem(syncResult, message);
         } catch (Exception e) {
             syncProblem(syncResult, e.getMessage());
@@ -183,13 +192,16 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
                 e.printStackTrace();
             }
         }
+    }
 
-        //zobrazit aktuální data
+    /**
+     * Reload objektů v activity
+     */
+    private void refreshDiaryList() {
         Intent intent = new Intent();
         intent.setAction(DiaryActivity.REFRESH_DIARY_LIST);
         Log.d("Response", "SEND DIARY BROADCAST *");
         getContext().sendBroadcast(intent);
-
     }
 
     /**
@@ -228,10 +240,12 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 //        syncResult.stats.numAuthExceptions++;
 
         syncFromServerOK = false;
+        Log.d("astro", "SYNC CONFLICT 1: " + message);
         syncResult.stats.numConflictDetectedExceptions++;
+        Log.d("astro", "SYNC CONFLICT 2: " + message);
         syncResult.delayUntil = 30;
 
-        Log.d("astro", "SYNC CONFLICT: " + message);
+
         Intent intent = new Intent();
         intent.setAction(AbstactBaseActivity.FILTER_SHOW_MESSAGE);
         intent.putExtra("message", message);

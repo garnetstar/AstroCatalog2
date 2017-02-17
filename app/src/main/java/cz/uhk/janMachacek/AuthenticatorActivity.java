@@ -43,7 +43,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         accountManager = AccountManager.get(getBaseContext());
         String accountName = getIntent().getStringExtra(LOGIN);
         if (accountName != null) {
-            ((TextView)findViewById(R.id.accountName)).setText(accountName);
+            ((TextView) findViewById(R.id.accountName)).setText(accountName);
         }
 
         findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
                 final String password = ((TextView) findViewById(R.id.accountPassword)).getText().toString();
 
                 final String accountType = getIntent().getStringExtra(ACCOUNT_TYPE);
-
 
                 new AsyncTask<String, Void, Intent>() {
                     @Override
@@ -129,20 +128,19 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 //            getApplicationContext().getContentResolver().setMasterSyncAutomatically(true);
 //            getApplicationContext().getContentResolver().setIsSyncable(account, AstroContract.DIARY_AUTHORITY, 1);
 //            getApplicationContext().getContentResolver().setIsSyncable(account, AstroContract.CATALOG_AUTHORITY, 1);
-            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.DIARY_AUTHORITY,true);
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.DIARY_AUTHORITY, true);
 
             getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.DIARY_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
-            getApplicationContext().getContentResolver().addPeriodicSync(account,  AstroContract.CATALOG_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
-            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.CATALOG_AUTHORITY,true);
-        }
-        else{
+            getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.CATALOG_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.CATALOG_AUTHORITY, true);
+        } else {
             Log.d("astro", "UPDATE ACCOUNT ONLY");
             accountManager.setPassword(account, password);
         }
 
         /** @TODO nevim zda to je tady k necemu **/
-       // Intent intent1 = new Intent();
-     //   intent1.putExtras(data);
+        // Intent intent1 = new Intent();
+        //   intent1.putExtras(data);
         setAccountAuthenticatorResult(intent.getExtras());
         setResult(RESULT_OK, intent);
 

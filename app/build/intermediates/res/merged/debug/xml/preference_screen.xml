@@ -27,16 +27,4 @@
         android:max="10"
         android:title="@string/max_magnitude"
         custom:min="1" />
-
-    <MultiSelectListPreference
-        android:defaultValue="@array/astro_sync_default_values"
-        android:entries="@array/astro_sync_names"
-        android:entryValues="@array/astro_sync_values"
-        android:key="sync_issues"
-        android:title="Nastavení synchronizace"
-        />
-
-
-
-
 </PreferenceScreen>

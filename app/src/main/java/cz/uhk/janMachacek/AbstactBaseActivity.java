@@ -8,21 +8,21 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -42,10 +42,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         LocationListener
 {
 
-    public static final String FILTER = "astroIntent.broadcast";
     public static final String FILTER_SHOW_MESSAGE = "astroIntent.show_message";
-    public static final String KEY_MESSAGE = "key_message";
-    private Handler mHandler = new Handler();
 
     protected LocationManager locationManager;
     protected ObjectDataFacade facade;
@@ -78,9 +75,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 
 
     }
-
-
-
 
     protected void showProgressDialog(String title, String message) {
         this.progresDialog = ProgressDialog.show(this, title, message, true);
@@ -135,16 +129,9 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         return;
     }
 
-    /**
-     * registrace broadcast receiveru pro zobrazování message z jiných threadů
-     */
     @Override
     protected void onStart() {
         super.onStart();
-
-        registerReceiver(new MyReciever(), new IntentFilter(FILTER));
-
-
 
         if(numberOfAccounts() < 1) {
             addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
@@ -183,62 +170,24 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         public void onReceive(Context context, Intent intent) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-                String message = "RESUL SYNCHRONIZACE " + extras.getString("message");
+                String message = "RESUL SYNCHRONIZACE:\n" + extras.getString("message");
                 Log.d("astro",message );
-//                Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                // Create layout inflator object to inflate toast.xml file
                 LayoutInflater inflater = getLayoutInflater();
-
-                // Call toast.xml file for toast layout
                 View toastRoot = inflater.inflate(R.layout.toast, null);
-
-
-
                 Toast toast = new Toast(context);
-
-                // Set layout to toast
                 toast.setView(toastRoot);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM,
                         0, 0);
                 toast.setDuration(Toast.LENGTH_LONG);
                 TextView toastMessage = (TextView) toastRoot.findViewById(R.id.toastMessage);
                 toastMessage.setText(message);
                 toast.show();
+
+//                showNotification(message, getBaseContext());
             }
         }
     }
-
-
-    // !!! dulezita promenna, zajisti ze runnable job pojede jen v jedne instanci
-    static boolean  runn = false;
-
-    /**
-     * spustení synchronizace na pozadi
-     * Později bude nahrazeno SyncAdapterem
-     */
-//    private Runnable mHandlerTask = new Runnable() {
-//        @Override
-//        public void run() {
-//            runn = true;
-//            try {
-//                Date date = new Date();
-//                Log.d("Response", "execution" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-//                Synchronization sync = new Synchronization(getApplicationContext(), preference);
-//                sync.execute();
-//                mHandler.postDelayed(mHandlerTask, 30000);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                runn = false;
-//            }
-//        }
-//    };
-
-    void startRepeatingTask() {
-        //mHandlerTask.run();
-
-    }
-
 
     private void addNewAccount(String accountType, String authTokenType) {
 
@@ -281,4 +230,24 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         super.onPause();
         unregisterReceiver(messageReceiver);
     }
+
+//    private void showNotification(String eventtext, Context ctx) {
+//
+//        // Set the icon, scrolling text and timestamp
+//        Notification notification = new Notification(R.drawable.common_full_open_on_phone,
+//                eventtext, System.currentTimeMillis());
+//
+//        // The PendingIntent to launch our activity if the user selects this
+//        // notification
+//        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
+//                new Intent(ctx, HomePage.class), 0);
+//
+//        // Set the info for the views that show in the notification panel.
+//        notification.setLatestEventInfo(ctx, "AstroCatalog", eventtext,
+//                contentIntent);
+//
+//        // Send the notification.
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify("Title", 0, notification);
+//    }
 }

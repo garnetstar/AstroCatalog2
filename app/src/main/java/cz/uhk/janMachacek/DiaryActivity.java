@@ -29,6 +29,8 @@ public class DiaryActivity extends AbstactBaseActivity {
 
     private DiaryObjectAdapter adapter;
 
+    private RefreshBroudcastReceiver refreshReceiver = new RefreshBroudcastReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +43,7 @@ public class DiaryActivity extends AbstactBaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // registrace broadcast receiveru pro reload objektů
-        registerReceiver(new RefreshBroudcastReceiver(), new IntentFilter(REFRESH_DIARY_LIST));
+
     }
 
     @Override
@@ -66,6 +67,9 @@ public class DiaryActivity extends AbstactBaseActivity {
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
+
+        // registrace broadcast receiveru pro reload objektů
+        registerReceiver(refreshReceiver, new IntentFilter(REFRESH_DIARY_LIST));
 
         ArrayList<DiaryObject> objects = new ArrayList<DiaryObject>();
 
@@ -96,6 +100,15 @@ public class DiaryActivity extends AbstactBaseActivity {
         }
 
         renderObjects(objects);
+    }
+
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(refreshReceiver);
     }
 
     private void renderObjects(ArrayList<DiaryObject> objects) {

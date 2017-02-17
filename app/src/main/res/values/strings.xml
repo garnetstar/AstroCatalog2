@@ -60,6 +60,7 @@
     <string name="settings">Settings</string>
 
     <string name="catalog">Katalog</string>
+    <string name="title_activity_main">MainActivity</string>
 
 
 </resources>
