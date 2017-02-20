@@ -7,17 +7,17 @@
                     "startLine": 2,
                     "startColumn": 4,
                     "startOffset": 105,
-                    "endColumn": 189,
-                    "endOffset": 290
+                    "endColumn": 106,
+                    "endOffset": 207
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 476,
-                        "endColumn": 193,
-                        "endOffset": 665
+                        "startLine": 4,
+                        "startColumn": 0,
+                        "startOffset": 287,
+                        "endColumn": 102,
+                        "endOffset": 389
                     }
                 }
             },
@@ -25,18 +25,18 @@
                 "to": {
                     "startLine": 3,
                     "startColumn": 4,
-                    "startOffset": 295,
-                    "endColumn": 180,
-                    "endOffset": 471
+                    "startOffset": 212,
+                    "endColumn": 179,
+                    "endOffset": 387
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 18,
-                        "startColumn": 4,
-                        "startOffset": 2605,
-                        "endColumn": 184,
-                        "endOffset": 2785
+                        "startLine": 5,
+                        "startColumn": 0,
+                        "startOffset": 390,
+                        "endColumn": 179,
+                        "endOffset": 569
                     }
                 }
             },
@@ -44,18 +44,18 @@
                 "to": {
                     "startLine": 4,
                     "startColumn": 4,
-                    "startOffset": 476,
-                    "endColumn": 115,
-                    "endOffset": 587
+                    "startOffset": 392,
+                    "endColumn": 128,
+                    "endOffset": 516
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 16,
-                        "startColumn": 4,
-                        "startOffset": 2290,
-                        "endColumn": 115,
-                        "endOffset": 2401
+                        "startLine": 6,
+                        "startColumn": 0,
+                        "startOffset": 570,
+                        "endColumn": 124,
+                        "endOffset": 694
                     }
                 }
             },
@@ -63,18 +63,18 @@
                 "to": {
                     "startLine": 5,
                     "startColumn": 4,
-                    "startOffset": 592,
-                    "endColumn": 279,
-                    "endOffset": 867
+                    "startOffset": 521,
+                    "endColumn": 109,
+                    "endOffset": 626
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 30,
-                        "startColumn": 4,
-                        "startOffset": 4497,
-                        "endColumn": 283,
-                        "endOffset": 4776
+                        "startLine": 7,
+                        "startColumn": 0,
+                        "startOffset": 695,
+                        "endColumn": 105,
+                        "endOffset": 800
                     }
                 }
             },
@@ -82,18 +82,18 @@
                 "to": {
                     "startLine": 6,
                     "startColumn": 4,
-                    "startOffset": 872,
-                    "endColumn": 129,
-                    "endOffset": 997
+                    "startOffset": 631,
+                    "endColumn": 225,
+                    "endOffset": 852
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 14,
-                        "startColumn": 4,
-                        "startOffset": 2029,
-                        "endColumn": 129,
-                        "endOffset": 2154
+                        "startLine": 8,
+                        "startColumn": 0,
+                        "startOffset": 801,
+                        "endColumn": 225,
+                        "endOffset": 1026
                     }
                 }
             },
@@ -101,18 +101,18 @@
                 "to": {
                     "startLine": 7,
                     "startColumn": 4,
-                    "startOffset": 1002,
-                    "endColumn": 179,
-                    "endOffset": 1177
+                    "startOffset": 857,
+                    "endColumn": 131,
+                    "endOffset": 984
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 13,
-                        "startColumn": 4,
-                        "startOffset": 1845,
-                        "endColumn": 183,
-                        "endOffset": 2024
+                        "startLine": 9,
+                        "startColumn": 0,
+                        "startOffset": 1027,
+                        "endColumn": 127,
+                        "endOffset": 1154
                     }
                 }
             },
@@ -120,18 +120,18 @@
                 "to": {
                     "startLine": 8,
                     "startColumn": 4,
-                    "startOffset": 1182,
-                    "endColumn": 126,
-                    "endOffset": 1304
+                    "startOffset": 989,
+                    "endColumn": 133,
+                    "endOffset": 1118
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 12,
-                        "startColumn": 4,
-                        "startOffset": 1718,
-                        "endColumn": 126,
-                        "endOffset": 1840
+                        "startLine": 10,
+                        "startColumn": 0,
+                        "startOffset": 1155,
+                        "endColumn": 129,
+                        "endOffset": 1284
                     }
                 }
             },
@@ -139,18 +139,18 @@
                 "to": {
                     "startLine": 9,
                     "startColumn": 4,
-                    "startOffset": 1309,
-                    "endColumn": 170,
-                    "endOffset": 1475
+                    "startOffset": 1123,
+                    "endColumn": 203,
+                    "endOffset": 1322
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 7,
-                        "startColumn": 4,
-                        "startOffset": 827,
-                        "endColumn": 174,
-                        "endOffset": 997
+                        "startLine": 4,
+                        "startColumn": 0,
+                        "startOffset": 289,
+                        "endColumn": 203,
+                        "endOffset": 492
                     }
                 }
             },
@@ -158,18 +158,18 @@
                 "to": {
                     "startLine": 10,
                     "startColumn": 4,
-                    "startOffset": 1480,
-                    "endColumn": 132,
-                    "endOffset": 1608
+                    "startOffset": 1327,
+                    "endColumn": 228,
+                    "endOffset": 1551
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
                         "startLine": 11,
-                        "startColumn": 4,
-                        "startOffset": 1585,
-                        "endColumn": 132,
-                        "endOffset": 1713
+                        "startColumn": 0,
+                        "startOffset": 1285,
+                        "endColumn": 228,
+                        "endOffset": 1513
                     }
                 }
             },
@@ -177,18 +177,18 @@
                 "to": {
                     "startLine": 11,
                     "startColumn": 4,
-                    "startOffset": 1613,
-                    "endColumn": 224,
-                    "endOffset": 1833
+                    "startOffset": 1556,
+                    "endColumn": 109,
+                    "endOffset": 1661
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 9,
-                        "startColumn": 4,
-                        "startOffset": 1131,
-                        "endColumn": 228,
-                        "endOffset": 1355
+                        "startLine": 12,
+                        "startColumn": 0,
+                        "startOffset": 1514,
+                        "endColumn": 105,
+                        "endOffset": 1619
                     }
                 }
             },
@@ -196,18 +196,18 @@
                 "to": {
                     "startLine": 12,
                     "startColumn": 4,
-                    "startOffset": 1838,
-                    "endColumn": 220,
-                    "endOffset": 2054
+                    "startOffset": 1666,
+                    "endColumn": 194,
+                    "endOffset": 1856
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 10,
-                        "startColumn": 4,
-                        "startOffset": 1360,
-                        "endColumn": 224,
-                        "endOffset": 1580
+                        "startLine": 13,
+                        "startColumn": 0,
+                        "startOffset": 1620,
+                        "endColumn": 194,
+                        "endOffset": 1814
                     }
                 }
             },
@@ -215,18 +215,18 @@
                 "to": {
                     "startLine": 13,
                     "startColumn": 4,
-                    "startOffset": 2059,
-                    "endColumn": 128,
-                    "endOffset": 2183
+                    "startOffset": 1861,
+                    "endColumn": 131,
+                    "endOffset": 1988
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 8,
-                        "startColumn": 4,
-                        "startOffset": 1002,
-                        "endColumn": 128,
-                        "endOffset": 1126
+                        "startLine": 14,
+                        "startColumn": 0,
+                        "startOffset": 1815,
+                        "endColumn": 127,
+                        "endOffset": 1942
                     }
                 }
             },
@@ -234,18 +234,18 @@
                 "to": {
                     "startLine": 14,
                     "startColumn": 4,
-                    "startOffset": 2188,
-                    "endColumn": 175,
-                    "endOffset": 2359
+                    "startOffset": 1993,
+                    "endColumn": 215,
+                    "endOffset": 2204
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 24,
-                        "startColumn": 4,
-                        "startOffset": 3566,
-                        "endColumn": 175,
-                        "endOffset": 3737
+                        "startLine": 15,
+                        "startColumn": 0,
+                        "startOffset": 1943,
+                        "endColumn": 215,
+                        "endOffset": 2158
                     }
                 }
             },
@@ -253,18 +253,18 @@
                 "to": {
                     "startLine": 15,
                     "startColumn": 4,
-                    "startOffset": 2364,
-                    "endColumn": 122,
-                    "endOffset": 2482
+                    "startOffset": 2209,
+                    "endColumn": 186,
+                    "endOffset": 2391
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 23,
-                        "startColumn": 4,
-                        "startOffset": 3443,
-                        "endColumn": 122,
-                        "endOffset": 3561
+                        "startLine": 16,
+                        "startColumn": 0,
+                        "startOffset": 2159,
+                        "endColumn": 182,
+                        "endOffset": 2341
                     }
                 }
             },
@@ -272,18 +272,18 @@
                 "to": {
                     "startLine": 16,
                     "startColumn": 4,
-                    "startOffset": 2487,
-                    "endColumn": 156,
-                    "endOffset": 2639
+                    "startOffset": 2396,
+                    "endColumn": 98,
+                    "endOffset": 2490
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 6,
-                        "startColumn": 4,
-                        "startOffset": 670,
-                        "endColumn": 156,
-                        "endOffset": 822
+                        "startLine": 17,
+                        "startColumn": 0,
+                        "startOffset": 2342,
+                        "endColumn": 94,
+                        "endOffset": 2436
                     }
                 }
             },
@@ -291,18 +291,18 @@
                 "to": {
                     "startLine": 17,
                     "startColumn": 4,
-                    "startOffset": 2644,
-                    "endColumn": 177,
-                    "endOffset": 2817
+                    "startOffset": 2495,
+                    "endColumn": 95,
+                    "endOffset": 2586
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
-                        "startLine": 22,
-                        "startColumn": 4,
-                        "startOffset": 3265,
-                        "endColumn": 177,
-                        "endOffset": 3438
+                        "startLine": 18,
+                        "startColumn": 0,
+                        "startOffset": 2437,
+                        "endColumn": 91,
+                        "endOffset": 2528
                     }
                 }
             },
@@ -310,265 +310,18 @@
                 "to": {
                     "startLine": 18,
                     "startColumn": 4,
-                    "startOffset": 2822,
-                    "endColumn": 118,
-                    "endOffset": 2936
+                    "startOffset": 2591,
+                    "endColumn": 112,
+                    "endOffset": 2699
                 },
                 "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 21,
-                        "startColumn": 4,
-                        "startOffset": 3146,
-                        "endColumn": 118,
-                        "endOffset": 3260
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 19,
-                    "startColumn": 4,
-                    "startOffset": 2941,
-                    "endColumn": 170,
-                    "endOffset": 3107
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 305,
-                        "endColumn": 170,
-                        "endOffset": 471
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 20,
-                    "startColumn": 4,
-                    "startOffset": 3112,
-                    "endColumn": 134,
-                    "endOffset": 3242
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 170,
-                        "endColumn": 134,
-                        "endOffset": 300
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 21,
-                    "startColumn": 4,
-                    "startOffset": 3247,
-                    "endColumn": 169,
-                    "endOffset": 3412
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 32,
-                        "startColumn": 4,
-                        "startOffset": 4903,
-                        "endColumn": 169,
-                        "endOffset": 5068
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 22,
-                    "startColumn": 4,
-                    "startOffset": 3417,
-                    "endColumn": 121,
-                    "endOffset": 3534
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 31,
-                        "startColumn": 4,
-                        "startOffset": 4781,
-                        "endColumn": 121,
-                        "endOffset": 4898
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 23,
-                    "startColumn": 4,
-                    "startOffset": 3539,
-                    "endColumn": 149,
-                    "endOffset": 3684
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 25,
-                        "startColumn": 4,
-                        "startOffset": 3742,
-                        "endColumn": 149,
-                        "endOffset": 3887
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 24,
-                    "startColumn": 4,
-                    "startOffset": 3689,
-                    "endColumn": 274,
-                    "endOffset": 3959
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 27,
-                        "startColumn": 4,
-                        "startOffset": 4010,
-                        "endColumn": 278,
-                        "endOffset": 4284
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 25,
-                    "startColumn": 4,
-                    "startOffset": 3964,
-                    "endColumn": 117,
-                    "endOffset": 4077
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 26,
-                        "startColumn": 4,
-                        "startOffset": 3892,
-                        "endColumn": 117,
-                        "endOffset": 4005
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 26,
-                    "startColumn": 4,
-                    "startOffset": 4082,
-                    "endColumn": 109,
-                    "endOffset": 4187
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 28,
-                        "startColumn": 4,
-                        "startOffset": 4289,
-                        "endColumn": 109,
-                        "endOffset": 4394
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 27,
-                    "startColumn": 4,
-                    "startOffset": 4192,
-                    "endColumn": 194,
-                    "endOffset": 4382
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 17,
-                        "startColumn": 4,
-                        "startOffset": 2406,
-                        "endColumn": 198,
-                        "endOffset": 2600
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 28,
-                    "startColumn": 4,
-                    "startOffset": 4387,
-                    "endColumn": 130,
-                    "endOffset": 4513
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 15,
-                        "startColumn": 4,
-                        "startOffset": 2159,
-                        "endColumn": 130,
-                        "endOffset": 2285
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 29,
-                    "startColumn": 4,
-                    "startOffset": 4518,
-                    "endColumn": 215,
-                    "endOffset": 4729
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 20,
-                        "startColumn": 4,
-                        "startOffset": 2926,
-                        "endColumn": 219,
-                        "endOffset": 3141
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 30,
-                    "startColumn": 4,
-                    "startOffset": 4734,
-                    "endColumn": 135,
-                    "endOffset": 4865
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
+                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values-pt-rBR\\values.xml",
                     "position": {
                         "startLine": 19,
-                        "startColumn": 4,
-                        "startOffset": 2790,
-                        "endColumn": 135,
-                        "endOffset": 2921
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 31,
-                    "startColumn": 4,
-                    "startOffset": 4870,
-                    "endColumn": 97,
-                    "endOffset": 4963
-                },
-                "from": {
-                    "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-pt-rBR\\common_strings.xml",
-                    "position": {
-                        "startLine": 29,
-                        "startColumn": 4,
-                        "startOffset": 4399,
-                        "endColumn": 97,
-                        "endOffset": 4492
+                        "startColumn": 0,
+                        "startOffset": 2529,
+                        "endColumn": 108,
+                        "endOffset": 2637
                     }
                 }
             }

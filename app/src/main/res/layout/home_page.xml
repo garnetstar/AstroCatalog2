@@ -17,7 +17,6 @@
         android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
-
         <ImageButton
             android:id="@+id/katalog"
             android:layout_width="wrap_content"

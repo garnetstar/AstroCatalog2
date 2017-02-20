@@ -16,4 +16,6 @@ public class AstroContract {
 
     public static final String weatherUri = "http://api.openweathermap.org/data/2.5/weather?units=metric";
     public static final String weatherApiKey = "edcc91c97986f06f830222a5aabf9084";
+
+    public static final String API_CLIENT_ID = "171814397882-qoafbodpid52h7lh0pc98bruc9vv16vs.apps.googleusercontent.com";
 }

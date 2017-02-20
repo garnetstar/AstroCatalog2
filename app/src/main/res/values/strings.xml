@@ -15,8 +15,8 @@
     <string name="title_activity_pointer">PointerActivity</string>
     <string name="title_activity_object_detatil">ObjectDetatil</string>
     <string name="title_object_list">ObjectList</string>
-    <string name="title_diary">Denník</string>
-    <string name="title_diary_detail">Denník detail</string>
+    <string name="title_diary">Deník</string>
+    <string name="title_diary_detail">Deník detail</string>
 
     <!-- Jména typů objektů -->
     <string name="object_type_open_cluser">Otevřená hvězdokupa</string>
