@@ -1,5 +1,7 @@
 package cz.uhk.janMachacek.Model;
 
+import android.accounts.Account;
+import android.accounts.OnAccountsUpdateListener;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,11 +27,13 @@ public class DiaryContentProvider extends ContentProvider {
     private static final int DIARY = 1;
     private static final int DIARY_LIST = 2;
     private static final int SETTINGS = 3;
+    private static final int DELETE_ALL = 4;
 
     // prepare the UriMatcher
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
         URI_MATCHER.addURI(AstroContract.DIARY_AUTHORITY, "diary_edit", DIARY);
+        URI_MATCHER.addURI(AstroContract.DIARY_AUTHORITY, "delete_all", DELETE_ALL);
         URI_MATCHER.addURI(AstroContract.DIARY_AUTHORITY, "settings", SETTINGS);
     }
 
@@ -112,7 +116,22 @@ public class DiaryContentProvider extends ContentProvider {
      */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsDeleted = -1;
+        int token = URI_MATCHER.match(uri);
+
+        Log.d("astro", "Diary delete all " + uri);
+
+        switch (token) {
+            case DELETE_ALL:
+                db.delete(dbHelper.TABLE_OBJECT_NAME, selection, selectionArgs);
+                db.delete(dbHelper.TABLE_SETTINGS_NAME, selection, selectionArgs);
+                db.delete(dbHelper.TABLE_DIARY_NAME, selection, selectionArgs);
+                Log.d("astro", "Diary delete all " + uri);
+                break;
+        }
+        return 1;
     }
 
     /*
@@ -139,4 +158,5 @@ public class DiaryContentProvider extends ContentProvider {
             }
         }
     }
+
 }

@@ -4,10 +4,12 @@ package cz.uhk.janMachacek;
 import cz.uhk.janMachacek.coordinates.Angle;
 import cz.uhk.janMachacek.coordinates.Utils;
 import cz.uhk.janMachacek.Model.ObjectDataFacade;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
+import android.accounts.OnAccountsUpdateListener;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,6 +27,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,8 +43,7 @@ import android.widget.Toast;
  * @author Jan Mach??ek
  */
 abstract public class AbstactBaseActivity extends FragmentActivity implements
-        LocationListener
-{
+        LocationListener {
 
     public static final String FILTER_SHOW_MESSAGE = "astroIntent.show_message";
 
@@ -72,8 +75,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         facade = new ObjectDataFacade(this, getAssets());
 
         mAccountManager = AccountManager.get(this);
-
-
     }
 
     protected void showProgressDialog(String title, String message) {
@@ -97,8 +98,19 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
             c.setAccuracy(Criteria.ACCURACY_COARSE);
             c.setPowerRequirement(Criteria.POWER_LOW);
             locationProviderName = locationManager.getBestProvider(c, true);
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             locationManager.requestSingleUpdate(c, this, null);
         } catch (Exception e) {
+
             hideProgressDialog();
             Toast.makeText(getBaseContext(),
                     "ERROR: " + e.getMessage() + e.getLocalizedMessage(),
@@ -133,7 +145,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     protected void onStart() {
         super.onStart();
 
-        if(numberOfAccounts() < 1) {
+        if (numberOfAccounts() < 1) {
             addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
         }
     }
@@ -149,6 +161,16 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
     @Override
     protected void onStop() {
         super.onStop();
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         locationManager.removeUpdates(this);
     }
 
@@ -250,4 +272,5 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 //        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 //        notificationManager.notify("Title", 0, notification);
 //    }
+
 }

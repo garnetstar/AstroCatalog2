@@ -90,6 +90,7 @@
     <declare-styleable name="SignInButton"><attr format="reference" name="buttonSize"><enum name="standard" value="0"/><enum name="wide" value="1"/><enum name="icon_only" value="2"/></attr><attr format="reference" name="colorScheme"><enum name="dark" value="0"/><enum name="light" value="1"/><enum name="auto" value="2"/></attr><attr format="reference|string" name="scopeUris"/></declare-styleable>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <item name="crash_reporting_present" type="id"/>
     <integer name="google_play_services_version">10298000</integer>
     <string name="accountType">cz.uhk.janMachacek.astroCatalog</string>
     <string name="action_settings">Settings</string>

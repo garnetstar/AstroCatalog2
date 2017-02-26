@@ -148,7 +148,9 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.d("astro", "LOCATION - change xxxx");
         if (isNew) {
+            Log.d("astro", "LOCATION - change");
             Angle latitude = new Angle(location.getLatitude());
             Angle longitude = new Angle(location.getLongitude());
 
