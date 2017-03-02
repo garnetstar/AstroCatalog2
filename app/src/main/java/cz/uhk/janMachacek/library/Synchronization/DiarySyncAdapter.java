@@ -66,11 +66,11 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         try {
 
-            authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+//            authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
 
 
 
-//          authToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+          authToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
 
 
 

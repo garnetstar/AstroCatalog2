@@ -30,7 +30,9 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleRefreshTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.firebase.crash.FirebaseCrash;
@@ -88,30 +90,60 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
         Log.d("astro", "AcountAuthenticator getAuthToken()");
 
 
-        GoogleTokenResponse tokenResponse =
-                null;
+        AccountManager am = AccountManager.get(context);
+        String refreshToken = am.getUserData(account, AuthenticatorActivity.REFRESH_TOKEN);
+
+        Log.d("astro", "REFRESH_TOKEN=" + refreshToken);
+
         try {
-            tokenResponse = new GoogleAuthorizationCodeTokenRequest(
+            GoogleTokenResponse googleTokenResponse = new GoogleRefreshTokenRequest(
                     new NetHttpTransport(),
                     JacksonFactory.getDefaultInstance(),
-                    "https://www.googleapis.com/oauth2/v4/token",
+                    refreshToken,
                     "171814397882-qoafbodpid52h7lh0pc98bruc9vv16vs.apps.googleusercontent.com",
-                    "zN_3GYmPfnSAnlz0ChErRI4M",
-                    "4/-6HSoWFIA2mnlYhvoExQaHVDVN8jLn_B1lukkT6TWYg",
-                    "")  // Specify the same redirect URI that you use with your web
-                    // app. If you don't have a web version of your app, you can
-                    // specify an empty string.
-                    .execute();
+                    "zN_3GYmPfnSAnlz0ChErRI4M"
+            ).execute();
+
+
+            Log.d("astro", "NEW ID_TOKEN=" + googleTokenResponse.getIdToken());
+
+            Bundle result = new Bundle();
+            result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+            result.putString(AccountManager.KEY_AUTHTOKEN, googleTokenResponse.getAccessToken());
+            result.putString(AuthenticatorActivity.ID_TOKEN, googleTokenResponse.getIdToken());
+            am.setUserData(account, AuthenticatorActivity.REFRESH_TOKEN, refreshToken);
+            return result;
+
         } catch (IOException e) {
+            Log.d("astro", "ERROR IN GoogleRefreshTokenRequest " + e.toString());
             e.printStackTrace();
-            Log.d("astro", "sdfsf " + e.toString());
         }
 
-        String accessToken = tokenResponse.getAccessToken();
-        String refreshToken = tokenResponse.getRefreshToken();
+//        GoogleTokenResponse tokenResponse =
+//                null;
+//        try {
+//            tokenResponse = new GoogleAuthorizationCodeTokenRequest(
+//                    new NetHttpTransport(),
+//                    JacksonFactory.getDefaultInstance(),
+//                    "https://www.googleapis.com/oauth2/v4/token",
+//                    "171814397882-qoafbodpid52h7lh0pc98bruc9vv16vs.apps.googleusercontent.com",
+//                    "zN_3GYmPfnSAnlz0ChErRI4M",
+//                    "4/-6HSoWFIA2mnlYhvoExQaHVDVN8jLn_B1lukkT6TWYg",
+//                    "")  // Specify the same redirect URI that you use with your web
+//                    // app. If you don't have a web version of your app, you can
+//                    // specify an empty string.
+//                    .execute();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.d("astro", "sdfsf " + e.toString());
+//        }
 
-        Log.d("astro", "new access " + accessToken);
-        Log.d("astro", "new refresh " + refreshToken);
+//        String accessToken = tokenResponse.getAccessToken();
+//        String refreshToken = tokenResponse.getRefreshToken();
+//
+//        Log.d("astro", "new access " + accessToken);
+//        Log.d("astro", "new refresh " + refreshToken);
         return null;
 
     }

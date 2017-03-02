@@ -15,6 +15,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import cz.uhk.janMachacek.AuthenticatorActivity;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 //import cz.uhk.janMachacek.R;
 import cz.uhk.janMachacek.Model.AstroObject;
@@ -40,6 +41,7 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             // Get the auth token for the current account
             String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+            authToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
 
             Log.d("astro", "ADAPter - " + authToken);
 

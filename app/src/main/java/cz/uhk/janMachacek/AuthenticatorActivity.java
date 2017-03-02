@@ -216,15 +216,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
             String token = googleSignInAccount.getServerAuthCode();
             Log.d("astro", "server token  +++++ " + token);
 
-       //     token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxMDkxNGZiOTk0OGYxZTQzNTdjYzg3MjY4MDg3Mjk4ZTgzNTlkMjAifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0ODgxODg4OTMsImV4cCI6MTQ4ODE5MjQ5MywiYXVkIjoiMTcxODE0Mzk3ODgyLXFvYWZib2RwaWQ1Mmg3bGgwcGM5OGJydWM5dnYxNnZzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE2ODE2OTM4NjYwODI0MjY3MjQ5IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjE3MTgxNDM5Nzg4Mi1vZ3JtaDBvZ2Y5NTRsZWhubXFoa2tnZTBwYW44bXIyMy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoibWFjaGFjZWsuakBnbWFpbC5jb20iLCJuYW1lIjoiSmFuIE1hY2jDocSNZWsiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ldERGdEowV24zUS9BQUFBQUFBQUFBSS9BQUFBQUFBQURLby9BdTNjWDlFVnZpRS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiSmFuIiwiZmFtaWx5X25hbWUiOiJNYWNow6HEjWVrIiwibG9jYWxlIjoiY3MifQ.JRRRa3dCmpfddK7DrymCjZ1XC3P7U9q9NQMDMiQAkaEIMWNnd4_rHVspzhWe3UQx-wfWVu11hJVEoWKtMNQMISEmsZACQxnvNe7x1QyUcDSXzXLSMFCWWxUOtyrPp6VJLrMcZlV2cH8NDTSaZlv9loQjIZbBhpp70seYAoxuLMbGp8JL7HNRdyo_0AG421csKRkNOPlGYp3qJLDOYgKlRJ84BSANapqXamWsIU_K7ik6nvWi0ha5pZEG12iPVQ6wSHYtPxPDiZKmHuQjNoArFXOeOuqGKT6E18VjXG3WjVaNJokrAqDTCkmXdAF9fa-85qMpLDhKORC_FveMOZlxwg";
-
-            token = googleTokenResponse.getIdToken();
-            Log.d("astro", "AccountType = " + accountType);
-
+//            token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxMDkxNGZiOTk0OGYxZTQzNTdjYzg3MjY4MDg3Mjk4ZTgzNTlkMjAifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0ODgxODg4OTMsImV4cCI6MTQ4ODE5MjQ5MywiYXVkIjoiMTcxODE0Mzk3ODgyLXFvYWZib2RwaWQ1Mmg3bGgwcGM5OGJydWM5dnYxNnZzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE2ODE2OTM4NjYwODI0MjY3MjQ5IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjE3MTgxNDM5Nzg4Mi1vZ3JtaDBvZ2Y5NTRsZWhubXFoa2tnZTBwYW44bXIyMy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoibWFjaGFjZWsuakBnbWFpbC5jb20iLCJuYW1lIjoiSmFuIE1hY2jDocSNZWsiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ldERGdEowV24zUS9BQUFBQUFBQUFBSS9BQUFBQUFBQURLby9BdTNjWDlFVnZpRS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiSmFuIiwiZmFtaWx5X25hbWUiOiJNYWNow6HEjWVrIiwibG9jYWxlIjoiY3MifQ.JRRRa3dCmpfddK7DrymCjZ1XC3P7U9q9NQMDMiQAkaEIMWNnd4_rHVspzhWe3UQx-wfWVu11hJVEoWKtMNQMISEmsZACQxnvNe7x1QyUcDSXzXLSMFCWWxUOtyrPp6VJLrMcZlV2cH8NDTSaZlv9loQjIZbBhpp70seYAoxuLMbGp8JL7HNRdyo_0AG421csKRkNOPlGYp3qJLDOYgKlRJ84BSANapqXamWsIU_K7ik6nvWi0ha5pZEG12iPVQ6wSHYtPxPDiZKmHuQjNoArFXOeOuqGKT6E18VjXG3WjVaNJokrAqDTCkmXdAF9fa-85qMpLDhKORC_FveMOZlxwg";
+            token = googleTokenResponse.getAccessToken();
 
             Account account = new Account(login, accountType);
             Bundle data = new Bundle();
             data.putString(AccountManager.KEY_ACCOUNT_NAME, login);
+            data.putString(REFRESH_TOKEN, googleTokenResponse.getRefreshToken());
+            data.putString(ID_TOKEN, googleTokenResponse.getIdToken());
 
             accountManager.addAccountExplicitly(account, null, data);
             accountManager.setAuthToken(account, "baerer", token);
