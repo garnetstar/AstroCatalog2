@@ -91,6 +91,8 @@ public class AuthenticatorService extends Service implements OnAccountsUpdateLis
                 getContentResolver().delete(uri, null, null);
                 // Take actions to clean up.  Maybe send intent on Local Broadcast reciever
                 Log.d("astro", "DELETE ACCOUNT DATE OK");
+
+                //revoke account
             }
         }
 

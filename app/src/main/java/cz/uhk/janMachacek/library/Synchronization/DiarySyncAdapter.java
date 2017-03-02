@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import cz.uhk.janMachacek.AbstactBaseActivity;
 import cz.uhk.janMachacek.AstroContract;
+import cz.uhk.janMachacek.AuthenticatorActivity;
 import cz.uhk.janMachacek.DiaryActivity;
 import cz.uhk.janMachacek.Exception.AccessTokenExpiredException;
 import cz.uhk.janMachacek.Exception.Api400ErrorException;
@@ -64,7 +65,17 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         String authToken = null;
 
         try {
+
             authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+
+
+
+//          authToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+
+
+
+
+
             Log.d("astro", "SYNC: zahájení synchronizace");
             diaryData = new DiaryData(contentProviderClient, authToken);
             Log.d("astro", "SYNC: stahování dat ze serveru");
@@ -88,7 +99,9 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         } catch (AccessTokenExpiredException e) {
             String message = "ERROR: neaktuální přihlašovací údaje " + e.getMessage();
+            Log.d("astro", "invalidate token = " + authToken);
             mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
+            Log.d("astro", "invalidate token called CCCCCCCCCC= ");
             // poslat spravne cislo chyby
             syncProblem(syncResult, message);
         } catch (Exception e) {
@@ -243,6 +256,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("astro", "SYNC CONFLICT 1: " + message);
         syncResult.stats.numConflictDetectedExceptions++;
         Log.d("astro", "SYNC CONFLICT 2: " + message);
+
         syncResult.delayUntil = 30;
 
 

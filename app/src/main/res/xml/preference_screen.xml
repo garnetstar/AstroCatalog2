@@ -27,4 +27,14 @@
         android:max="10"
         android:title="@string/max_magnitude"
         custom:min="1" />
+
+    <Preference android:title="User" >
+        <intent
+            android:targetPackage="cz.uhk.janMachacek"
+            android:targetClass="cz.uhk.janMachacek.UserActivity"
+            />
+    </Preference>
+
+
+
 </PreferenceScreen>

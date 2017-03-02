@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:text="The image has been uploaded to server."
+        android:text="..."
         android:layout_gravity="center_vertical"
         android:layout_width="match_parent" />
 

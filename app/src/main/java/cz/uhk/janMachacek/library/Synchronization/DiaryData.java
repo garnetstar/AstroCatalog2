@@ -75,6 +75,7 @@ public class DiaryData {
             HttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(get);
             String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+            Log.d("astro", "SSDDGG" + json);
             JSONObject jsonObject = new JSONObject(json);
             //kontrola http statusu
             int httpStatus = response.getStatusLine().getStatusCode();
