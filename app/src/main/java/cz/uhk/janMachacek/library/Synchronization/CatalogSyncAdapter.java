@@ -40,8 +40,8 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("astro", "onPerformSync for account[" + account.name + "]");
         try {
             // Get the auth token for the current account
-            String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
-            authToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+//            String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+            String authToken = mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
 
             Log.d("astro", "ADAPter - " + authToken);
 

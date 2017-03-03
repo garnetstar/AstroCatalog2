@@ -64,7 +64,7 @@ int drawable ic_launcher 0x7f020017
 int drawable observatory_m 0x7f020018
 int drawable settings_m 0x7f020019
 int drawable toast_border 0x7f02001a
-int id action_settings 0x7f0b0069
+int id action_settings 0x7f0b006a
 int id actual_latitude 0x7f0b005b
 int id actual_location 0x7f0b0010
 int id actual_location_provider 0x7f0b0011
@@ -166,6 +166,7 @@ int id timeFrom 0x7f0b004c
 int id timeTo 0x7f0b0050
 int id toastMessage 0x7f0b0068
 int id type 0x7f0b0031
+int id user_image 0x7f0b0069
 int id user_name 0x7f0b000e
 int id weather 0x7f0b0055
 int id weatherList 0x7f0b0044

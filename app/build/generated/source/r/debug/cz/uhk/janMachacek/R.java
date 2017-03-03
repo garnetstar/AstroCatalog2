@@ -154,7 +154,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int toast_border=0x7f02001a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0069;
+        public static final int action_settings=0x7f0b006a;
         public static final int actual_latitude=0x7f0b005b;
         public static final int actual_location=0x7f0b0010;
         public static final int actual_location_provider=0x7f0b0011;
@@ -256,6 +256,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int timeTo=0x7f0b0050;
         public static final int toastMessage=0x7f0b0068;
         public static final int type=0x7f0b0031;
+        public static final int user_image=0x7f0b0069;
         public static final int user_name=0x7f0b000e;
         public static final int weather=0x7f0b0055;
         public static final int weatherList=0x7f0b0044;

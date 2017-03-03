@@ -46,6 +46,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     public final static String REFRESH_TOKEN = "REFRESH_TOKEN";
     public final static String WRONG_CREDENTIALS = "WRONG_CREDENTIALS";
     public final static String ID_TOKEN = "ID_TOKEN";
+    public final static String NAME = "NAME";
+    public final static String PICTURE = "PICTURE";
 
     public final static int PERIOD_OF_SYNC_SEC = 30;
     public final static int KEY_SIGN_IN = 9001;
@@ -224,6 +226,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
             data.putString(AccountManager.KEY_ACCOUNT_NAME, login);
             data.putString(REFRESH_TOKEN, googleTokenResponse.getRefreshToken());
             data.putString(ID_TOKEN, googleTokenResponse.getIdToken());
+            data.putString(NAME, googleSignInAccount.getDisplayName());
+            data.putString(PICTURE, String.valueOf(googleSignInAccount.getPhotoUrl()));
 
             accountManager.addAccountExplicitly(account, null, data);
             accountManager.setAuthToken(account, "baerer", token);
