@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.uhk.janMachacek.test">
+    package="cz.uhk.machacek.test">
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="25" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="cz.uhk.janMachacek"
+                     android:targetPackage="cz.uhk.machacek"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for cz.uhk.janMachacek"/>
+                     android:label="Tests for cz.uhk.machacek"/>
 </manifest>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.uhk.janMachacek"
+    package="cz.uhk.machacek"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -35,10 +35,10 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
-        android:name="cz.uhk.janMachacek.permission.C2D_MESSAGE"
+        android:name="cz.uhk.machacek.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="cz.uhk.janMachacek.permission.C2D_MESSAGE" />
+    <uses-permission android:name="cz.uhk.machacek.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -46,7 +46,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cz.uhk.janMachacek.HomePage"
+            android:name="cz.uhk.machacek.HomePage"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -56,29 +56,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cz.uhk.janMachacek.AuthenticatorActivity"
+            android:name="cz.uhk.machacek.AuthenticatorActivity"
             android:label="AutenticatorActivity" />
         <activity
-            android:name="cz.uhk.janMachacek.ObjectListActivity"
+            android:name="cz.uhk.machacek.ObjectListActivity"
             android:label="@string/title_object_list" />
         <activity
-            android:name="cz.uhk.janMachacek.DiaryEditActivity"
+            android:name="cz.uhk.machacek.DiaryEditActivity"
             android:label="@string/title_diary" />
         <activity
-            android:name="cz.uhk.janMachacek.DiaryActivity"
+            android:name="cz.uhk.machacek.DiaryActivity"
             android:label="@string/title_diary" />
         <activity
-            android:name="cz.uhk.janMachacek.SettingsActivity"
+            android:name="cz.uhk.machacek.SettingsActivity"
             android:label="@string/app_settings" />
         <activity
-            android:name="cz.uhk.janMachacek.ObjectDetatilActivity"
+            android:name="cz.uhk.machacek.ObjectDetatilActivity"
             android:label="@string/title_activity_object_detatil" />
         <activity
-            android:name="cz.uhk.janMachacek.PointerActivity"
+            android:name="cz.uhk.machacek.PointerActivity"
             android:label="@string/title_activity_pointer"
             android:screenOrientation="portrait" />
         <activity
-            android:name="cz.uhk.janMachacek.UserActivity"
+            android:name="cz.uhk.machacek.UserActivity"
             android:screenOrientation="portrait" />
 
         <!--
@@ -90,19 +90,19 @@
             android:value="@integer/google_play_services_version" />
 
         <provider
-            android:name="cz.uhk.janMachacek.Model.CatalogContentProvider"
-            android:authorities="cz.uhk.janMachacek.astro.provider"
+            android:name="cz.uhk.machacek.Model.CatalogContentProvider"
+            android:authorities="cz.uhk.machacek.astro.provider"
             android:exported="false"
             android:label="AstroCatalog"
             android:syncable="true" />
         <provider
-            android:name="cz.uhk.janMachacek.Model.DiaryContentProvider"
-            android:authorities="cz.uhk.janMachacek.astro.diaryProvider"
+            android:name="cz.uhk.machacek.Model.DiaryContentProvider"
+            android:authorities="cz.uhk.machacek.astro.diaryProvider"
             android:exported="false"
             android:label="Diary"
             android:syncable="true" />
 
-        <service android:name="cz.uhk.janMachacek.Service.AuthenticatorService" >
+        <service android:name="cz.uhk.machacek.Service.AuthenticatorService" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -112,7 +112,7 @@
                 android:resource="@xml/authenticator" />
         </service>
         <service
-            android:name="cz.uhk.janMachacek.Service.AstroSyncService"
+            android:name="cz.uhk.machacek.Service.AstroSyncService"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -123,7 +123,7 @@
                 android:resource="@xml/sync_adapter_catalog" />
         </service>
         <service
-            android:name="cz.uhk.janMachacek.Service.AstroDiarySyncService"
+            android:name="cz.uhk.machacek.Service.AstroDiarySyncService"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -161,7 +161,7 @@ Service handling Google Sign-In user revocation. For apps that do not integrate 
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="cz.uhk.janMachacek" />
+                <category android:name="cz.uhk.machacek" />
             </intent-filter>
         </receiver>
         <!--
@@ -185,7 +185,7 @@ Service handling Google Sign-In user revocation. For apps that do not integrate 
 
         <provider
             android:name="com.google.firebase.provider.FirebaseInitProvider"
-            android:authorities="cz.uhk.janMachacek.firebaseinitprovider"
+            android:authorities="cz.uhk.machacek.firebaseinitprovider"
             android:exported="false"
             android:initOrder="100" />
 

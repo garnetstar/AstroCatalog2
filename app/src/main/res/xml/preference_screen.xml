@@ -20,7 +20,7 @@
         android:key="setting_filtering"
         android:title="@string/filter_object" />
 
-    <cz.uhk.janMachacek.UI.SeekBarDialogPreference
+    <cz.uhk.machacek.UI.SeekBarDialogPreference
         android:defaultValue="10"
         android:dialogMessage="@string/max_magnitude_dialog"
         android:key="setting_max_magnitude"
@@ -30,8 +30,8 @@
 
     <Preference android:title="User" >
         <intent
-            android:targetPackage="cz.uhk.janMachacek"
-            android:targetClass="cz.uhk.janMachacek.UserActivity"
+            android:targetPackage="cz.uhk.machacek"
+            android:targetClass="cz.uhk.machacek.UserActivity"
             />
     </Preference>
 

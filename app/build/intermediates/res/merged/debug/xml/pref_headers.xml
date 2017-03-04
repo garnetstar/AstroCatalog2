@@ -3,13 +3,13 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="cz.uhk.janMachacek.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="cz.uhk.machacek.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
     <header
-        android:fragment="cz.uhk.janMachacek.SettingsActivity$NotificationPreferenceFragment"
+        android:fragment="cz.uhk.machacek.SettingsActivity$NotificationPreferenceFragment"
         android:title="@string/pref_header_notifications" />
     <header
-        android:fragment="cz.uhk.janMachacek.SettingsActivity$DataSyncPreferenceFragment"
+        android:fragment="cz.uhk.machacek.SettingsActivity$DataSyncPreferenceFragment"
         android:title="@string/pref_header_data_sync" />
 
 </preference-headers>

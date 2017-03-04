@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.uhk.janMachacek"
+    package="cz.uhk.machacek"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -37,7 +37,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".HomePage"
+            android:name="cz.uhk.machacek.HomePage"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -47,30 +47,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AuthenticatorActivity"
+            android:name="cz.uhk.machacek.AuthenticatorActivity"
             android:label="AutenticatorActivity"
             />
         <activity
-            android:name=".ObjectListActivity"
+            android:name="cz.uhk.machacek.ObjectListActivity"
             android:label="@string/title_object_list" />
         <activity
-            android:name=".DiaryEditActivity"
+            android:name="cz.uhk.machacek.DiaryEditActivity"
             android:label="@string/title_diary" />
         <activity
-            android:name=".DiaryActivity"
+            android:name="cz.uhk.machacek.DiaryActivity"
             android:label="@string/title_diary" />
         <activity
-            android:name=".SettingsActivity"
+            android:name="cz.uhk.machacek.SettingsActivity"
             android:label="@string/app_settings" />
         <activity
-            android:name=".ObjectDetatilActivity"
+            android:name="cz.uhk.machacek.ObjectDetatilActivity"
             android:label="@string/title_activity_object_detatil" />
         <activity
-            android:name=".PointerActivity"
+            android:name="cz.uhk.machacek.PointerActivity"
             android:label="@string/title_activity_pointer"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserActivity"
+            android:name="cz.uhk.machacek.UserActivity"
             android:screenOrientation="portrait" />
 
         <!--
@@ -82,19 +82,19 @@
             android:value="@integer/google_play_services_version" />
 
         <provider
-            android:name=".Model.CatalogContentProvider"
-            android:authorities="cz.uhk.janMachacek.astro.provider"
+            android:name="cz.uhk.machacek.Model.CatalogContentProvider"
+            android:authorities="cz.uhk.machacek.astro.provider"
             android:exported="false"
             android:label="AstroCatalog"
             android:syncable="true" />
         <provider
-            android:name=".Model.DiaryContentProvider"
-            android:authorities="cz.uhk.janMachacek.astro.diaryProvider"
+            android:name="cz.uhk.machacek.Model.DiaryContentProvider"
+            android:authorities="cz.uhk.machacek.astro.diaryProvider"
             android:exported="false"
             android:label="Diary"
             android:syncable="true" />
 
-        <service android:name=".Service.AuthenticatorService" >
+        <service android:name="cz.uhk.machacek.Service.AuthenticatorService" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -103,7 +103,7 @@
                 android:resource="@xml/authenticator" />
         </service>
         <service
-            android:name=".Service.AstroSyncService"
+            android:name="cz.uhk.machacek.Service.AstroSyncService"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -114,7 +114,7 @@
                 android:resource="@xml/sync_adapter_catalog" />
         </service>
         <service
-            android:name=".Service.AstroDiarySyncService"
+            android:name="cz.uhk.machacek.Service.AstroDiarySyncService"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />

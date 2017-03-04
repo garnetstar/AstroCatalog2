@@ -599,8 +599,8 @@
                     "startLine": 95,
                     "startColumn": 4,
                     "startOffset": 4484,
-                    "endColumn": 71,
-                    "endOffset": 4551
+                    "endColumn": 68,
+                    "endOffset": 4548
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -608,8 +608,8 @@
                         "startLine": 58,
                         "startColumn": 4,
                         "startOffset": 2855,
-                        "endColumn": 71,
-                        "endOffset": 2922
+                        "endColumn": 68,
+                        "endOffset": 2919
                     }
                 }
             },
@@ -617,9 +617,9 @@
                 "to": {
                     "startLine": 96,
                     "startColumn": 4,
-                    "startOffset": 4556,
+                    "startOffset": 4553,
                     "endColumn": 52,
-                    "endOffset": 4604
+                    "endOffset": 4601
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -636,9 +636,9 @@
                 "to": {
                     "startLine": 97,
                     "startColumn": 4,
-                    "startOffset": 4609,
+                    "startOffset": 4606,
                     "endColumn": 57,
-                    "endOffset": 4662
+                    "endOffset": 4659
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -655,9 +655,9 @@
                 "to": {
                     "startLine": 98,
                     "startColumn": 4,
-                    "startOffset": 4667,
+                    "startOffset": 4664,
                     "endColumn": 49,
-                    "endOffset": 4712
+                    "endOffset": 4709
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -674,9 +674,9 @@
                 "to": {
                     "startLine": 99,
                     "startColumn": 4,
-                    "startOffset": 4717,
+                    "startOffset": 4714,
                     "endColumn": 59,
-                    "endOffset": 4772
+                    "endOffset": 4769
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -693,9 +693,9 @@
                 "to": {
                     "startLine": 100,
                     "startColumn": 4,
-                    "startOffset": 4777,
+                    "startOffset": 4774,
                     "endColumn": 43,
-                    "endOffset": 4816
+                    "endOffset": 4813
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -712,9 +712,9 @@
                 "to": {
                     "startLine": 101,
                     "startColumn": 4,
-                    "startOffset": 4821,
+                    "startOffset": 4818,
                     "endColumn": 44,
-                    "endOffset": 4861
+                    "endOffset": 4858
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -731,9 +731,9 @@
                 "to": {
                     "startLine": 102,
                     "startColumn": 4,
-                    "startOffset": 4866,
+                    "startOffset": 4863,
                     "endColumn": 44,
-                    "endOffset": 4906
+                    "endOffset": 4903
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -750,9 +750,9 @@
                 "to": {
                     "startLine": 103,
                     "startColumn": 4,
-                    "startOffset": 4911,
+                    "startOffset": 4908,
                     "endColumn": 43,
-                    "endOffset": 4950
+                    "endOffset": 4947
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -769,18 +769,18 @@
                 "to": {
                     "startLine": 104,
                     "startColumn": 4,
-                    "startOffset": 4955,
+                    "startOffset": 4952,
                     "endColumn": 43,
-                    "endOffset": 4994
+                    "endOffset": 4991
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 61,
                         "startColumn": 4,
-                        "startOffset": 2974,
+                        "startOffset": 2971,
                         "endColumn": 43,
-                        "endOffset": 3013
+                        "endOffset": 3010
                     }
                 }
             },
@@ -788,9 +788,9 @@
                 "to": {
                     "startLine": 105,
                     "startColumn": 4,
-                    "startOffset": 4999,
+                    "startOffset": 4996,
                     "endColumn": 104,
-                    "endOffset": 5099
+                    "endOffset": 5096
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -807,9 +807,9 @@
                 "to": {
                     "startLine": 106,
                     "startColumn": 4,
-                    "startOffset": 5104,
+                    "startOffset": 5101,
                     "endColumn": 180,
-                    "endOffset": 5280
+                    "endOffset": 5277
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -826,9 +826,9 @@
                 "to": {
                     "startLine": 107,
                     "startColumn": 4,
-                    "startOffset": 5285,
+                    "startOffset": 5282,
                     "endColumn": 124,
-                    "endOffset": 5405
+                    "endOffset": 5402
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -845,9 +845,9 @@
                 "to": {
                     "startLine": 108,
                     "startColumn": 4,
-                    "startOffset": 5410,
+                    "startOffset": 5407,
                     "endColumn": 106,
-                    "endOffset": 5512
+                    "endOffset": 5509
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -864,9 +864,9 @@
                 "to": {
                     "startLine": 109,
                     "startColumn": 4,
-                    "startOffset": 5517,
+                    "startOffset": 5514,
                     "endColumn": 179,
-                    "endOffset": 5692
+                    "endOffset": 5689
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -883,9 +883,9 @@
                 "to": {
                     "startLine": 110,
                     "startColumn": 4,
-                    "startOffset": 5697,
+                    "startOffset": 5694,
                     "endColumn": 122,
-                    "endOffset": 5815
+                    "endOffset": 5812
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -902,9 +902,9 @@
                 "to": {
                     "startLine": 111,
                     "startColumn": 4,
-                    "startOffset": 5820,
+                    "startOffset": 5817,
                     "endColumn": 102,
-                    "endOffset": 5918
+                    "endOffset": 5915
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -921,9 +921,9 @@
                 "to": {
                     "startLine": 112,
                     "startColumn": 4,
-                    "startOffset": 5923,
+                    "startOffset": 5920,
                     "endColumn": 166,
-                    "endOffset": 6085
+                    "endOffset": 6082
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\10.2.0\\res\\values\\values.xml",
@@ -940,9 +940,9 @@
                 "to": {
                     "startLine": 113,
                     "startColumn": 4,
-                    "startOffset": 6090,
+                    "startOffset": 6087,
                     "endColumn": 187,
-                    "endOffset": 6273
+                    "endOffset": 6270
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -959,9 +959,9 @@
                 "to": {
                     "startLine": 114,
                     "startColumn": 4,
-                    "startOffset": 6278,
+                    "startOffset": 6275,
                     "endColumn": 104,
-                    "endOffset": 6378
+                    "endOffset": 6375
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -978,9 +978,9 @@
                 "to": {
                     "startLine": 115,
                     "startColumn": 4,
-                    "startOffset": 6383,
+                    "startOffset": 6380,
                     "endColumn": 180,
-                    "endOffset": 6559
+                    "endOffset": 6556
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -997,9 +997,9 @@
                 "to": {
                     "startLine": 116,
                     "startColumn": 4,
-                    "startOffset": 6564,
+                    "startOffset": 6561,
                     "endColumn": 124,
-                    "endOffset": 6684
+                    "endOffset": 6681
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -1016,9 +1016,9 @@
                 "to": {
                     "startLine": 117,
                     "startColumn": 4,
-                    "startOffset": 6689,
+                    "startOffset": 6686,
                     "endColumn": 174,
-                    "endOffset": 6859
+                    "endOffset": 6856
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -1035,9 +1035,9 @@
                 "to": {
                     "startLine": 118,
                     "startColumn": 4,
-                    "startOffset": 6864,
+                    "startOffset": 6861,
                     "endColumn": 147,
-                    "endOffset": 7007
+                    "endOffset": 7004
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -1054,9 +1054,9 @@
                 "to": {
                     "startLine": 119,
                     "startColumn": 4,
-                    "startOffset": 7012,
+                    "startOffset": 7009,
                     "endColumn": 62,
-                    "endOffset": 7070
+                    "endOffset": 7067
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -1073,9 +1073,9 @@
                 "to": {
                     "startLine": 120,
                     "startColumn": 4,
-                    "startOffset": 7075,
+                    "startOffset": 7072,
                     "endColumn": 61,
-                    "endOffset": 7132
+                    "endOffset": 7129
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -1092,9 +1092,9 @@
                 "to": {
                     "startLine": 121,
                     "startColumn": 4,
-                    "startOffset": 7137,
+                    "startOffset": 7134,
                     "endColumn": 78,
-                    "endOffset": 7211
+                    "endOffset": 7208
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\values\\values.xml",
@@ -1111,9 +1111,9 @@
                 "to": {
                     "startLine": 122,
                     "startColumn": 4,
-                    "startOffset": 7216,
+                    "startOffset": 7213,
                     "endColumn": 143,
-                    "endOffset": 7355
+                    "endOffset": 7352
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\generated\\res\\google-services\\debug\\values\\values.xml",
@@ -1130,9 +1130,9 @@
                 "to": {
                     "startLine": 123,
                     "startColumn": 4,
-                    "startOffset": 7360,
+                    "startOffset": 7357,
                     "endColumn": 53,
-                    "endOffset": 7409
+                    "endOffset": 7406
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1149,9 +1149,9 @@
                 "to": {
                     "startLine": 124,
                     "startColumn": 4,
-                    "startOffset": 7414,
+                    "startOffset": 7411,
                     "endColumn": 81,
-                    "endOffset": 7491
+                    "endOffset": 7488
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\generated\\res\\google-services\\debug\\values\\values.xml",
@@ -1168,9 +1168,9 @@
                 "to": {
                     "startLine": 125,
                     "startColumn": 4,
-                    "startOffset": 7496,
+                    "startOffset": 7493,
                     "endColumn": 103,
-                    "endOffset": 7595
+                    "endOffset": 7592
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\generated\\res\\google-services\\debug\\values\\values.xml",
@@ -1187,9 +1187,9 @@
                 "to": {
                     "startLine": 126,
                     "startColumn": 4,
-                    "startOffset": 7600,
+                    "startOffset": 7597,
                     "endColumn": 102,
-                    "endOffset": 7698
+                    "endOffset": 7695
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\generated\\res\\google-services\\debug\\values\\values.xml",
@@ -1206,9 +1206,9 @@
                 "to": {
                     "startLine": 127,
                     "startColumn": 4,
-                    "startOffset": 7703,
+                    "startOffset": 7700,
                     "endColumn": 119,
-                    "endOffset": 7818
+                    "endOffset": 7815
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\generated\\res\\google-services\\debug\\values\\values.xml",
@@ -1225,9 +1225,9 @@
                 "to": {
                     "startLine": 128,
                     "startColumn": 4,
-                    "startOffset": 7823,
+                    "startOffset": 7820,
                     "endColumn": 39,
-                    "endOffset": 7858
+                    "endOffset": 7855
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1244,9 +1244,9 @@
                 "to": {
                     "startLine": 129,
                     "startColumn": 4,
-                    "startOffset": 7863,
+                    "startOffset": 7860,
                     "endColumn": 61,
-                    "endOffset": 7920
+                    "endOffset": 7917
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1263,9 +1263,9 @@
                 "to": {
                     "startLine": 130,
                     "startColumn": 4,
-                    "startOffset": 7925,
+                    "startOffset": 7922,
                     "endColumn": 88,
-                    "endOffset": 8009
+                    "endOffset": 8006
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1282,9 +1282,9 @@
                 "to": {
                     "startLine": 131,
                     "startColumn": 4,
-                    "startOffset": 8014,
+                    "startOffset": 8011,
                     "endColumn": 47,
-                    "endOffset": 8057
+                    "endOffset": 8054
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1301,9 +1301,9 @@
                 "to": {
                     "startLine": 132,
                     "startColumn": 4,
-                    "startOffset": 8062,
+                    "startOffset": 8059,
                     "endColumn": 48,
-                    "endOffset": 8106
+                    "endOffset": 8103
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1320,9 +1320,9 @@
                 "to": {
                     "startLine": 133,
                     "startColumn": 4,
-                    "startOffset": 8111,
+                    "startOffset": 8108,
                     "endColumn": 75,
-                    "endOffset": 8182
+                    "endOffset": 8179
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1339,9 +1339,9 @@
                 "to": {
                     "startLine": 134,
                     "startColumn": 4,
-                    "startOffset": 8187,
+                    "startOffset": 8184,
                     "endColumn": 64,
-                    "endOffset": 8247
+                    "endOffset": 8244
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1358,9 +1358,9 @@
                 "to": {
                     "startLine": 135,
                     "startColumn": 4,
-                    "startOffset": 8252,
+                    "startOffset": 8249,
                     "endColumn": 72,
-                    "endOffset": 8320
+                    "endOffset": 8317
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1377,9 +1377,9 @@
                 "to": {
                     "startLine": 136,
                     "startColumn": 4,
-                    "startOffset": 8325,
+                    "startOffset": 8322,
                     "endColumn": 70,
-                    "endOffset": 8391
+                    "endOffset": 8388
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1396,9 +1396,9 @@
                 "to": {
                     "startLine": 137,
                     "startColumn": 4,
-                    "startOffset": 8396,
+                    "startOffset": 8393,
                     "endColumn": 67,
-                    "endOffset": 8459
+                    "endOffset": 8456
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1415,9 +1415,9 @@
                 "to": {
                     "startLine": 138,
                     "startColumn": 4,
-                    "startOffset": 8464,
+                    "startOffset": 8461,
                     "endColumn": 72,
-                    "endOffset": 8532
+                    "endOffset": 8529
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1434,9 +1434,9 @@
                 "to": {
                     "startLine": 139,
                     "startColumn": 4,
-                    "startOffset": 8537,
+                    "startOffset": 8534,
                     "endColumn": 68,
-                    "endOffset": 8601
+                    "endOffset": 8598
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1453,9 +1453,9 @@
                 "to": {
                     "startLine": 140,
                     "startColumn": 4,
-                    "startOffset": 8606,
+                    "startOffset": 8603,
                     "endColumn": 64,
-                    "endOffset": 8666
+                    "endOffset": 8663
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1472,9 +1472,9 @@
                 "to": {
                     "startLine": 141,
                     "startColumn": 4,
-                    "startOffset": 8671,
+                    "startOffset": 8668,
                     "endColumn": 72,
-                    "endOffset": 8739
+                    "endOffset": 8736
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1491,9 +1491,9 @@
                 "to": {
                     "startLine": 142,
                     "startColumn": 4,
-                    "startOffset": 8744,
+                    "startOffset": 8741,
                     "endColumn": 65,
-                    "endOffset": 8805
+                    "endOffset": 8802
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1510,9 +1510,9 @@
                 "to": {
                     "startLine": 143,
                     "startColumn": 4,
-                    "startOffset": 8810,
+                    "startOffset": 8807,
                     "endColumn": 57,
-                    "endOffset": 8863
+                    "endOffset": 8860
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1529,9 +1529,9 @@
                 "to": {
                     "startLine": 144,
                     "startColumn": 4,
-                    "startOffset": 8868,
+                    "startOffset": 8865,
                     "endColumn": 71,
-                    "endOffset": 8935
+                    "endOffset": 8932
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1548,9 +1548,9 @@
                 "to": {
                     "startLine": 145,
                     "startColumn": 4,
-                    "startOffset": 8940,
+                    "startOffset": 8937,
                     "endColumn": 74,
-                    "endOffset": 9010
+                    "endOffset": 9007
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1567,9 +1567,9 @@
                 "to": {
                     "startLine": 146,
                     "startColumn": 4,
-                    "startOffset": 9015,
+                    "startOffset": 9012,
                     "endColumn": 71,
-                    "endOffset": 9082
+                    "endOffset": 9079
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1586,9 +1586,9 @@
                 "to": {
                     "startLine": 147,
                     "startColumn": 4,
-                    "startOffset": 9087,
+                    "startOffset": 9084,
                     "endColumn": 77,
-                    "endOffset": 9160
+                    "endOffset": 9157
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1605,9 +1605,9 @@
                 "to": {
                     "startLine": 148,
                     "startColumn": 4,
-                    "startOffset": 9165,
+                    "startOffset": 9162,
                     "endColumn": 71,
-                    "endOffset": 9232
+                    "endOffset": 9229
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1624,9 +1624,9 @@
                 "to": {
                     "startLine": 149,
                     "startColumn": 4,
-                    "startOffset": 9237,
+                    "startOffset": 9234,
                     "endColumn": 76,
-                    "endOffset": 9309
+                    "endOffset": 9306
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1643,9 +1643,9 @@
                 "to": {
                     "startLine": 150,
                     "startColumn": 4,
-                    "startOffset": 9314,
+                    "startOffset": 9311,
                     "endColumn": 70,
-                    "endOffset": 9380
+                    "endOffset": 9377
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1662,9 +1662,9 @@
                 "to": {
                     "startLine": 151,
                     "startColumn": 4,
-                    "startOffset": 9385,
+                    "startOffset": 9382,
                     "endColumn": 42,
-                    "endOffset": 9423
+                    "endOffset": 9420
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1681,9 +1681,9 @@
                 "to": {
                     "startLine": 152,
                     "startColumn": 4,
-                    "startOffset": 9428,
+                    "startOffset": 9425,
                     "endColumn": 64,
-                    "endOffset": 9488
+                    "endOffset": 9485
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1700,9 +1700,9 @@
                 "to": {
                     "startLine": 153,
                     "startColumn": 4,
-                    "startOffset": 9493,
+                    "startOffset": 9490,
                     "endColumn": 135,
-                    "endOffset": 9624
+                    "endOffset": 9621
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1719,9 +1719,9 @@
                 "to": {
                     "startLine": 154,
                     "startColumn": 4,
-                    "startOffset": 9629,
+                    "startOffset": 9626,
                     "endColumn": 65,
-                    "endOffset": 9690
+                    "endOffset": 9687
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1738,9 +1738,9 @@
                 "to": {
                     "startLine": 155,
                     "startColumn": 4,
-                    "startOffset": 9695,
+                    "startOffset": 9692,
                     "endColumn": 55,
-                    "endOffset": 9746
+                    "endOffset": 9743
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1757,9 +1757,9 @@
                 "to": {
                     "startLine": 156,
                     "startColumn": 4,
-                    "startOffset": 9751,
+                    "startOffset": 9748,
                     "endColumn": 67,
-                    "endOffset": 9814
+                    "endOffset": 9811
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1776,9 +1776,9 @@
                 "to": {
                     "startLine": 157,
                     "startColumn": 4,
-                    "startOffset": 9819,
+                    "startOffset": 9816,
                     "endColumn": 55,
-                    "endOffset": 9870
+                    "endOffset": 9867
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1795,9 +1795,9 @@
                 "to": {
                     "startLine": 158,
                     "startColumn": 4,
-                    "startOffset": 9875,
+                    "startOffset": 9872,
                     "endColumn": 86,
-                    "endOffset": 9957
+                    "endOffset": 9954
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1814,9 +1814,9 @@
                 "to": {
                     "startLine": 159,
                     "startColumn": 4,
-                    "startOffset": 9962,
+                    "startOffset": 9959,
                     "endColumn": 64,
-                    "endOffset": 10022
+                    "endOffset": 10019
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1833,9 +1833,9 @@
                 "to": {
                     "startLine": 160,
                     "startColumn": 4,
-                    "startOffset": 10027,
+                    "startOffset": 10024,
                     "endColumn": 90,
-                    "endOffset": 10113
+                    "endOffset": 10110
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1852,9 +1852,9 @@
                 "to": {
                     "startLine": 161,
                     "startColumn": 4,
-                    "startOffset": 10118,
+                    "startOffset": 10115,
                     "endColumn": 56,
-                    "endOffset": 10170
+                    "endOffset": 10167
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1871,9 +1871,9 @@
                 "to": {
                     "startLine": 162,
                     "startColumn": 4,
-                    "startOffset": 10175,
+                    "startOffset": 10172,
                     "endColumn": 91,
-                    "endOffset": 10262
+                    "endOffset": 10259
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1890,9 +1890,9 @@
                 "to": {
                     "startLine": 163,
                     "startColumn": 4,
-                    "startOffset": 10267,
+                    "startOffset": 10264,
                     "endColumn": 68,
-                    "endOffset": 10331
+                    "endOffset": 10328
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1909,9 +1909,9 @@
                 "to": {
                     "startLine": 164,
                     "startColumn": 4,
-                    "startOffset": 10336,
+                    "startOffset": 10333,
                     "endColumn": 80,
-                    "endOffset": 10412
+                    "endOffset": 10409
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1928,9 +1928,9 @@
                 "to": {
                     "startLine": 165,
                     "startColumn": 4,
-                    "startOffset": 10417,
+                    "startOffset": 10414,
                     "endColumn": 54,
-                    "endOffset": 10467
+                    "endOffset": 10464
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -1947,18 +1947,18 @@
                 "to": {
                     "startLine": 166,
                     "startColumn": 4,
-                    "startOffset": 10472,
+                    "startOffset": 10469,
                     "endColumn": 45,
-                    "endOffset": 10513
+                    "endOffset": 10510
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 59,
                         "startColumn": 4,
-                        "startOffset": 2927,
+                        "startOffset": 2924,
                         "endColumn": 45,
-                        "endOffset": 2968
+                        "endOffset": 2965
                     }
                 }
             },
@@ -1966,9 +1966,9 @@
                 "to": {
                     "startLine": 167,
                     "startColumn": 4,
-                    "startOffset": 10518,
+                    "startOffset": 10515,
                     "endColumn": 68,
-                    "endOffset": 10582
+                    "endOffset": 10579
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -1985,9 +1985,9 @@
                 "to": {
                     "startLine": 168,
                     "startColumn": 4,
-                    "startOffset": 10587,
+                    "startOffset": 10584,
                     "endColumn": 116,
-                    "endOffset": 10699
+                    "endOffset": 10696
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -2004,18 +2004,18 @@
                 "to": {
                     "startLine": 169,
                     "startColumn": 4,
-                    "startOffset": 10704,
+                    "startOffset": 10701,
                     "endColumn": 60,
-                    "endOffset": 10760
+                    "endOffset": 10757
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 62,
                         "startColumn": 4,
-                        "startOffset": 3018,
+                        "startOffset": 3015,
                         "endColumn": 60,
-                        "endOffset": 3074
+                        "endOffset": 3071
                     }
                 }
             },
@@ -2023,9 +2023,9 @@
                 "to": {
                     "startLine": 170,
                     "startColumn": 4,
-                    "startOffset": 10765,
+                    "startOffset": 10762,
                     "endColumn": 71,
-                    "endOffset": 10832
+                    "endOffset": 10829
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -2042,9 +2042,9 @@
                 "to": {
                     "startLine": 171,
                     "startColumn": 4,
-                    "startOffset": 10837,
+                    "startOffset": 10834,
                     "endColumn": 66,
-                    "endOffset": 10899
+                    "endOffset": 10896
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -2061,9 +2061,9 @@
                 "to": {
                     "startLine": 172,
                     "startColumn": 4,
-                    "startOffset": 10904,
+                    "startOffset": 10901,
                     "endColumn": 60,
-                    "endOffset": 10960
+                    "endOffset": 10957
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings_activity_settings.xml",
@@ -2080,9 +2080,9 @@
                 "to": {
                     "startLine": 173,
                     "startColumn": 4,
-                    "startOffset": 10965,
+                    "startOffset": 10962,
                     "endColumn": 60,
-                    "endOffset": 11021
+                    "endOffset": 11018
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -2099,9 +2099,9 @@
                 "to": {
                     "startLine": 174,
                     "startColumn": 4,
-                    "startOffset": 11026,
+                    "startOffset": 11023,
                     "endColumn": 45,
-                    "endOffset": 11067
+                    "endOffset": 11064
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -2118,9 +2118,9 @@
                 "to": {
                     "startLine": 175,
                     "startColumn": 4,
-                    "startOffset": 11072,
+                    "startOffset": 11069,
                     "endColumn": 59,
-                    "endOffset": 11127
+                    "endOffset": 11124
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -2137,9 +2137,9 @@
                 "to": {
                     "startLine": 176,
                     "startColumn": 4,
-                    "startOffset": 11132,
+                    "startOffset": 11129,
                     "endColumn": 56,
-                    "endOffset": 11184
+                    "endOffset": 11181
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\strings.xml",
@@ -2156,10 +2156,10 @@
                 "to": {
                     "startLine": 177,
                     "startColumn": 4,
-                    "startOffset": 11189,
+                    "startOffset": 11186,
                     "endLine": 178,
                     "endColumn": 12,
-                    "endOffset": 11258
+                    "endOffset": 11255
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\styles.xml",
@@ -2177,10 +2177,10 @@
                 "to": {
                     "startLine": 179,
                     "startColumn": 4,
-                    "startOffset": 11263,
+                    "startOffset": 11260,
                     "endLine": 181,
                     "endColumn": 12,
-                    "endOffset": 11418
+                    "endOffset": 11415
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\styles.xml",
@@ -2198,10 +2198,10 @@
                 "to": {
                     "startLine": 182,
                     "startColumn": 4,
-                    "startOffset": 11423,
+                    "startOffset": 11420,
                     "endLine": 186,
                     "endColumn": 12,
-                    "endOffset": 11647
+                    "endOffset": 11644
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\styles.xml",
@@ -2219,10 +2219,10 @@
                 "to": {
                     "startLine": 187,
                     "startColumn": 4,
-                    "startOffset": 11652,
+                    "startOffset": 11649,
                     "endLine": 191,
                     "endColumn": 12,
-                    "endOffset": 11880
+                    "endOffset": 11877
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\styles.xml",
@@ -2240,10 +2240,10 @@
                 "to": {
                     "startLine": 192,
                     "startColumn": 4,
-                    "startOffset": 11885,
+                    "startOffset": 11882,
                     "endLine": 196,
                     "endColumn": 12,
-                    "endOffset": 12103
+                    "endOffset": 12100
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\styles.xml",
@@ -2261,10 +2261,10 @@
                 "to": {
                     "startLine": 197,
                     "startColumn": 4,
-                    "startOffset": 12108,
+                    "startOffset": 12105,
                     "endLine": 202,
                     "endColumn": 12,
-                    "endOffset": 12355
+                    "endOffset": 12352
                 },
                 "from": {
                     "file": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\values\\styles.xml",
