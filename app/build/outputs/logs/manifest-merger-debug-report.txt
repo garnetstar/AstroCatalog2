@@ -1357,8 +1357,8 @@ ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\A
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:46:27-74
 activity#cz.uhk.janMachacek.AuthenticatorActivity
 ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:49:9-52:15
-	android:theme
-		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:51:13-68
+	android:label
+		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:51:13-49
 	android:name
 		ADDED from C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\src\main\AndroidManifest.xml:50:13-50
 activity#cz.uhk.janMachacek.ObjectListActivity

@@ -3,15 +3,14 @@ package cz.uhk.janMachacek;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,22 +28,15 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 import java.io.IOException;
 
-import cz.uhk.janMachacek.Exception.ApiErrorException;
-import cz.uhk.janMachacek.Exception.WrongCredentialsException;
-import cz.uhk.janMachacek.library.Api.ApiAuthenticator;
-
 /**
  * Created by jan on 10.8.2016.
- * https://sites.google.com/site/andsamples/concept-of-syncadapter-androidcontentabstractthreadedsyncadapter
  */
 public class AuthenticatorActivity extends AccountAuthenticatorActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     public final static String ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public final static String AUTH_TYPE = "AUTH_TYPE";
     public final static String LOGIN = "LOGIN";
-    public final static String PASSWORD = "PASSWORD";
     public final static String REFRESH_TOKEN = "REFRESH_TOKEN";
-    public final static String WRONG_CREDENTIALS = "WRONG_CREDENTIALS";
     public final static String ID_TOKEN = "ID_TOKEN";
     public final static String NAME = "NAME";
     public final static String PICTURE = "PICTURE";
@@ -56,12 +48,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 
     private AccountManager accountManager;
     private GoogleApiClient mGoogleApiClient;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        Log.d("Response", "Auth activity onCreae()");
+        Log.d("Response", "SPUŠTĚNÍ AUTENTICATION ACTIVITY");
         setContentView(R.layout.act_login);
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -95,22 +88,16 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
      */
     @Override
     public void onClick(View v) {
-        Log.d("astro", "LOGIN viewId = " + v.getId());
         switch (v.getId()) {
             case R.id.sign_in_button:
                 signIn();
                 break;
-            case R.id.sign_out_button:
-                //  signOut();
-                break;
-//            case R.id.disconnect_button:
-//                revokeAccess();
-//                break;
         }
     }
 
     private void signIn() {
-        Log.d("astro", "SIGN > " + "signIn()");
+        Log.d("astro", "ZOBRAZENÍ PŘIHLAŠOVACÍHO FORMULÁŘE");
+        showProgressDialog();
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, KEY_SIGN_IN);
     }
@@ -127,59 +114,33 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d("astro", "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-            TextView v = (TextView) findViewById(R.id.user_name);
-            v.setText(acct.getDisplayName());
+            Log.d("astro", "ÚSPĚŠNÉ PŘIHLÁŠENÍ KE GoogleSignInApi");
+            GoogleSignInAccount googleSignInAccount = result.getSignInAccount();
 
-
-            Log.d("astro", "SIGN > " + "create accoutn");
-            Log.d("astro", acct.getEmail());
-            Log.d("astro", acct.getId());
-//            Log.d("astro", acct.getIdToken());
-//            String accountType = getIntent().getStringExtra(ACCOUNT_TYPE);
-//            String login = acct.getEmail();
-//            String token = acct.getServerAuthCode();
-//            Log.d("astro", "server token  +++++ " + token);
-//
-//            token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxMDkxNGZiOTk0OGYxZTQzNTdjYzg3MjY4MDg3Mjk4ZTgzNTlkMjAifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0ODgxODg4OTMsImV4cCI6MTQ4ODE5MjQ5MywiYXVkIjoiMTcxODE0Mzk3ODgyLXFvYWZib2RwaWQ1Mmg3bGgwcGM5OGJydWM5dnYxNnZzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE2ODE2OTM4NjYwODI0MjY3MjQ5IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjE3MTgxNDM5Nzg4Mi1vZ3JtaDBvZ2Y5NTRsZWhubXFoa2tnZTBwYW44bXIyMy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoibWFjaGFjZWsuakBnbWFpbC5jb20iLCJuYW1lIjoiSmFuIE1hY2jDocSNZWsiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ldERGdEowV24zUS9BQUFBQUFBQUFBSS9BQUFBQUFBQURLby9BdTNjWDlFVnZpRS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiSmFuIiwiZmFtaWx5X25hbWUiOiJNYWNow6HEjWVrIiwibG9jYWxlIjoiY3MifQ.JRRRa3dCmpfddK7DrymCjZ1XC3P7U9q9NQMDMiQAkaEIMWNnd4_rHVspzhWe3UQx-wfWVu11hJVEoWKtMNQMISEmsZACQxnvNe7x1QyUcDSXzXLSMFCWWxUOtyrPp6VJLrMcZlV2cH8NDTSaZlv9loQjIZbBhpp70seYAoxuLMbGp8JL7HNRdyo_0AG421csKRkNOPlGYp3qJLDOYgKlRJ84BSANapqXamWsIU_K7ik6nvWi0ha5pZEG12iPVQ6wSHYtPxPDiZKmHuQjNoArFXOeOuqGKT6E18VjXG3WjVaNJokrAqDTCkmXdAF9fa-85qMpLDhKORC_FveMOZlxwg";
-//
-//            Log.d("astro", "AccountType = " + accountType);
-//
-//
-//            Account account = new Account(login, accountType);
-//            Bundle data = new Bundle();
-//            data.putString(AccountManager.KEY_ACCOUNT_NAME, login);
-//
-//            accountManager.addAccountExplicitly(account, null, data);
-//            accountManager.setAuthToken(account, "baerer", token);
-//            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.DIARY_AUTHORITY, true);
-//            getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.DIARY_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
-//            getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.CATALOG_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
-//            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.CATALOG_AUTHORITY, true);
-
-            job j = new job(acct, accountManager);
-            j.execute(acct.getServerAuthCode());
+            Log.d("astro", "SPUŠTĚNÍ ASYNCHRONÍHO VLÁKNA K VYTVOŘENÍ UŽIVATELE "+ googleSignInAccount.getEmail());
+            Log.d("astro", "SERVER_AUTH_CODE="+ googleSignInAccount.getServerAuthCode());
+            CreateUserTask job = new CreateUserTask(googleSignInAccount, accountManager);
+            job.execute(googleSignInAccount.getServerAuthCode());
 
         } else {
-            // Signed out, show unauthenticated UI.
-//            updateUI(false);
+            hideProgressDialog();
+           Log.d("astro", "NEPODAŘILO SE PŘIHLÁSIT KE GoogleSignInApi");
         }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        hideProgressDialog();
         Log.d("astro", "CONNECTION FAILED AUTENTICATOR ACTIVITY");
     }
 
-    private class job extends AsyncTask<String, Void, String> {
+    private class CreateUserTask extends AsyncTask<String, Void, String> {
         private GoogleSignInAccount googleSignInAccount;
         private AccountManager accountManager;
         private GoogleTokenResponse googleTokenResponse;
 
-        public job(GoogleSignInAccount acct, AccountManager accountManager) {
+        public CreateUserTask(GoogleSignInAccount acct, AccountManager accountManager) {
             this.googleSignInAccount = acct;
             this.accountManager = accountManager;
         }
@@ -199,12 +160,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
                         "").execute();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.d("astro", "sdfsf " + e.toString());
+                Log.d("astro", "NEPODAŘILO SE ZÍSKAT AUTORIZAČNÍ TOKENY " + e.toString());
             }
 
-            Log.d("astro", "ACCESS_TOKEN " + googleTokenResponse.getAccessToken());
-            Log.d("astro", "REFRESH_TOKEN " + googleTokenResponse.getRefreshToken());
-            Log.d("astro", "ID_TOKEN " + googleTokenResponse.getIdToken());
+            Log.d("astro", "------------------------------------");
+            Log.d("astro", "ÚSPĚŠNÉ ZÍSKÁNÍ AUTORIZAČNÍCH TOKENŮ");
+            Log.d("astro", "ACCESS_TOKEN=" + googleTokenResponse.getAccessToken());
+            Log.d("astro", "REFRESH_TOKEN=" + googleTokenResponse.getRefreshToken());
+            Log.d("astro", "ID_TOKEN=" + googleTokenResponse.getIdToken());
 
             return null;
         }
@@ -215,12 +178,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 
             String accountType = getIntent().getStringExtra(ACCOUNT_TYPE);
             String login = googleSignInAccount.getEmail();
-            String token = googleSignInAccount.getServerAuthCode();
-            Log.d("astro", "server token  +++++ " + token);
 
-//            token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxMDkxNGZiOTk0OGYxZTQzNTdjYzg3MjY4MDg3Mjk4ZTgzNTlkMjAifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0ODgxODg4OTMsImV4cCI6MTQ4ODE5MjQ5MywiYXVkIjoiMTcxODE0Mzk3ODgyLXFvYWZib2RwaWQ1Mmg3bGgwcGM5OGJydWM5dnYxNnZzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE2ODE2OTM4NjYwODI0MjY3MjQ5IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjE3MTgxNDM5Nzg4Mi1vZ3JtaDBvZ2Y5NTRsZWhubXFoa2tnZTBwYW44bXIyMy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoibWFjaGFjZWsuakBnbWFpbC5jb20iLCJuYW1lIjoiSmFuIE1hY2jDocSNZWsiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ldERGdEowV24zUS9BQUFBQUFBQUFBSS9BQUFBQUFBQURLby9BdTNjWDlFVnZpRS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiSmFuIiwiZmFtaWx5X25hbWUiOiJNYWNow6HEjWVrIiwibG9jYWxlIjoiY3MifQ.JRRRa3dCmpfddK7DrymCjZ1XC3P7U9q9NQMDMiQAkaEIMWNnd4_rHVspzhWe3UQx-wfWVu11hJVEoWKtMNQMISEmsZACQxnvNe7x1QyUcDSXzXLSMFCWWxUOtyrPp6VJLrMcZlV2cH8NDTSaZlv9loQjIZbBhpp70seYAoxuLMbGp8JL7HNRdyo_0AG421csKRkNOPlGYp3qJLDOYgKlRJ84BSANapqXamWsIU_K7ik6nvWi0ha5pZEG12iPVQ6wSHYtPxPDiZKmHuQjNoArFXOeOuqGKT6E18VjXG3WjVaNJokrAqDTCkmXdAF9fa-85qMpLDhKORC_FveMOZlxwg";
-            token = googleTokenResponse.getAccessToken();
+//          String token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxMDkxNGZiOTk0OGYxZTQzNTdjYzg3MjY4MDg3Mjk4ZTgzNTlkMjAifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0ODgxODg4OTMsImV4cCI6MTQ4ODE5MjQ5MywiYXVkIjoiMTcxODE0Mzk3ODgyLXFvYWZib2RwaWQ1Mmg3bGgwcGM5OGJydWM5dnYxNnZzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE2ODE2OTM4NjYwODI0MjY3MjQ5IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjE3MTgxNDM5Nzg4Mi1vZ3JtaDBvZ2Y5NTRsZWhubXFoa2tnZTBwYW44bXIyMy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoibWFjaGFjZWsuakBnbWFpbC5jb20iLCJuYW1lIjoiSmFuIE1hY2jDocSNZWsiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ldERGdEowV24zUS9BQUFBQUFBQUFBSS9BQUFBQUFBQURLby9BdTNjWDlFVnZpRS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiSmFuIiwiZmFtaWx5X25hbWUiOiJNYWNow6HEjWVrIiwibG9jYWxlIjoiY3MifQ.JRRRa3dCmpfddK7DrymCjZ1XC3P7U9q9NQMDMiQAkaEIMWNnd4_rHVspzhWe3UQx-wfWVu11hJVEoWKtMNQMISEmsZACQxnvNe7x1QyUcDSXzXLSMFCWWxUOtyrPp6VJLrMcZlV2cH8NDTSaZlv9loQjIZbBhpp70seYAoxuLMbGp8JL7HNRdyo_0AG421csKRkNOPlGYp3qJLDOYgKlRJ84BSANapqXamWsIU_K7ik6nvWi0ha5pZEG12iPVQ6wSHYtPxPDiZKmHuQjNoArFXOeOuqGKT6E18VjXG3WjVaNJokrAqDTCkmXdAF9fa-85qMpLDhKORC_FveMOZlxwg";
+            String authToken = googleTokenResponse.getAccessToken();
 
+            // Vytvoření nového účtu
             Account account = new Account(login, accountType);
             Bundle data = new Bundle();
             data.putString(AccountManager.KEY_ACCOUNT_NAME, login);
@@ -230,15 +192,34 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
             data.putString(PICTURE, String.valueOf(googleSignInAccount.getPhotoUrl()));
 
             accountManager.addAccountExplicitly(account, null, data);
-            accountManager.setAuthToken(account, "baerer", token);
+            accountManager.setAuthToken(account, "baerer", authToken);
 
             getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.DIARY_AUTHORITY, true);
             getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.DIARY_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
             getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.CATALOG_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
             getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.CATALOG_AUTHORITY, true);
 
-            Log.d("astro", "onPostExecute() ");
+            Log.d("astro", "UKONČENÍ AUTENTICATION_ACTIVITY");
+            Log.d("astro", "-------------------------------");
+
+            setAccountAuthenticatorResult(data);
             finish();
+        }
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
         }
     }
 }

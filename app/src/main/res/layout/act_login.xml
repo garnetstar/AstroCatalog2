@@ -6,7 +6,9 @@
     android:background="@drawable/toast_border"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+
+    >
 
     <LinearLayout
         android:id="@+id/signo_in_layout"

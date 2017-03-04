@@ -48,7 +48,7 @@
         </activity>
         <activity
             android:name=".AuthenticatorActivity"
-            android:theme="@android:style/android:Theme.Holo.Panel"
+            android:label="AutenticatorActivity"
             />
         <activity
             android:name=".ObjectListActivity"

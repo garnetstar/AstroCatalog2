@@ -131,7 +131,7 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
                                 public void run(AccountManagerFuture<Boolean> future) {
                                     Log.d("astro", "účet byl úspěšně odstraněn");
                                     Intent intent = new Intent(getBaseContext(), HomePage.class);
-                                    hideProgressDialog();
+                                  //  hideProgressDialog();
                                     startActivity(intent);
                                 }
                             }, null);
@@ -153,12 +153,6 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
         }
 
         mProgressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
-        }
     }
 
     class ShowUserPictureJob extends AsyncTask<String, Void, Bitmap> {

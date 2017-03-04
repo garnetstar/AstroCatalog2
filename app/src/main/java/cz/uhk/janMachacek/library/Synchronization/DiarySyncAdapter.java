@@ -2,6 +2,8 @@ package cz.uhk.janMachacek.library.Synchronization;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentValues;
@@ -15,6 +17,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cz.uhk.janMachacek.AbstactBaseActivity;
@@ -62,6 +65,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         syncFromServerOK = true;
 
         facade = new DiaryFacade(contentProviderClient);
+        String idToken = null;
         String authToken = null;
 
         try {
@@ -70,14 +74,13 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
 
 
-          authToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
-
-
-
+          idToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+            authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+            Log.d("astro", "GET TOKEN FROM " + authToken);
 
 
             Log.d("astro", "SYNC: zahájení synchronizace");
-            diaryData = new DiaryData(contentProviderClient, authToken);
+            diaryData = new DiaryData(contentProviderClient, idToken);
             Log.d("astro", "SYNC: stahování dat ze serveru");
             syncFromServer(contentProviderClient);
             Log.d("astro", "SYNC: odeslání dat ne server");
@@ -99,8 +102,23 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         } catch (AccessTokenExpiredException e) {
             String message = "ERROR: neaktuální přihlašovací údaje " + e.getMessage();
-            Log.d("astro", "invalidate token = " + authToken);
+            Log.d("astro", "INVALIDACE TOKENU");
+            Log.d("astro", "-----------------");
             mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
+//            try {
+//                Log.d("astro", "XXXX 0 = " + authToken2);
+//                String t =mAccountManager.blockingGetAuthToken(account, "baerer", true);
+//                Log.d("astro", "XXXX 1 x = " + t);
+//            } catch (OperationCanceledException e1) {
+//                e1.printStackTrace();
+//                Log.d("astro", "XXXX 2");
+//            } catch (IOException e1) {
+//                Log.d("astro", "XXXX 3");
+//                e1.printStackTrace();
+//            } catch (AuthenticatorException e1) {
+//                Log.d("astro", "XXXX 4");
+//                e1.printStackTrace();
+//            }
             Log.d("astro", "invalidate token called CCCCCCCCCC= ");
             // poslat spravne cislo chyby
             syncProblem(syncResult, message);

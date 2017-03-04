@@ -57,7 +57,7 @@
         </activity>
         <activity
             android:name="cz.uhk.janMachacek.AuthenticatorActivity"
-            android:theme="@android:style/android:Theme.Holo.Panel" />
+            android:label="AutenticatorActivity" />
         <activity
             android:name="cz.uhk.janMachacek.ObjectListActivity"
             android:label="@string/title_object_list" />

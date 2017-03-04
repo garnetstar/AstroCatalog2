@@ -146,7 +146,7 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
         super.onStart();
 
         if (numberOfAccounts() < 1) {
-            addNewAccount(getBaseContext().getString(R.string.accountType), "baerer");
+            final AccountManagerFuture<Bundle> future = mAccountManager.addAccount(getBaseContext().getString(R.string.accountType), "baerer", null, null, this, null, null);
         }
     }
 
@@ -209,24 +209,6 @@ abstract public class AbstactBaseActivity extends FragmentActivity implements
 //                showNotification(message, getBaseContext());
             }
         }
-    }
-
-    private void addNewAccount(String accountType, String authTokenType) {
-
-        final AccountManagerFuture<Bundle> future = mAccountManager.addAccount(accountType, authTokenType, null, null, this, new AccountManagerCallback<Bundle>() {
-            @Override
-            public void run(AccountManagerFuture<Bundle> future) {
-                try {
-                    Bundle bnd = future.getResult();
-
-                    Log.d("astro", "AddNewAccount Bundle is " + bnd);
-
-                } catch (Exception e) {
-                    Log.d("astro", "FUTURE: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        }, null);
     }
 
     private int numberOfAccounts() {
