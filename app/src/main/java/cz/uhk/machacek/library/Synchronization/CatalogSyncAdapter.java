@@ -40,27 +40,23 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("astro", "onPerformSync for account[" + account.name + "]");
         try {
             // Get the auth token for the current account
-//            String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
-            String authToken = mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+            String idToken = mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+            String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
 
-            Log.d("astro", "ADAPter - " + authToken);
-
-            ArrayList<AstroObject> messierData;
+            ArrayList<AstroObject> messierData = null;
             MessierData md = new MessierData();
 
             try {
                 // ziskat data ze serveru
                 // md.sync(authToken, getContext());
-                messierData = md.getMessierData(authToken, getContext(), provider);
+                messierData = md.getMessierData(idToken, getContext(), provider);
             } catch (AccessTokenExpiredException e) {
                 // doslo k chybe, pokus o získání tokenu pomocí refresh tokenu nebo user credentials
                 // AstroAccountAuthenticator->getAuthToken
                 Log.d("astro", "EXPIRED Adapter");
                 mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
-                authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
-                // druhy pokus o ziskani dat ze serveru
-                // md.sync(authToken, getContext());
-                messierData = md.getMessierData(authToken, getContext(), provider);
+                syncResult.delayUntil=10;
+                syncResult.fullSyncRequested=true;
             }
 
             // pokud prisla nejaka data

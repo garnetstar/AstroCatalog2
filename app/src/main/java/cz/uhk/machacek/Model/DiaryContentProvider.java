@@ -119,12 +119,15 @@ public class DiaryContentProvider extends ContentProvider {
         int rowsDeleted = -1;
         int token = URI_MATCHER.match(uri);
 
-        Log.d("astro", "Diary delete all " + uri);
-
         switch (token) {
             case DELETE_ALL:
+
+                ContentValues val = new ContentValues();
+                val.put(AstroDbHelper.KEY_SETTINGS_VALUE, 0);
+
                 db.delete(dbHelper.TABLE_OBJECT_NAME, selection, selectionArgs);
-                db.delete(dbHelper.TABLE_SETTINGS_NAME, selection, selectionArgs);
+                // settings je třeba pouze vynulovat
+                db.update(dbHelper.TABLE_SETTINGS_NAME, val, AstroDbHelper.KEY_SETTINGS_KEY + "=?", new String[]{"client_counter"});
                 db.delete(dbHelper.TABLE_DIARY_NAME, selection, selectionArgs);
                 Log.d("astro", "Diary delete all " + uri);
                 break;

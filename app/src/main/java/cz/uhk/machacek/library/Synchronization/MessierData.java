@@ -50,52 +50,6 @@ public class MessierData {
         actualVersion = 0;
     }
 
-    /**
-     * @deprecated
-     * @param accessToken
-     * @param context
-     * @throws AccessTokenExpiredException
-     * @throws ApiErrorException
-     */
-    public void sync(String accessToken, Context context) throws AccessTokenExpiredException, ApiErrorException {
-
-        Log.d("astro", "static sync start");
-
-        String url = getUrl(accessToken);
-
-        int serverVersion = getVersion(accessToken);
-        Log.d("astro", "MS VERSION=" + serverVersion);
-
-        // default preference
-        SharedPreferences preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
-
-        int deviceVersion = preferences.getInt("ms_version", 0);
-        Log.d("astro", "act>" + deviceVersion + " version>" + serverVersion);
-        if (deviceVersion < serverVersion) {
-
-            ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
-
-            getData(url, astroObjects);
-
-            ObjectDataFacade db = new ObjectDataFacade(context);
-            db.stuffMessierData(astroObjects);
-            Log.d("Response", "Size = " + Integer.toString(astroObjects.size()));
-
-
-            //aktualizovat verzi katalogu
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt("ms_version", serverVersion);
-            editor.commit();
-            Log.d("astro", "set new version " + serverVersion);
-
-            //zobrazit aktuální data
-            Intent intent = new Intent();
-            intent.setAction(ObjectListActivity.REFRESH_OBJECTS_LIST);
-            Log.d("Response", "SEND BROADCAST *");
-            context.sendBroadcast(intent);
-        }
-    }
-
     public ArrayList<AstroObject> getMessierData(String accessToken, Context context, ContentProviderClient providerClient) throws AccessTokenExpiredException, ApiErrorException {
 
         Log.d("astro", "static sync start");
@@ -148,7 +102,6 @@ public class MessierData {
     private int getVersion(String accessToken) throws AccessTokenExpiredException, ApiErrorException {
 
         String url = getVersionUrl(accessToken);
-
         Log.d("astro ", "GET VERSION MESSIER 1 " + url);
 
         try {

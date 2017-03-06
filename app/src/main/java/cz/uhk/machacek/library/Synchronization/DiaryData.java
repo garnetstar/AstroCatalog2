@@ -44,18 +44,19 @@ public class DiaryData {
         this.access_token = access_token;
     }
 
-    public void sync() {
-
-        try {
-            getDataFromServer();
-        } catch (AccessTokenExpiredException e) {
-            e.printStackTrace();
-        } catch (ApiErrorException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void sync() {
+//
+//        try {
+//            getDataFromServer();
+//        } catch (AccessTokenExpiredException e) {
+//            e.printStackTrace();
+//        } catch (ApiErrorException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
+     *
      * @return
      * @throws AccessTokenExpiredException
      * @throws ApiErrorException
@@ -70,7 +71,7 @@ public class DiaryData {
             HttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(get);
             String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-            Log.d("astro", "SSDDGG" + json);
+            Log.d("astro", "DATA ZE SERVERU " + json);
             JSONObject jsonObject = new JSONObject(json);
             //kontrola http statusu
             int httpStatus = response.getStatusLine().getStatusCode();

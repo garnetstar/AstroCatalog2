@@ -64,9 +64,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 // ziskani údajů uživatelova účtu
-                .requestScopes(new Scope(Scopes.PROFILE))
+                .requestScopes(new Scope(Scopes.PLUS_ME))
                 //nastavení api_client_id a požadavku na získání autorizačního kódu pro offline přístup
-                .requestServerAuthCode(AstroContract.API_CLIENT_ID, false)
+                .requestServerAuthCode(AstroContract.API_CLIENT_ID, true)
                 .requestEmail()
                 .build();
 

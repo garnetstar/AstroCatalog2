@@ -2,18 +2,23 @@ package cz.uhk.machacek.library.Synchronization;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SyncResult;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cz.uhk.machacek.AbstactBaseActivity;
@@ -54,8 +59,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
 
-        Log.d("astro", "Synchronizace diary_edit");
-        Log.d("astro", contentProviderClient.getLocalContentProvider().getClass().toString());
+        Log.d("astro", "ZAHÁJENÍ SYNCHRONIZACE DIARY");
 
         syncFromServerOK = true;
 
@@ -64,15 +68,8 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         String authToken = null;
 
         try {
-
-//            authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
-
-
-
-          idToken =   mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+            idToken = mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
             authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
-            Log.d("astro", "GET TOKEN FROM " + authToken);
-
 
             Log.d("astro", "SYNC: zahájení synchronizace");
             diaryData = new DiaryData(contentProviderClient, idToken);
@@ -80,7 +77,6 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
             syncFromServer(contentProviderClient);
             Log.d("astro", "SYNC: odeslání dat ne server");
             syncToServer(contentProviderClient, diaryData.getNextId(), diaryData.getUserId(), syncResult);
-
 
             if (syncFromServerOK) {
                 //zobrazit aktuální data
@@ -100,23 +96,9 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
             Log.d("astro", "INVALIDACE TOKENU");
             Log.d("astro", "-----------------");
             mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
-//            try {
-//                Log.d("astro", "XXXX 0 = " + authToken2);
-//                String t =mAccountManager.blockingGetAuthToken(account, "baerer", true);
-//                Log.d("astro", "XXXX 1 x = " + t);
-//            } catch (OperationCanceledException e1) {
-//                e1.printStackTrace();
-//                Log.d("astro", "XXXX 2");
-//            } catch (IOException e1) {
-//                Log.d("astro", "XXXX 3");
-//                e1.printStackTrace();
-//            } catch (AuthenticatorException e1) {
-//                Log.d("astro", "XXXX 4");
-//                e1.printStackTrace();
-//            }
-            Log.d("astro", "invalidate token called CCCCCCCCCC= ");
-            // poslat spravne cislo chyby
-            syncProblem(syncResult, message);
+            syncResult.delayUntil = 10;
+            syncResult.fullSyncRequested = true;
+            Log.d("astro", "delay-10 " + syncResult.stats.toString());
         } catch (Exception e) {
             syncProblem(syncResult, e.getMessage());
             e.printStackTrace();
@@ -175,7 +157,6 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
      * @throws RemoteException
      */
     private void syncFromServer(ContentProviderClient contentProviderClient) throws ApiErrorException, AccessTokenExpiredException, RemoteException {
-
 
         ArrayList<DiaryObject> diaryObjects = diaryData.getDataFromServer();
 
@@ -268,9 +249,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         syncFromServerOK = false;
         Log.d("astro", "SYNC CONFLICT 1: " + message);
         syncResult.stats.numConflictDetectedExceptions++;
-        Log.d("astro", "SYNC CONFLICT 2: " + message);
-
-        syncResult.delayUntil = 30;
+//        syncResult.delayUntil = 10;
 
 
         Intent intent = new Intent();
