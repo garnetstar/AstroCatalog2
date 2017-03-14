@@ -73,6 +73,16 @@
     </string-array>
     <color name="alert">#ff3333</color>
     <color name="black">#0e0e0e</color>
+    <color name="common_action_bar_splitter">#d2d2d2</color>
+    <color name="common_signin_btn_dark_text_default">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_disabled">#FFAAAAAA</color>
+    <color name="common_signin_btn_dark_text_focused">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_pressed">@android:color/white</color>
+    <color name="common_signin_btn_default_background">#FFDD4B39</color>
+    <color name="common_signin_btn_light_text_default">#FF737373</color>
+    <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
+    <color name="common_signin_btn_light_text_focused">#FF737373</color>
+    <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
     <color name="light_blue">#ff3399ff</color>
     <color name="light_red">#ffff6699</color>
     <color name="white">#ffffffff</color>
@@ -81,7 +91,7 @@
     <declare-styleable name="SeekBarDialogPreference"><attr name="android:max"/><attr format="integer" name="min"/><attr format="string" name="progressTextSuffix"/></declare-styleable>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <integer name="google_play_services_version">8298000</integer>
+    <integer name="google_play_services_version">8115000</integer>
     <string name="accountType">cz.uhk.janMachacek.astroCatalog</string>
     <string name="action_settings">Settings</string>
     <string name="adapter_magnitude_short">Mag: </string>
@@ -125,7 +135,6 @@
     <string name="common_google_play_services_updating_title">Google Play services are updating</string>
     <string name="common_open_on_phone">Open on phone</string>
     <string name="filter_object">Viditelnost</string>
-    <string name="gcm_defaultSenderId" translatable="false">171814397882</string>
     <string name="login">Login</string>
     <string name="max_magnitude">Maximální magnituda</string>
     <string name="max_magnitude_dialog">Maximální magnituda zobrazených objektů</string>
