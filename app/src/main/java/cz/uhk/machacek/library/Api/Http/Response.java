@@ -98,6 +98,14 @@ public class Response {
     }
 
 
+    /**
+     *
+     * @param latitude
+     * @param longitude
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
     public static JSONObject getWeatherData(double latitude, double longitude) throws IOException, JSONException {
 
         String lat = "&lat=" + Double.toString(latitude);
@@ -109,10 +117,8 @@ public class Response {
         HttpClient httpClient = new DefaultHttpClient();
         HttpResponse response = httpClient.execute(get);
         String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-        Log.d("astro", "WEATHER> JSON> " + json);
+        Log.d("astro", "WEATHER API DATA " + json);
         JSONObject jsonObject = new JSONObject(json);
         return jsonObject;
-//        //kontrola http statusu
-//        int httpStatus = response.getStatusLine().getStatusCode();
     }
 }

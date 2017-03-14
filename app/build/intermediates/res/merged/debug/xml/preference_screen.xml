@@ -33,8 +33,17 @@
             android:targetPackage="cz.uhk.machacek"
             android:targetClass="cz.uhk.machacek.UserActivity"
             />
+
     </Preference>
 
+    <PreferenceScreen
+        android:key="second_preferencescreen"
 
+        android:title="WiFi settings">
+        <CheckBoxPreference
+
+            android:key="prefer wifi"
+            android:title="Prefer WiFi" />
+    </PreferenceScreen>
 
 </PreferenceScreen>

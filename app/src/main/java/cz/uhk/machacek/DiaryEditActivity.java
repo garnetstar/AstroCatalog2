@@ -1,9 +1,12 @@
 package cz.uhk.machacek;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,18 +60,13 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.diary_edit);
-
         Intent intent = getIntent();
 
         if (null != intent) {
-
             this.id = intent.getIntExtra(AstroDbHelper.KEY_DIARY_ID, 0);
-
             if (id != 0) {
                 isNew = false;
-                DiaryFacade facade = new DiaryFacade(getContentResolver().acquireContentProviderClient(AstroContract
-                        .DIARY_URI));
-
+                DiaryFacade facade = new DiaryFacade(getContentResolver().acquireContentProviderClient(AstroContract.DIARY_URI));
                 try {
                     object = facade.getOneById(id);
 
@@ -94,8 +92,6 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                     TextView actualLongitude = (TextView) findViewById(R.id.lon);
                     actualLongitude.setText(Double.toString(object.getLongitude().getDecimalDegree()));
 
-//                    String possition = "Lat: " + Utils.getFormatedDegree(object.getLatitude()) + " Lon: " + Utils.getFormatedDegree(object.getLongitude());
-
                     //weather
                     TextView weather = (TextView) findViewById(R.id.weather);
                     weather.setText(object.getWeather());
@@ -112,44 +108,26 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         ll.addView(delete, lp);
                     }
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
-
-
         }
-
     }
 
-    /**
-     * Dispatch onResume() to fragments.  Note that for better inter-operation
-     * with older versions of the platform, at the point of this call the
-     * fragments attached to the activity are <em>not</em> resumed.  This means
-     * that in some cases the previous state may still be saved, not allowing
-     * fragment transactions that modify the state.  To correctly interact
-     * with fragments in their proper state, you should instead override
-     * {@link #onResumeFragments()}.
-     */
     @Override
     protected void onResume() {
         super.onResume();
-
         findLocation();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("astro", "LOCATION - change xxxx");
         if (isNew) {
-            Log.d("astro", "LOCATION - change");
+            Log.d("astro", "LOCATION - zjištěna poloha");
+
             Angle latitude = new Angle(location.getLatitude());
             Angle longitude = new Angle(location.getLongitude());
-
-//            String message = "Lat: " + Utils.getFormatedDegree(latitude) + " Lon: " + Utils.getFormatedDegree(longitude);
 
             TextView hiddenLatitude = (TextView) findViewById(R.id.lat);
             hiddenLatitude.setText(Double.toString(latitude.getDecimalDegree()));
@@ -157,17 +135,18 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
             TextView hiddenLongitude = (TextView) findViewById(R.id.lon);
             hiddenLongitude.setText(Double.toString(longitude.getDecimalDegree()));
 
-//            TextView hiddenLatitude = (TextView) findViewById(R.id.actual_latitude);
-//            hiddenLatitude.setText(Double.toString(latitude.getDecimalDegree()));
-//
-//            TextView hiddenLongitude = (TextView) findViewById(R.id.actual_longitude);
-//            hiddenLongitude.setText(Double.toString(longitude.getDecimalDegree()));
+            //pokud je k dispozici internetové spojení, načíst data počasí z API
+            ConnectivityManager cmr =
+                    (ConnectivityManager) getBaseContext().getSystemService( Activity.CONNECTIVITY_SERVICE );
+            NetworkInfo networkInfo = cmr.getActiveNetworkInfo();
 
-
-            // získat data počasí
-            SendfeedbackJob job = new SendfeedbackJob(latitude.getDecimalDegree(), longitude.getDecimalDegree());
-            job.execute();
-
+            if (!(networkInfo != null && networkInfo.isConnected())) {
+                Log.d("astro", "Internetoré spojení není k dispozici");
+            } else {
+                // získat data počasí
+                WeatherDataJob job = new WeatherDataJob(latitude.getDecimalDegree(), longitude.getDecimalDegree());
+                job.execute();
+            }
 
             hideProgressDialog();
         } else {
@@ -356,13 +335,12 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
     /**
      * POcasi
      */
-    private class SendfeedbackJob extends AsyncTask<String, Void, String> {
+    private class WeatherDataJob extends AsyncTask<String, Void, String> {
 
         private double lat, lon;
         private String message;
-        private Bitmap bmp;
 
-        public SendfeedbackJob(double lat, double lon) {
+        public WeatherDataJob(double lat, double lon) {
             super();
             this.lat = lat;
             this.lon = lon;

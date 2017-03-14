@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4\\sync_ok.png",
+        "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\drawable-xxxhdpi\\sync_ok.png"
+    },
+    {
         "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4\\settings_m.png",
         "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\drawable-xxxhdpi\\settings_m.png"
     },

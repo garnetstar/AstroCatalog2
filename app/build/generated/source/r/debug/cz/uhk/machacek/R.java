@@ -151,7 +151,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020017;
         public static final int observatory_m=0x7f020018;
         public static final int settings_m=0x7f020019;
-        public static final int toast_border=0x7f02001a;
+        public static final int sync_notok=0x7f02001a;
+        public static final int sync_ok=0x7f02001b;
+        public static final int toast_border=0x7f02001c;
     }
     public static final class id {
         public static final int action_settings=0x7f0b006a;
@@ -192,7 +194,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int diary_item=0x7f0b0039;
         public static final int diary_length=0x7f0b0040;
         public static final int diary_time_from=0x7f0b003e;
-        public static final int diarys_sync_ok=0x7f0b0047;
         public static final int dl3=0x7f0b003a;
         public static final int edit_diary_form=0x7f0b0048;
         public static final int horizont=0x7f0b002b;
@@ -236,6 +237,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int signo_in_layout=0x7f0b000b;
         public static final int signo_out_layout=0x7f0b000d;
         public static final int standard=0x7f0b0005;
+        public static final int sync_img=0x7f0b0047;
         public static final int sync_status=0x7f0b0067;
         public static final int textView=0x7f0b0049;
         public static final int textView1=0x7f0b0013;

@@ -122,20 +122,33 @@
             android:id="@+id/diary_guid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="sss"
+            android:text="64-123"
             android:textColor="@color/white"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/diarys_sync_ok"
+            android:textSize="12sp"
+            android:layout_below="@+id/sync_img"
+            android:layout_alignRight="@+id/sync_img"
+            android:layout_alignEnd="@+id/sync_img" />
+        <!--<TextView-->
+            <!--android:id="@+id/diarys_sync_ok"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="false"-->
+            <!--android:text="sync"-->
+            <!--android:textColor="@color/alert"-->
+            <!--android:textSize="18sp" />-->
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="false"
-            android:text="eee"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:src="@drawable/sync_ok"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/sync_img"
+            />
 
     </RelativeLayout>
 

@@ -47,6 +47,11 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
+            android:name="cz.uhk.machacek.AccountPreference"
+            android:excludeFromRecents="true"
+            android:label="Account Preferences"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
             android:name="cz.uhk.machacek.HomePage"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -103,7 +108,9 @@
             android:label="Diary"
             android:syncable="true" />
 
-        <service android:name="cz.uhk.machacek.Service.AuthenticatorService" >
+        <service
+            android:name="cz.uhk.machacek.Service.AuthenticatorService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>

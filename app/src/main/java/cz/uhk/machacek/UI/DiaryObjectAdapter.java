@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -50,7 +51,7 @@ public class DiaryObjectAdapter extends ArrayAdapter<DiaryObject> {
         TextView log = (TextView) row.findViewById(R.id.content);
         TextView weather = (TextView) row.findViewById(R.id.weatherList);
         TextView guid = (TextView) row.findViewById(R.id.diary_guid);
-        TextView sync_ok = (TextView) row.findViewById(R.id.diarys_sync_ok) ;
+        ImageView sync_ok = (ImageView) row.findViewById(R.id.sync_img) ;
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -78,11 +79,11 @@ public class DiaryObjectAdapter extends ArrayAdapter<DiaryObject> {
             log.setText(values.get(position).getLog());
             weather.setText(values.get(position).getWeather());
             guid.setText(values.get(position).getGuid());
-            sync_ok.setText(Integer.toString(values.get(position).getSyncOk()));
-
-
-
-
+            if(values.get(position).getSyncOk() == 1) {
+                sync_ok.setImageResource(R.drawable.sync_ok);
+            } else {
+                sync_ok.setImageResource(R.drawable.sync_notok);
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();

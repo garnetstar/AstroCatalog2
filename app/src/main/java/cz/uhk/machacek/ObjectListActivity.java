@@ -36,11 +36,14 @@ public class ObjectListActivity extends AbstactBaseActivity implements
         OnSharedPreferenceChangeListener {
 
     private AstroObjectAdapter adapter;
+    private RefreshBroudcastReceiver refreshBroudcastReceiver;
     public final static String REFRESH_OBJECTS_LIST = "ObjectListActivity.refreshObject";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        refreshBroudcastReceiver = new RefreshBroudcastReceiver();
 
         // pristup k preferencim
         preference.registerOnSharedPreferenceChangeListener(this);
@@ -54,13 +57,22 @@ public class ObjectListActivity extends AbstactBaseActivity implements
         super.onStart();
 
         // registrace broadcast receiveru pro reload objektů
-        registerReceiver(new RefreshBroudcastReceiver(), new IntentFilter(REFRESH_OBJECTS_LIST));
+        registerReceiver(refreshBroudcastReceiver, new IntentFilter(REFRESH_OBJECTS_LIST));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         createObjects();
+    }
+
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(refreshBroudcastReceiver);
     }
 
     private void createObjects() {
