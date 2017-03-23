@@ -36,14 +36,5 @@
 
     </Preference>
 
-    <PreferenceScreen
-        android:key="second_preferencescreen"
-
-        android:title="WiFi settings">
-        <CheckBoxPreference
-
-            android:key="prefer wifi"
-            android:title="Prefer WiFi" />
-    </PreferenceScreen>
 
 </PreferenceScreen>

@@ -91,6 +91,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
                 Log.d("astro", "SYNC PROBLEM: synchronizace nebyla dokončena");
             }
 
+
         } catch (AccessTokenExpiredException e) {
             String message = "ERROR: neaktuální přihlašovací údaje " + e.getMessage();
             Log.d("astro", "INVALIDACE TOKENU");
