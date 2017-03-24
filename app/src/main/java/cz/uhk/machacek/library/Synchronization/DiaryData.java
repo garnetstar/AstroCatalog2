@@ -37,7 +37,7 @@ public class DiaryData {
     private ContentProviderClient contentProvider;
     private String access_token;
 
-    private int serverCounter, nextId, userId;
+    private int serverCounter, userId;
 
     public DiaryData(ContentProviderClient contentProvider, String access_token) {
         this.contentProvider = contentProvider;
@@ -79,14 +79,12 @@ public class DiaryData {
                 throw new AccessTokenExpiredException();
             }
             int serverCounter = jsonObject.getInt("servercounter");
-            int nextId = jsonObject.getInt("next_id");
             int userId = jsonObject.getInt("user_id");
 
             setServerCounter(serverCounter);
-            setNextId(nextId);
             setUserId(userId);
 
-            Log.d("astro", "diary servercounter=" + Integer.toString(serverCounter) + " nextId=" + Integer.toString(nextId));
+            Log.d("astro", "diary servercounter=" + Integer.toString(serverCounter));
 
             ArrayList<DiaryObject> newData = new ArrayList<DiaryObject>();
 
@@ -187,14 +185,6 @@ public class DiaryData {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getNextId() {
-        return nextId;
-    }
-
-    public void setNextId(int nextId) {
-        this.nextId = nextId;
     }
 
     public int getServerCounter() {
