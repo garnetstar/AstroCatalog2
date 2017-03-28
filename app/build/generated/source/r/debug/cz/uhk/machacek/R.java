@@ -293,7 +293,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class mipmap {
         public static final int ic_catalog=0x7f030000;
         public static final int ic_launcher=0x7f030001;
-        public static final int ic_settings=0x7f030002;
+        public static final int ic_launcher_g=0x7f030002;
+        public static final int ic_settings=0x7f030003;
     }
     public static final class string {
         public static final int accountType=0x7f060011;

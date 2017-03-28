@@ -14,6 +14,7 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -229,10 +230,8 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
         try {
             //kontrola správně zadaného času
             if (dfDate.parse(to).before(dfDate.parse(from)) || dfDate.parse(to).equals(dfDate.parse(from))) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Čas začátku musí být menší než čas konce", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP, 0, 0);
-                toast.show();
 
+                showAlert("Čas začátku musí být menší než čas konce");
                 Log.d("astro", "DATE ERROR start / end");
             } else {
 
@@ -261,8 +260,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                     int actualServerCounter = getActualServerCounter(this.object.getId());
                     Log.d("astro", "PREVENT BEFORE CONFLICT: object>" + this.object.getRowCounter() + " actual>" + actualServerCounter);
                     if (this.object.getRowCounter() < actualServerCounter) {
-
-                        Toast.makeText(getBaseContext(), "Záznam nelze editovat, byl aktualizován serverem",Toast.LENGTH_LONG).show();
+                        showAlert("Záznam nelze editovat, byl aktualizován serverem");
 
                     } else {
                         val.setId(this.object.getId());
@@ -283,7 +281,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
             }
 
         } catch (ParseException e) {
-            Toast.makeText(getApplicationContext(), "Není zadáno datum", Toast.LENGTH_LONG).show();
+            showAlert( "Není zadáno datum");
             Log.d("astro", "DATE ERROR bad format");
         }
     }
@@ -398,6 +396,19 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
             weather.setText(this.message);
 
         }
+    }
+
+    private void showAlert(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View toastRoot = inflater.inflate(R.layout.toast, null);
+        Toast toast = new Toast(getBaseContext());
+        toast.setView(toastRoot);
+        toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.CENTER,
+                0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        TextView toastMessage = (TextView) toastRoot.findViewById(R.id.toastMessage);
+        toastMessage.setText(message);
+        toast.show();
     }
 
 }

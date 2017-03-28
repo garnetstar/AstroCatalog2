@@ -195,7 +195,8 @@ int menu object_detatil 0x7f0d0001
 int menu pointer 0x7f0d0002
 int mipmap ic_catalog 0x7f030000
 int mipmap ic_launcher 0x7f030001
-int mipmap ic_settings 0x7f030002
+int mipmap ic_launcher_g 0x7f030002
+int mipmap ic_settings 0x7f030003
 int string accountType 0x7f060011
 int string action_settings 0x7f060012
 int string adapter_magnitude_short 0x7f060013
