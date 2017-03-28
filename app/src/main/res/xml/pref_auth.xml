@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="sdfsdf" />
+    <!--<PreferenceCategory android:title="sdfsdf" />-->
 
-    <PreferenceCategory android:title="Nastavení synchronizace">
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="checkbox_pref"
-            android:persistent="true"
-            android:summary="cxvv"
-            android:title="werfs" />
-    </PreferenceCategory>
+    <!--<PreferenceCategory android:title="Nastavení synchronizace">-->
+        <!--<CheckBoxPreference-->
+            <!--android:defaultValue="true"-->
+            <!--android:key="checkbox_pref"-->
+            <!--android:persistent="true"-->
+            <!--android:summary="cxvv"-->
+            <!--android:title="werfs" />-->
+    <!--</PreferenceCategory>-->
 </PreferenceScreen>

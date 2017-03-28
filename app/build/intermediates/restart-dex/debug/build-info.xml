@@ -4,7 +4,7 @@
     api-level="16"
     density="hdpi"
     format="7"
-    timestamp="175527128046947" >
+    timestamp="30130998367278" >
 
     <task
         name="javac"
@@ -19,6 +19,6 @@
         name="verifier"
         duration="0" />
 
-    <build timestamp="175527128046947" />
+    <build timestamp="30130998367278" />
 
 </instant-run>

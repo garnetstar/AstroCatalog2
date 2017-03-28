@@ -224,8 +224,19 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         // nastavit row counter
         // podle timestamp  vyresit konflikt
-        serverObject.setRowCounter(diaryData.getServerCounter());
-        saveObject(client, serverObject);
+        int compatation = serverObject.getTimestamp().compareTo(deviceObject.getTimestamp());
+        if(compatation >= 0) {
+            //server timestamp je větší nebo stejný
+            Log.d("astro", "server wins");
+            serverObject.setRowCounter(diaryData.getServerCounter());
+            saveObject(client, serverObject);
+        } else {
+            //device timestamp je větší
+            Log.d("astro", "device wins");
+            deviceObject.setRowCounter(diaryData.getServerCounter());
+            saveObject(client, deviceObject);
+        }
+
 
     }
 
