@@ -4,26 +4,26 @@
     api-level="16"
     density="hdpi"
     format="7"
-    timestamp="18232909340537" >
+    timestamp="23904746775330" >
 
     <task
         name="javac"
-        duration="2276" />
+        duration="0" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="869" />
+        duration="0" />
     <task
         name="verifier"
-        duration="348" />
+        duration="0" />
 
     <artifact
         location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
         type="MAIN" />
 
-    <build timestamp="18232909340537" >
+    <build timestamp="23904746775330" >
         <artifact
             location="C:\Users\jan\AndroidStudioProjects\AstroCatalog-master\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import cz.uhk.janMachacek.AbstactBaseActivity;
 import cz.uhk.janMachacek.AstroContract;
@@ -70,7 +71,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
             Log.d("astro", "SYNC: stahování dat ze serveru");
             syncFromServer(contentProviderClient);
             Log.d("astro", "SYNC: odeslání dat ne server");
-            syncToServer(contentProviderClient, diaryData.getNextId(), diaryData.getUserId(), syncResult);
+            syncToServer(contentProviderClient, diaryData.getUserId(), syncResult);
 
 
             if (syncFromServerOK) {
@@ -97,7 +98,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private void syncToServer(ContentProviderClient contentProviderClient, int nextId, int userId, SyncResult syncResult) throws RemoteException {
+    private void syncToServer(ContentProviderClient contentProviderClient, int userId, SyncResult syncResult) throws RemoteException {
 
         // ziskat všechny objekty se sync_OK = 0
         ArrayList<DiaryObject> objects = facade.getObjectForSync();
@@ -106,9 +107,8 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         for (int i = 0; i < objects.size(); i++) {
 
             if (objects.get(i).getGuid() == null) {
-                nextId++;
-                String newGuid = Integer.toString(nextId) + "-" + Integer.toString(userId);
-
+//                String newGuid = Integer.toString(nextId) + "-" + Integer.toString(userId);
+                String newGuid = UUID.randomUUID().toString();
                 objects.get(i).setGuid(newGuid);
                 objects.get(i).setIsNew(true);
                 objects.get(i).setRowCounter(diaryData.getServerCounter());
