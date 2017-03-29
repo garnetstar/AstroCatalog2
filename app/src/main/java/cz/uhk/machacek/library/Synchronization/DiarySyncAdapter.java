@@ -171,11 +171,8 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
         // Vlozit data ziskana ze serveru
         int i = 0;
-        //   ContentValues newValues[] = new ContentValues[diaryObjects.size()];
         for (DiaryObject serverObject : diaryObjects) {
-            // newValues[i++] = oneValue.getContentValues();
             try {
-//                serverObject.setRowCounter(diaryData.getServerCounter());
                 contentProviderClient.insert(Uri.parse(AstroContract.DIARY_URI + "/diary_edit"), serverObject.getContentValues());
                 Log.d("astro", "INSERT diaryData = " + diaryObjects.toString());
             } catch (SQLiteConstraintException e) {
@@ -185,14 +182,10 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
                 DiaryObject deviceObject = facade.getOneByGuid(serverObject.getGuid());
                 // pokud je záznam synchronizovaný, syncOK = 1, provede se update
                 if (deviceObject.getSyncOk() == 1) {
-//                    String selection = AstroDbHelper.KEY_DIARY_GUID + "=?";
-//                    String[] selectionArgs = {serverObject.getGuid()};
-//                    contentProviderClient.update(getUri(), serverObject.getContentValues(), selection, selectionArgs);
                     saveObject(contentProviderClient, serverObject);
                     Log.d("astro", "Diary updated: " + serverObject.toString());
                 } else {
                     // pokud není záznam synchronizovaný, syncOK = 0, je třeba řešit konflikt
-
                     solveConflict(contentProviderClient, deviceObject, serverObject);
                 }
             } catch (RemoteException e) {

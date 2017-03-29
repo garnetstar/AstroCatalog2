@@ -365,22 +365,6 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
 
                 Log.d("astro", message);
 
-
-//                URL url = null;
-//                try {
-//                    url = new URL("http://openweathermap.org/img/w/10d.png");
-//                    try {
-//                        bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                }
-
-
             } catch (IOException e) {
                 Log.d("astro", "ERROR 123" + e.toString());
             } catch (JSONException e) {
