@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.uhk.machacek"
+    package="cz.uhk.machacekgoogle"
     android:versionCode="2"
     android:versionName="2.0" >
 
@@ -40,7 +40,7 @@
             android:theme="@android:style/Theme.Dialog" android:excludeFromRecents="true" />
 
         <activity
-            android:name="cz.uhk.machacek.HomePage"
+            android:name="cz.uhk.machacekgoogle.HomePage"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -50,30 +50,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cz.uhk.machacek.AuthenticatorActivity"
+            android:name="cz.uhk.machacekgoogle.AuthenticatorActivity"
             android:label="AutenticatorActivity"
             />
         <activity
-            android:name="cz.uhk.machacek.ObjectListActivity"
+            android:name="cz.uhk.machacekgoogle.ObjectListActivity"
             android:label="@string/title_object_list" />
         <activity
-            android:name="cz.uhk.machacek.DiaryEditActivity"
+            android:name="cz.uhk.machacekgoogle.DiaryEditActivity"
             android:label="@string/title_diary" />
         <activity
-            android:name="cz.uhk.machacek.DiaryActivity"
+            android:name="cz.uhk.machacekgoogle.DiaryActivity"
             android:label="@string/title_diary" />
         <activity
-            android:name="cz.uhk.machacek.SettingsActivity"
+            android:name="cz.uhk.machacekgoogle.SettingsActivity"
             android:label="@string/app_settings" />
         <activity
-            android:name="cz.uhk.machacek.ObjectDetatilActivity"
+            android:name="cz.uhk.machacekgoogle.ObjectDetatilActivity"
             android:label="@string/title_activity_object_detatil" />
         <activity
-            android:name="cz.uhk.machacek.PointerActivity"
+            android:name="cz.uhk.machacekgoogle.PointerActivity"
             android:label="@string/title_activity_pointer"
             android:screenOrientation="portrait" />
         <activity
-            android:name="cz.uhk.machacek.UserActivity"
+            android:name="cz.uhk.machacekgoogle.UserActivity"
             android:screenOrientation="portrait" />
 
         <!--
@@ -85,19 +85,19 @@
             android:value="@integer/google_play_services_version" />
 
         <provider
-            android:name="cz.uhk.machacek.Model.CatalogContentProvider"
-            android:authorities="cz.uhk.machacek.astro.provider"
+            android:name="cz.uhk.machacekgoogle.Model.CatalogContentProvider"
+            android:authorities="cz.uhk.machacekgoogle.astro.provider"
             android:exported="false"
             android:label="Katalog"
             android:syncable="true" />
         <provider
-            android:name="cz.uhk.machacek.Model.DiaryContentProvider"
-            android:authorities="cz.uhk.machacek.astro.diaryProvider"
+            android:name="cz.uhk.machacekgoogle.Model.DiaryContentProvider"
+            android:authorities="cz.uhk.machacekgoogle.astro.diaryProvider"
             android:exported="false"
             android:label="Deník"
             android:syncable="true" />
 
-        <service android:name="cz.uhk.machacek.Service.AuthenticatorService" android:exported="false">
+        <service android:name="cz.uhk.machacekgoogle.Service.AuthenticatorService" android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -106,7 +106,7 @@
                 android:resource="@xml/authenticator" />
         </service>
         <service
-            android:name="cz.uhk.machacek.Service.AstroSyncService"
+            android:name="cz.uhk.machacekgoogle.Service.AstroSyncService"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -117,7 +117,7 @@
                 android:resource="@xml/sync_adapter_catalog" />
         </service>
         <service
-            android:name="cz.uhk.machacek.Service.AstroDiarySyncService"
+            android:name="cz.uhk.machacekgoogle.Service.AstroDiarySyncService"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />

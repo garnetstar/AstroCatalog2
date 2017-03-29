@@ -10,7 +10,7 @@
         android:layout_weight=".15"
         android:orientation="vertical" >
 
-        <cz.uhk.machacek.UI.CompasView
+        <cz.uhk.machacekgoogle.UI.CompasView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/compas"
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
             android:text="" />
     </LinearLayout>
 
-    <cz.uhk.machacek.UI.HorizontView
+    <cz.uhk.machacekgoogle.UI.HorizontView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/horizont"
         android:layout_width="wrap_content"
