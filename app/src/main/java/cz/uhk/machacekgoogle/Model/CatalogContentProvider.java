@@ -15,19 +15,17 @@ import cz.uhk.machacekgoogle.AstroContract;
  * @author Jan Macháček
  *         Created on 3.10.2016.
  */
-/*
- * Define an implementation of ContentProvider that stubs out
- * all methods
- */
 public class CatalogContentProvider extends ContentProvider {
 
     private static final UriMatcher URI_MATCHER;
     private static final int MESSIER = 1;
+    private static final int SETTINGS = 2;
 
     // prepare the UriMatcher
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
         URI_MATCHER.addURI(AstroContract.CATALOG_AUTHORITY, "messier", MESSIER);
+        URI_MATCHER.addURI(AstroContract.CATALOG_AUTHORITY, "settings", SETTINGS);
     }
 
     private AstroDbHelper dbHelper;
@@ -62,7 +60,19 @@ public class CatalogContentProvider extends ContentProvider {
             String selection,
             String[] selectionArgs,
             String sortOrder) {
-        return null;
+        int token = URI_MATCHER.match(uri);
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        switch (token) {
+            case SETTINGS: {
+                String[] columns = new String[]{AstroDbHelper.KEY_SETTINGS_KEY, AstroDbHelper.KEY_SETTINGS_VALUE};
+                Cursor c = db.query(AstroDbHelper.TABLE_SETTINGS_NAME, columns, null, null, null, null, null);
+                return c;
+            }
+            default: {
+                throw new UnsupportedOperationException("URI: " + uri + " not supported. messier !!!" + Integer.toString(token));
+            }
+        }
     }
 
     /*
@@ -96,34 +106,33 @@ public class CatalogContentProvider extends ContentProvider {
         int rowsDeleted = -1;
         int token = URI_MATCHER.match(uri);
 
-        Log.d("astro", "DDD " + uri);
-
         switch (token) {
             case MESSIER:
                 rowsDeleted = db.delete(dbHelper.TABLE_OBJECT_NAME, selection, selectionArgs);
-                Log.d("astro", "delete !!!!<<<???");
+                Log.d("astro", "delete messier");
                 break;
         }
         // Notifying the changes, if there are any
         if (rowsDeleted != -1)
             getContext().getContentResolver().notifyChange(uri, null);
-        Log.d("astro", "delete OBSERVER ???");
         return rowsDeleted;
     }
-//    content://cz.uhk.machacekgoogle.astro.provider/messier
-    /*
-     * update() always returns "no rows affected" (0)
-     */
+
     public int update(
             Uri uri,
             ContentValues values,
-            String selection,
-            String[] selectionArgs) {
+            String where,
+            String[] whereArgs) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         switch (URI_MATCHER.match(uri)) {
             case MESSIER:
                 Log.d("astro", "uri " + "messier");
                 break;
+            case SETTINGS: {
+                return  db.update(AstroDbHelper.TABLE_SETTINGS_NAME,values,where,whereArgs);
+            }
         }
         Log.d("astro", "URI" + Integer.toString(URI_MATCHER.match(uri)));
         return 0;

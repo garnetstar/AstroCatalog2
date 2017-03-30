@@ -103,6 +103,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 
                 final String accountType = getIntent().getStringExtra(ACCOUNT_TYPE);
 
+                showProgressDialog();
+
                 new AsyncTask<String, Void, Intent>() {
                     @Override
                     protected Intent doInBackground(String... strings) {
@@ -139,9 +141,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
                     @Override
                     protected void onPostExecute(Intent intent) {
                         super.onPostExecute(intent);
+
+                        hideProgressDialog();
                         Log.d("astro", "> onPostExecute");
                         if (intent.hasExtra(WRONG_CREDENTIALS)) {
-                            Toast.makeText(AuthenticatorActivity.this, "", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AuthenticatorActivity.this, "ERROR: baly zadány neplatné přihlašovací údaje", Toast.LENGTH_SHORT).show();
                         } else {
                             finishLogin(intent);
                         }

@@ -1,6 +1,7 @@
 package cz.uhk.machacekgoogle.library.Synchronization;
 
 import android.content.ContentProviderClient;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import cz.uhk.machacekgoogle.Config;
 import cz.uhk.machacekgoogle.Exception.AccessTokenExpiredException;
 import cz.uhk.machacekgoogle.Exception.ApiErrorException;
+import cz.uhk.machacekgoogle.Model.AstroDbHelper;
 import cz.uhk.machacekgoogle.ObjectListActivity;
 import cz.uhk.machacekgoogle.coordinates.Angle;
 import cz.uhk.machacekgoogle.library.Api.Http.Response;
@@ -35,24 +37,13 @@ import cz.uhk.machacekgoogle.Model.AstroObject;
  */
 public class MessierData {
 
-    private ApiAuthenticator apiAuthenticator;
-    private HttpClient httpClient;
-    private Context context;
     private int actualVersion;
-    private ContentProviderClient contentProvider;
-
-    public MessierData(ApiAuthenticator apiAuthenticator, Context context, ContentProviderClient contentProvider) {
-        this.apiAuthenticator = apiAuthenticator;
-        this.httpClient = new DefaultHttpClient();
-        this.context = context;
-        this.contentProvider = contentProvider;
-    }
 
     public MessierData() {
         actualVersion = 0;
     }
 
-    public ArrayList<AstroObject> getMessierData(String accessToken, Context context, ContentProviderClient providerClient) throws AccessTokenExpiredException, ApiErrorException {
+    public ArrayList<AstroObject> getMessierData(String accessToken, Context context, ContentProviderClient providerClient) throws AccessTokenExpiredException, ApiErrorException, RemoteException {
 
         Log.d("astro", "static sync start");
 
@@ -60,12 +51,8 @@ public class MessierData {
 
         int serverVersion = getVersion(accessToken);
         Log.d("astro", "MS VERSION=" + serverVersion);
-
-        // default preference
-        SharedPreferences preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
-
-        int deviceVersion = preferences.getInt("ms_version", 0);
-        Log.d("astro", "act>" + deviceVersion + " version>" + serverVersion);
+        int deviceVersion = getMessierVersion(providerClient);
+        Log.d("astro", "act messier version = " + deviceVersion + " version>" + serverVersion);
         actualVersion = serverVersion;
 
         if (deviceVersion < serverVersion) {
@@ -80,10 +67,10 @@ public class MessierData {
                 e.printStackTrace();
             }
 
-            //aktualizovat verzi katalogu
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt("ms_version", serverVersion);
-            editor.commit();
+            // ulozit serverCounter do clientCounter
+            ContentValues val = new ContentValues();
+            val.put(AstroDbHelper.KEY_SETTINGS_VALUE, serverVersion);
+            providerClient.update(Uri.parse(AstroContract.CATALOG_URI + "/settings"), val, AstroDbHelper.KEY_SETTINGS_KEY + "=?", new String[]{"messier_version"});
             Log.d("astro", "set new version " + serverVersion);
 
             //zobrazit aktuální data
@@ -209,13 +196,12 @@ public class MessierData {
         return Config.API_URL + Config.API_MESSIER_DATA + "/version?" + Config.API_ACCESS_TOKEN + "=" + accessToken;
     }
 
-    private int getMessierVersion() throws RemoteException {
+    private int getMessierVersion(ContentProviderClient providerClient) throws RemoteException {
 
-        Uri uri = Uri.parse(AstroContract.DIARY_URI + "/settings");
+        Uri uri = Uri.parse(AstroContract.CATALOG_URI + "/settings");
         int messier_version = 0;
 
-        Cursor c = contentProvider.query(uri, null, null, null, null);
-
+        Cursor c = providerClient.query(uri, null, null, null, null);
         if (c.moveToFirst()) {
             do {
                 if (c.getString(0).equals("messier_version")) {
