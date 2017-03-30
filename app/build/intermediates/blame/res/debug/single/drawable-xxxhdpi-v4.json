@@ -14,9 +14,5 @@
     {
         "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4\\diary_m.png",
         "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\drawable-xxxhdpi\\diary_m.png"
-    },
-    {
-        "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_launcher.png"
     }
 ]

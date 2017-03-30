@@ -12,10 +12,6 @@
         "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\drawable-xhdpi-v4\\common_full_open_on_phone.png"
     },
     {
-        "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
-    },
-    {
         "merged": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\googleg_disabled_color_18.png",
         "source": "C:\\Users\\jan\\AndroidStudioProjects\\AstroCatalog-master\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.2.0\\res\\drawable-xhdpi-v4\\googleg_disabled_color_18.png"
     },

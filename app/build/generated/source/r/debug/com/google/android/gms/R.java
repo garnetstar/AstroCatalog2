@@ -59,13 +59,13 @@ public final class R {
 		public static final int adjust_height = 0x7f0b0001;
 		public static final int adjust_width = 0x7f0b0002;
 		public static final int auto = 0x7f0b0007;
-		public static final int button = 0x7f0b005a;
+		public static final int button = 0x7f0b005f;
 		public static final int crash_reporting_present = 0x7f0b0000;
 		public static final int dark = 0x7f0b0008;
 		public static final int icon_only = 0x7f0b0004;
 		public static final int light = 0x7f0b0009;
 		public static final int none = 0x7f0b0003;
-		public static final int seek_bar = 0x7f0b0066;
+		public static final int seek_bar = 0x7f0b006b;
 		public static final int standard = 0x7f0b0005;
 		public static final int wide = 0x7f0b0006;
 	}

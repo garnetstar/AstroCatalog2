@@ -94,8 +94,6 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-
-
     /**
      * Called when a view has been clicked.
      *

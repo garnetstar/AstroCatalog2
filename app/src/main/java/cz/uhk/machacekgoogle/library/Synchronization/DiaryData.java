@@ -44,17 +44,6 @@ public class DiaryData {
         this.access_token = access_token;
     }
 
-//    public void sync() {
-//
-//        try {
-//            getDataFromServer();
-//        } catch (AccessTokenExpiredException e) {
-//            e.printStackTrace();
-//        } catch (ApiErrorException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     /**
      *
      * @return

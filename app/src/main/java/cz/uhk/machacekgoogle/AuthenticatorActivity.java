@@ -8,8 +8,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,6 +31,10 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 
 import java.io.IOException;
 
+import cz.uhk.machacekgoogle.Exception.ApiErrorException;
+import cz.uhk.machacekgoogle.Exception.WrongCredentialsException;
+import cz.uhk.machacekgoogle.library.Api.ApiAuthenticator;
+
 /**
  * Created by jan on 10.8.2016.
  */
@@ -39,6 +47,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     public final static String ID_TOKEN = "ID_TOKEN";
     public final static String NAME = "NAME";
     public final static String PICTURE = "PICTURE";
+    public final static String PASSWORD = "PASSWORD";
+    public final static String WRONG_CREDENTIALS = "WRONG_CREDENTIALS";
+    public final static String SIGN_IN_TYPE = "SIGN_IN_TYPE";
+    public final static String SIGN_IN_TYPE_GOOGLE = "google";
+    public final static String SIGN_IN_TYPE_ASTRO = "astro";
+
 
     public final static int PERIOD_OF_SYNC_SEC = 30;
     public final static int KEY_SIGN_IN = 9001;
@@ -59,6 +73,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
 
+        TextView tv = (TextView) findViewById(R.id.htmllink);
+        tv.setText(Html.fromHtml("<a href=http://astro.8u.cz>astro.8u.cz"));
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_WIDE);
 
@@ -70,14 +88,67 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
                 .requestEmail()
                 .build();
 
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by gso.
+// Vytvoření GoogleApiClient s přístupem do Google Sign-In API
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                //      .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         accountManager = AccountManager.get(getBaseContext());
-        String accountName = getIntent().getStringExtra(LOGIN);
+
+        findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String login = ((TextView) findViewById(R.id.accountName)).getText().toString();
+                final String password = ((TextView) findViewById(R.id.accountPassword)).getText().toString();
+
+                final String accountType = getIntent().getStringExtra(ACCOUNT_TYPE);
+
+                new AsyncTask<String, Void, Intent>() {
+                    @Override
+                    protected Intent doInBackground(String... strings) {
+
+                        Log.d("Response", "> Started authenticating");
+
+                        String[] tokens;
+                        Bundle data = new Bundle();
+
+                        try {
+                            tokens = ApiAuthenticator.getTokenByLogin(login, password);
+                            String authToken = tokens[0];
+                            String refreshToken = tokens[1];
+
+                            data.putString(SIGN_IN_TYPE, SIGN_IN_TYPE_ASTRO);
+                            data.putString(AccountManager.KEY_ACCOUNT_NAME, login);
+                            data.putString(AccountManager.KEY_ACCOUNT_TYPE, accountType);
+                            data.putString(AccountManager.KEY_AUTHTOKEN, authToken);
+                            data.putString(PASSWORD, password);
+                            data.putString(REFRESH_TOKEN, refreshToken);
+
+                        } catch (WrongCredentialsException e) {
+                            data.putString(WRONG_CREDENTIALS, e.getMessage());
+                        } catch (ApiErrorException e) {
+                            Log.d("astro", e.toString());
+                            e.printStackTrace();
+                        }
+
+                        final Intent result = new Intent();
+                        result.putExtras(data);
+                        return result;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Intent intent) {
+                        super.onPostExecute(intent);
+                        Log.d("astro", "> onPostExecute");
+                        if (intent.hasExtra(WRONG_CREDENTIALS)) {
+                            Toast.makeText(AuthenticatorActivity.this, "", Toast.LENGTH_SHORT).show();
+                        } else {
+                            finishLogin(intent);
+                        }
+                    }
+                }.execute();
+            }
+        });
     }
 
     /**
@@ -182,10 +253,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
             // Vytvoření nového účtu
             Account account = new Account(login, accountType);
             Bundle data = new Bundle();
+            data.putString(SIGN_IN_TYPE, SIGN_IN_TYPE_GOOGLE);
             data.putString(AccountManager.KEY_ACCOUNT_NAME, login);
             data.putString(REFRESH_TOKEN, googleTokenResponse.getRefreshToken());
             data.putString(ID_TOKEN, googleTokenResponse.getIdToken());
-//            data.putString(ID_TOKEN, "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxMDkxNGZiOTk0OGYxZTQzNTdjYzg3MjY4MDg3Mjk4ZTgzNTlkMjAifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0ODgxODg4OTMsImV4cCI6MTQ4ODE5MjQ5MywiYXVkIjoiMTcxODE0Mzk3ODgyLXFvYWZib2RwaWQ1Mmg3bGgwcGM5OGJydWM5dnYxNnZzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE2ODE2OTM4NjYwODI0MjY3MjQ5IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjE3MTgxNDM5Nzg4Mi1vZ3JtaDBvZ2Y5NTRsZWhubXFoa2tnZTBwYW44bXIyMy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoibWFjaGFjZWsuakBnbWFpbC5jb20iLCJuYW1lIjoiSmFuIE1hY2jDocSNZWsiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ldERGdEowV24zUS9BQUFBQUFBQUFBSS9BQUFBQUFBQURLby9BdTNjWDlFVnZpRS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiSmFuIiwiZmFtaWx5X25hbWUiOiJNYWNow6HEjWVrIiwibG9jYWxlIjoiY3MifQ.JRRRa3dCmpfddK7DrymCjZ1XC3P7U9q9NQMDMiQAkaEIMWNnd4_rHVspzhWe3UQx-wfWVu11hJVEoWKtMNQMISEmsZACQxnvNe7x1QyUcDSXzXLSMFCWWxUOtyrPp6VJLrMcZlV2cH8NDTSaZlv9loQjIZbBhpp70seYAoxuLMbGp8JL7HNRdyo_0AG421csKRkNOPlGYp3qJLDOYgKlRJ84BSANapqXamWsIU_K7ik6nvWi0ha5pZEG12iPVQ6wSHYtPxPDiZKmHuQjNoArFXOeOuqGKT6E18VjXG3WjVaNJokrAqDTCkmXdAF9fa-85qMpLDhKORC_FveMOZlxwg");
             data.putString(NAME, googleSignInAccount.getDisplayName());
             data.putString(PICTURE, String.valueOf(googleSignInAccount.getPhotoUrl()));
 
@@ -220,4 +291,43 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
             mProgressDialog.hide();
         }
     }
+
+    private void finishLogin(Intent intent) {
+        Log.d("astro", "Auth activity finishLogin()");
+
+        String login = intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+        String password = intent.getStringExtra(PASSWORD);
+        String accountType = intent.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE);
+        String authToken = intent.getStringExtra(AccountManager.KEY_AUTHTOKEN);
+
+        final Account account = new Account(login, accountType);
+
+        if (getIntent().getBooleanExtra(NEW_ACCOUNT, false)) {
+
+
+            Bundle data = new Bundle();
+            data.putString(AccountManager.KEY_ACCOUNT_NAME, intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME));
+            data.putString(REFRESH_TOKEN, intent.getStringExtra(REFRESH_TOKEN));
+            data.putString(PASSWORD, intent.getStringExtra(PASSWORD));
+            data.putString(SIGN_IN_TYPE, intent.getStringExtra(SIGN_IN_TYPE));
+
+            accountManager.addAccountExplicitly(account, password, data);
+            accountManager.setAuthToken(account, "baerer", authToken);
+
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.DIARY_AUTHORITY, true);
+
+            getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.DIARY_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
+            getApplicationContext().getContentResolver().addPeriodicSync(account, AstroContract.CATALOG_AUTHORITY, new Bundle(), PERIOD_OF_SYNC_SEC);
+            getApplicationContext().getContentResolver().setSyncAutomatically(account, AstroContract.CATALOG_AUTHORITY, true);
+        } else {
+            Log.d("astro", "UPDATE ACCOUNT ONLY");
+            accountManager.setPassword(account, password);
+        }
+
+        setAccountAuthenticatorResult(intent.getExtras());
+        setResult(RESULT_OK, intent);
+
+        finish();
+    }
+
 }

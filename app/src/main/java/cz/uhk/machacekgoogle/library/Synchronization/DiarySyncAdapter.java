@@ -60,6 +60,23 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         syncFromServerOK = true;
 
         facade = new DiaryFacade(contentProviderClient);
+        String signType = mAccountManager.getUserData(account, AuthenticatorActivity.SIGN_IN_TYPE);
+        Log.d("astro", "sign in type === " + signType + " break");
+
+        switch (signType) {
+            case AuthenticatorActivity.SIGN_IN_TYPE_GOOGLE:
+                syncByGoogleAccount(account, contentProviderClient, syncResult);
+                break;
+            case AuthenticatorActivity.SIGN_IN_TYPE_ASTRO:
+                syncByAstroAccount(account, contentProviderClient, syncResult);
+                break;
+            default:
+                Log.d("astro", "ERROR: NO SYNC ACCOUNT TYPE");
+                break;
+        }
+    }
+
+    private void syncByGoogleAccount(Account account, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         String idToken = null;
         String authToken = null;
 
@@ -101,6 +118,44 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
         }
     }
+
+    private void syncByAstroAccount(Account account, ContentProviderClient contentProviderClient, SyncResult syncResult) {
+        String authToken = null;
+
+        try {
+            authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+            Log.d("astro", "SYNC: zahájení synchronizace");
+            diaryData = new DiaryData(contentProviderClient, authToken);
+            Log.d("astro", "SYNC: stahování dat ze serveru");
+            syncFromServer(contentProviderClient);
+            Log.d("astro", "SYNC: odeslání dat ne server");
+            syncToServer(contentProviderClient, diaryData.getUserId(), syncResult);
+
+
+            if (syncFromServerOK) {
+                //zobrazit aktuální data
+                refreshDiaryList();
+
+                //zobrazit stav synchronizace
+                Intent intent = new Intent();
+                intent.setAction(AbstactBaseActivity.FILTER_SHOW_MESSAGE);
+                intent.putExtra("message", "Synchronizace proběhla v pořádku");
+                getContext().sendBroadcast(intent);
+            } else {
+                Log.d("astro", "SYNC PROBLEM: synchronizace nebyla dokončena");
+            }
+
+        } catch (AccessTokenExpiredException e) {
+            String message = "ERROR: neaktuální přihlašovací údaje " + e.getMessage();
+            mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
+            // poslat spravne cislo chyby
+            syncProblem(syncResult, message);
+        } catch (Exception e) {
+            syncProblem(syncResult, e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
     private void syncToServer(ContentProviderClient contentProviderClient, int userId, SyncResult syncResult) throws RemoteException {
 
@@ -213,7 +268,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         // nastavit row counter
         // podle timestamp  vyresit konflikt
         int compatation = serverObject.getTimestamp().compareTo(deviceObject.getTimestamp());
-        if(compatation >= 0) {
+        if (compatation >= 0) {
             //server timestamp je větší nebo stejný
             Log.d("astro", "server wins");
             serverObject.setRowCounter(diaryData.getServerCounter());

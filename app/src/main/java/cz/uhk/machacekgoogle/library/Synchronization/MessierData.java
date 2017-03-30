@@ -4,6 +4,7 @@ import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.util.Log;
@@ -38,11 +39,13 @@ public class MessierData {
     private HttpClient httpClient;
     private Context context;
     private int actualVersion;
+    private ContentProviderClient contentProvider;
 
-    public MessierData(ApiAuthenticator apiAuthenticator, Context context) {
+    public MessierData(ApiAuthenticator apiAuthenticator, Context context, ContentProviderClient contentProvider) {
         this.apiAuthenticator = apiAuthenticator;
         this.httpClient = new DefaultHttpClient();
         this.context = context;
+        this.contentProvider = contentProvider;
     }
 
     public MessierData() {
@@ -204,6 +207,24 @@ public class MessierData {
 
     private static String getVersionUrl(String accessToken) {
         return Config.API_URL + Config.API_MESSIER_DATA + "/version?" + Config.API_ACCESS_TOKEN + "=" + accessToken;
+    }
+
+    private int getMessierVersion() throws RemoteException {
+
+        Uri uri = Uri.parse(AstroContract.DIARY_URI + "/settings");
+        int messier_version = 0;
+
+        Cursor c = contentProvider.query(uri, null, null, null, null);
+
+        if (c.moveToFirst()) {
+            do {
+                if (c.getString(0).equals("messier_version")) {
+                    messier_version = c.getInt(1);
+                }
+            } while (c.moveToNext());
+        }
+
+        return messier_version;
     }
 }
 

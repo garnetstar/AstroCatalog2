@@ -105,22 +105,10 @@ public class AstroDbHelper extends SQLiteOpenHelper {
         cv.put(KEY_SETTINGS_KEY, "client_counter");
         cv.put(KEY_SETTINGS_VALUE, 0);
         db.insert(TABLE_SETTINGS_NAME, null, cv);
-
-//			for (AstroObject astroObject : getObjectData()) {
-//				ContentValues cv = new ContentValues(8);
-//				cv.put(KEY_OBJECT_NAME, astroObject.getName());
-//				cv.put(KEY_OBJECT_MAG, astroObject.getMagnitude());
-//				cv.put(KEY_OBJECT_RA, astroObject.getLongitude().getDecimalDegree());
-//				cv.put(KEY_OBJECT_DEC, astroObject.getLatitude().getDecimalDegree());
-//				cv.put(KEY_OBJECT_TYPE, astroObject.getType());
-//				cv.put(KEY_OBJECT_CONSTELLATION, astroObject.getConstellation());
-//				cv.put(KEY_OBJECT_DIST, astroObject.getDistance());
-//				db.insert(TABLE_OBJECT_NAME, null, cv);
-//			}
-
-        //} catch (IOException e) {
-        //e.printStackTrace();
-        //}
+        cv = new ContentValues(2);
+        cv.put(KEY_SETTINGS_KEY, "messier_version");
+        cv.put(KEY_SETTINGS_VALUE, 0);
+        db.insert(TABLE_SETTINGS_NAME, null, cv);
     }
 
 

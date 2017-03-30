@@ -128,6 +128,8 @@ public class DiaryContentProvider extends ContentProvider {
                 db.delete(dbHelper.TABLE_OBJECT_NAME, selection, selectionArgs);
                 // settings je třeba pouze vynulovat
                 db.update(dbHelper.TABLE_SETTINGS_NAME, val, AstroDbHelper.KEY_SETTINGS_KEY + "=?", new String[]{"client_counter"});
+                db.update(dbHelper.TABLE_SETTINGS_NAME, val, AstroDbHelper.KEY_SETTINGS_KEY + "=?", new String[]{"messier_version"});
+
                 db.delete(dbHelper.TABLE_DIARY_NAME, selection, selectionArgs);
                 Log.d("astro", "Diary delete all " + uri);
                 break;

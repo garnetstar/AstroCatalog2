@@ -40,24 +40,71 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("astro", "onPerformSync for account[" + account.name + "]");
         try {
             // Get the auth token for the current account
-            String idToken = mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
-            String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+//            String idToken = mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+//            String authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+//
+//            ArrayList<AstroObject> messierData = null;
+//            MessierData md = new MessierData();
+//
+//            try {
+//                // ziskat data ze serveru
+//                // md.sync(authToken, getContext());
+//                messierData = md.getMessierData(idToken, getContext(), provider);
+//            } catch (AccessTokenExpiredException e) {
+//                // doslo k chybe, pokus o získání tokenu pomocí refresh tokenu nebo user credentials
+//                // AstroAccountAuthenticator->getAuthToken
+//                Log.d("astro", "EXPIRED Adapter");
+//                mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
+//                syncResult.fullSyncRequested=true;
+//            }
 
-            ArrayList<AstroObject> messierData = null;
             MessierData md = new MessierData();
+            String authToken;
+            ArrayList<AstroObject> messierData = null;
+            String signType = mAccountManager.getUserData(account, AuthenticatorActivity.SIGN_IN_TYPE);
+            switch (signType) {
+                case AuthenticatorActivity.SIGN_IN_TYPE_GOOGLE:
+                    String idToken = mAccountManager.getUserData(account, AuthenticatorActivity.ID_TOKEN);
+                    authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
 
-            try {
-                // ziskat data ze serveru
-                // md.sync(authToken, getContext());
-                messierData = md.getMessierData(idToken, getContext(), provider);
-            } catch (AccessTokenExpiredException e) {
-                // doslo k chybe, pokus o získání tokenu pomocí refresh tokenu nebo user credentials
-                // AstroAccountAuthenticator->getAuthToken
-                Log.d("astro", "EXPIRED Adapter");
-                mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
-                syncResult.delayUntil=10;
-                syncResult.fullSyncRequested=true;
+
+                    try {
+                        // ziskat data ze serveru
+                        // md.sync(authToken, getContext());
+                        messierData = md.getMessierData(idToken, getContext(), provider);
+                    } catch (AccessTokenExpiredException e) {
+                        // doslo k chybe, pokus o získání tokenu pomocí refresh tokenu nebo user credentials
+                        // AstroAccountAuthenticator->getAuthToken
+                        Log.d("astro", "EXPIRED Adapter");
+                        mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
+                        syncResult.fullSyncRequested = true;
+                    }
+                    break;
+                case AuthenticatorActivity.SIGN_IN_TYPE_ASTRO:
+                    authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+
+                    Log.d("astro", "ADAPter - " + authToken);
+
+                    try {
+                        // ziskat data ze serveru
+                        // md.sync(authToken, getContext());
+                        messierData = md.getMessierData(authToken, getContext(), provider);
+                    } catch (AccessTokenExpiredException e) {
+                        // doslo k chybe, pokus o získání tokenu pomocí refresh tokenu nebo user credentials
+                        // AstroAccountAuthenticator->getAuthToken
+                        Log.d("astro", "EXPIRED Adapter");
+                        mAccountManager.invalidateAuthToken(getContext().getString(R.string.accountType), authToken);
+                        authToken = mAccountManager.blockingGetAuthToken(account, "baerer", true);
+                        // druhy pokus o ziskani dat ze serveru
+                        // md.sync(authToken, getContext());
+                        messierData = md.getMessierData(authToken, getContext(), provider);
+                    }
+                    break;
+                default:
+                    Log.d("astro", "ERROR: NO SYNC ACCOUNT TYPE in MESSIER");
+                    break;
             }
+
 
             // pokud prisla nejaka data
             if (messierData != null) {
@@ -91,31 +138,6 @@ public class CatalogSyncAdapter extends AbstractThreadedSyncAdapter {
             } else {
                 Log.d("astro", "nothing to update");
             }
-
-
-//            ParseComServerAccessor parseComService = new ParseComServerAccessor();
-//
-//            // Get shows from the remote server
-//            List remoteTvShows = parseComService.getShows(authToken);
-//
-//            // Get shows from the local storage
-//            ArrayList localTvShows = new ArrayList();
-//            Cursor curTvShows = provider.query(TvShowsContract.CATALOG_URI, null, null, null, null);
-//            if (curTvShows != null) {
-//                while (curTvShows.moveToNext()) {
-//                    localTvShows.add(TvShow.fromCursor(curTvShows));
-//                }
-//                curTvShows.close();
-//            }
-            // TODO See what Local shows are missing on Remote
-
-            // TODO See what Remote shows are missing on Local
-
-            // TODO Updating remote tv shows
-
-            // TODO Updating local tv shows
-
-
         } catch (Exception e) {
             // pokud pri synchronizaci dojde k chybe, bude v telefonu synchronizace take ukoncena chybou
             syncResult.stats.numAuthExceptions++;

@@ -23,6 +23,10 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import java.io.IOException;
 
 import cz.uhk.machacekgoogle.AuthenticatorActivity;
+import cz.uhk.machacekgoogle.Exception.ApiErrorException;
+import cz.uhk.machacekgoogle.Exception.InvalidateRefreshTokenException;
+import cz.uhk.machacekgoogle.Exception.WrongCredentialsException;
+import cz.uhk.machacekgoogle.library.Api.ApiAuthenticator;
 
 /**
  * @author Jan Macháček
@@ -68,10 +72,28 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse accountAuthenticatorResponse, Account account, String authTokenType, Bundle bundle) throws NetworkErrorException {
 
+        AccountManager am = AccountManager.get(context);
+
+        String signType = am.getUserData(account, AuthenticatorActivity.SIGN_IN_TYPE);
+        Log.d("astro", "sign in type === " + signType + " break");
+
+        switch (signType) {
+            case AuthenticatorActivity.SIGN_IN_TYPE_GOOGLE:
+                return getAuthTokenByGoogle(account, am);
+            case AuthenticatorActivity.SIGN_IN_TYPE_ASTRO:
+                return getAuthTokenByAstro(account, am, bundle, accountAuthenticatorResponse, authTokenType);
+            default:
+                Log.d("astro", "ERROR: NO SYNC ACCOUNT TYPE");
+                break;
+        }
+        return null;
+
+    }
+
+    private Bundle getAuthTokenByGoogle(Account account,AccountManager am) {
         Log.d("astro", "ACCOUNT_AUTENTICATOR - OBNOVENI TOKENŮ");
         Log.d("astro", "--------------------------------------");
 
-        AccountManager am = AccountManager.get(context);
         String refreshToken = am.getUserData(account, AuthenticatorActivity.REFRESH_TOKEN);
 
         Log.d("astro", "REFRESH_TOKEN=" + refreshToken);
@@ -109,32 +131,64 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
             e.printStackTrace();
         }
 
-//        GoogleTokenResponse tokenResponse =
-//                null;
-//        try {
-//            tokenResponse = new GoogleAuthorizationCodeTokenRequest(
-//                    new NetHttpTransport(),
-//                    JacksonFactory.getDefaultInstance(),
-//                    "https://www.googleapis.com/oauth2/v4/token",
-//                    "171814397882-qoafbodpid52h7lh0pc98bruc9vv16vs.apps.googleusercontent.com",
-//                    "zN_3GYmPfnSAnlz0ChErRI4M",
-//                    "4/-6HSoWFIA2mnlYhvoExQaHVDVN8jLn_B1lukkT6TWYg",
-//                    "")  // Specify the same redirect URI that you use with your web
-//                    // app. If you don't have a web version of your app, you can
-//                    // specify an empty string.
-//                    .execute();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.d("astro", "sdfsf " + e.toString());
-//        }
-
-//        String accessToken = tokenResponse.getAccessToken();
-//        String refreshToken = tokenResponse.getRefreshToken();
-//
-//        Log.d("astro", "new access " + accessToken);
-//        Log.d("astro", "new refresh " + refreshToken);
         return null;
+    }
 
+    private Bundle getAuthTokenByAstro(Account account, AccountManager am, Bundle bundle, AccountAuthenticatorResponse accountAuthenticatorResponse, String authTokenType) {
+        String refreshToken = am.getUserData(account, AuthenticatorActivity.REFRESH_TOKEN);
+        String[] tokens;
+
+        try {
+            tokens = ApiAuthenticator.getAccessTokenByRefreshToken(refreshToken);
+            Bundle result = new Bundle();
+            result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+            result.putString(AccountManager.KEY_AUTHTOKEN, tokens[0]);
+            am.setUserData(account, AuthenticatorActivity.REFRESH_TOKEN, tokens[1]);
+            return result;
+        } catch (ApiErrorException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvalidateRefreshTokenException e) {
+
+            Log.d("astro", "INVALID REFRESHTOKEN EXCEPTION");
+            String login = account.name;
+            String password = am.getUserData(account, AuthenticatorActivity.PASSWORD);
+            Log.d("astro", "pass="+password + " " + "login:" + account.name);
+
+            try {
+                tokens = ApiAuthenticator.getTokenByLogin(login, password);
+                Bundle result = new Bundle();
+                result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+                result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+                result.putString(AccountManager.KEY_AUTHTOKEN, tokens[0]);
+                am.setUserData(account, AuthenticatorActivity.REFRESH_TOKEN, tokens[1]);
+                return result;
+
+            } catch (WrongCredentialsException e1) {
+                Log.d("astro", "WRONG CREDENTIALS EXCEPTION  ***");
+
+                final Intent intent = new Intent(context, AuthenticatorActivity.class);
+
+                intent.putExtra(AuthenticatorActivity.ACCOUNT_TYPE, account.type);
+                intent.putExtra(AuthenticatorActivity.LOGIN, account.name);
+                intent.putExtra(AuthenticatorActivity.AUTH_TYPE, authTokenType);
+                intent.putExtra(AuthenticatorActivity.NEW_ACCOUNT, false);
+                intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, accountAuthenticatorResponse);
+
+                //      final Bundle bund = new Bundle();
+                bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+                return bundle;
+
+            } catch (ApiErrorException e1) {
+
+                Log.d("astro", "SSSSS  ApiErrorException");
+                e1.printStackTrace();
+            }
+
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
