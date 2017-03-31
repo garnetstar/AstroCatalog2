@@ -115,7 +115,7 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
             result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
             result.putString(AccountManager.KEY_AUTHTOKEN, googleTokenResponse.getAccessToken());
             result.putString(AuthenticatorActivity.ID_TOKEN, googleTokenResponse.getIdToken());
-            am.setUserData(account, AuthenticatorActivity.REFRESH_TOKEN, refreshToken);
+            am.setUserData(account, AuthenticatorActivity.REFRESH_TOKEN, googleTokenResponse.getRefreshToken());
             am.setUserData(account,AuthenticatorActivity.ID_TOKEN,googleTokenResponse.getIdToken() );
 
             Log.d("astro", "NEW TOKEN = " + googleTokenResponse.getAccessToken());

@@ -224,7 +224,7 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         for (DiaryObject serverObject : diaryObjects) {
             try {
                 contentProviderClient.insert(Uri.parse(AstroContract.DIARY_URI + "/diary_edit"), serverObject.getContentValues());
-                Log.d("astro", "INSERT diaryData = " + diaryObjects.toString());
+                Log.d("astro", "INSERT diaryData = " + serverObject.toString());
             } catch (SQLiteConstraintException e) {
 
                 // doslo ke konfliktu, guid už v telefonu existuje
