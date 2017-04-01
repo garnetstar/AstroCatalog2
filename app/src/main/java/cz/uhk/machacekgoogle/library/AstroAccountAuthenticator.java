@@ -182,7 +182,7 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
 
             } catch (ApiErrorException e1) {
 
-                Log.d("astro", "SSSSS  ApiErrorException");
+                Log.d("astro", "ApiErrorException");
                 e1.printStackTrace();
             }
 

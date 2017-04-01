@@ -32,9 +32,6 @@ import cz.uhk.machacekgoogle.R;
 /**
  * @author Jan Macháček
  *         Created on 12.10.2016.
- *         https://developer.android.com/training/sync-adapters/creating-sync-adapter.html
- *         http://stackoverflow.com/questions/11362233/syncadapter-syncresult
- *         https://books.google.cz/books?id=NgTqCwAAQBAJ&pg=PA272&lpg=PA272&dq=android+getContentResolver().notifyChange&source=bl&ots=i3YRGv-ojU&sig=tXrfEWRhQMFH1jQooGmLjTKs4zA&hl=cs&sa=X&ved=0ahUKEwjRnof_kIrSAhWJthQKHcBMC1gQ6AEIUjAH#v=onepage&q=android%20getContentResolver().notifyChange&f=false
  */
 public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
 
@@ -166,8 +163,6 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
         for (int i = 0; i < objects.size(); i++) {
 
             if (objects.get(i).getGuid() == null) {
-//                nextId++;
-//                String newGuid = Integer.toString(nextId) + "-" + Integer.toString(userId);
                 String newGuid = UUID.randomUUID().toString();
                 objects.get(i).setGuid(newGuid);
                 objects.get(i).setIsNew(true);
@@ -299,15 +294,10 @@ public class DiarySyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void syncProblem(SyncResult syncResult, String message) {
-        //chyba http://stackoverflow.com/questions/14828998/how-to-show-sync-failed-message
-//        syncResult.stats.numAuthExceptions++;
 
         syncFromServerOK = false;
         Log.d("astro", "SYNC CONFLICT 1: " + message);
         syncResult.stats.numConflictDetectedExceptions++;
-//        syncResult.delayUntil = 10;
-
-
         Intent intent = new Intent();
         intent.setAction(AbstactBaseActivity.FILTER_SHOW_MESSAGE);
         intent.putExtra("message", message);

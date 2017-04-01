@@ -115,11 +115,9 @@ public class DiaryData {
     /**
      * @param objects
      * @param clientCounter
-     * @todo dodělat reakci pokud dojde při uploadu na server k chybě - pokud se vrátí kod > 400
      */
     public void sendDataToServer(ArrayList<DiaryObject> objects, int clientCounter) throws Api400ErrorException, IOException, JSONException {
 
-//        try {
             HttpPost post = Response.diarySyncToServer(objects, clientCounter, access_token);
 
             HttpClient httpClient = new DefaultHttpClient();
@@ -132,17 +130,11 @@ public class DiaryData {
 
             String json = Utils.convertInputStreamToString(response.getEntity().getContent());
 
-//            Log.d("astro", );
 
             if (httpStatus >= 400) {
                 String message = "REsponse po uploadu na server" + json + " STATUS=" + Integer.toString(httpStatus);
                 throw new Api400ErrorException(message);
             }
-
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            Log.d("astro", "Error in sendDataToServer " + e.toString());
-//        }
 
     }
 

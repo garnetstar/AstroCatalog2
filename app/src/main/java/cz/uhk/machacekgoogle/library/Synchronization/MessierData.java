@@ -112,7 +112,7 @@ public class MessierData {
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("astro", "7894554" + e.toString() + " " + e.getMessage());
+            Log.d("astro", "getVersionError " + e.toString() + " " + e.getMessage());
             throw new ApiErrorException(e.getMessage(), e);
         }
     }

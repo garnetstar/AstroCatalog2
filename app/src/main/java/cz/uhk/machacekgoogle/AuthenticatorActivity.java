@@ -155,11 +155,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
         });
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -192,14 +187,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
             Log.d("astro", "ÚSPĚŠNÉ PŘIHLÁŠENÍ KE GoogleSignInApi");
             GoogleSignInAccount googleSignInAccount = result.getSignInAccount();
 
-            Log.d("astro", "SPUŠTĚNÍ ASYNCHRONÍHO VLÁKNA K VYTVOŘENÍ UŽIVATELE "+ googleSignInAccount.getEmail());
-            Log.d("astro", "SERVER_AUTH_CODE="+ googleSignInAccount.getServerAuthCode());
+            Log.d("astro", "SPUŠTĚNÍ ASYNCHRONÍHO VLÁKNA K VYTVOŘENÍ UŽIVATELE " + googleSignInAccount.getEmail());
+            Log.d("astro", "SERVER_AUTH_CODE=" + googleSignInAccount.getServerAuthCode());
             CreateUserTask job = new CreateUserTask(googleSignInAccount, accountManager);
             job.execute(googleSignInAccount.getServerAuthCode());
 
         } else {
             hideProgressDialog();
-           Log.d("astro", "NEPODAŘILO SE PŘIHLÁSIT KE GoogleSignInApi");
+            Log.d("astro", "NEPODAŘILO SE PŘIHLÁSIT KE GoogleSignInApi");
         }
     }
 

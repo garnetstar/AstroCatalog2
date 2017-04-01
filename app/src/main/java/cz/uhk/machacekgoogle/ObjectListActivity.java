@@ -84,7 +84,6 @@ public class ObjectListActivity extends AbstactBaseActivity implements
 
             ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
-            // TODO Android 2 str.217
             if (cursor.moveToFirst()) {
                 do {
                     AstroObject object = createObjectFromCursor(cursor);
