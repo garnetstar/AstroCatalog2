@@ -157,7 +157,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int accountName=0x7f0b000e;
         public static final int accountPassword=0x7f0b000f;
-        public static final int action_settings=0x7f0b006f;
+        public static final int action_settings=0x7f0b0070;
         public static final int actual_latitude=0x7f0b0060;
         public static final int actual_location=0x7f0b0015;
         public static final int actual_location_provider=0x7f0b0016;
@@ -240,6 +240,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int signo_out_layout=0x7f0b0012;
         public static final int standard=0x7f0b0005;
         public static final int submit=0x7f0b0010;
+        public static final int sync_button=0x7f0b006f;
         public static final int sync_img=0x7f0b004c;
         public static final int sync_status=0x7f0b006c;
         public static final int textView=0x7f0b004e;

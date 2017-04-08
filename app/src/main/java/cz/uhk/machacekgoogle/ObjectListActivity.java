@@ -49,6 +49,10 @@ public class ObjectListActivity extends AbstactBaseActivity implements
         preference.registerOnSharedPreferenceChangeListener(this);
 
         setContentView(R.layout.astro_list);
+
+
+        // registrace broadcast receiveru pro reload objektů
+        registerReceiver(refreshBroudcastReceiver, new IntentFilter(REFRESH_OBJECTS_LIST));
     }
 
 
@@ -56,8 +60,6 @@ public class ObjectListActivity extends AbstactBaseActivity implements
     protected void onStart() {
         super.onStart();
 
-        // registrace broadcast receiveru pro reload objektů
-        registerReceiver(refreshBroudcastReceiver, new IntentFilter(REFRESH_OBJECTS_LIST));
     }
 
     @Override
@@ -67,11 +69,11 @@ public class ObjectListActivity extends AbstactBaseActivity implements
     }
 
     /**
-     * Dispatch onPause() to fragments.
+     * Destroy all fragments and loaders.
      */
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(refreshBroudcastReceiver);
     }
 
@@ -186,11 +188,6 @@ public class ObjectListActivity extends AbstactBaseActivity implements
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

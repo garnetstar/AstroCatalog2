@@ -50,8 +50,17 @@
             android:text="Odhlásit z účtu Googlu"
             android:onClick="onClick"
             />
+
     </LinearLayout>
 
+    <Button
+        android:id="@+id/sync_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:text="Spustit synchronizaci"
+        android:onClick="onSyncClick"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>

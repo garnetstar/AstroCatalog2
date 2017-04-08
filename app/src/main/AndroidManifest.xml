@@ -58,7 +58,9 @@
             android:label="@string/title_object_list" />
         <activity
             android:name="cz.uhk.machacekgoogle.DiaryEditActivity"
-            android:label="@string/title_diary" />
+            android:label="@string/title_diary"
+            android:noHistory="true"
+            />
         <activity
             android:name="cz.uhk.machacekgoogle.DiaryActivity"
             android:label="@string/title_diary" />

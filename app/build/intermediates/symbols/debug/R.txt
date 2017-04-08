@@ -67,7 +67,7 @@ int drawable sync_ok 0x7f02001a
 int drawable toast_border 0x7f02001b
 int id accountName 0x7f0b000e
 int id accountPassword 0x7f0b000f
-int id action_settings 0x7f0b006f
+int id action_settings 0x7f0b0070
 int id actual_latitude 0x7f0b0060
 int id actual_location 0x7f0b0015
 int id actual_location_provider 0x7f0b0016
@@ -150,6 +150,7 @@ int id signo_in_layout 0x7f0b000b
 int id signo_out_layout 0x7f0b0012
 int id standard 0x7f0b0005
 int id submit 0x7f0b0010
+int id sync_button 0x7f0b006f
 int id sync_img 0x7f0b004c
 int id sync_status 0x7f0b006c
 int id textView 0x7f0b004e

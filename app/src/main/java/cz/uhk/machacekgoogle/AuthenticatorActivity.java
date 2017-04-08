@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -271,6 +272,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
             Log.d("astro", "-------------------------------");
 
             setAccountAuthenticatorResult(data);
+            sync();
             finish();
         }
     }
@@ -326,7 +328,24 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
         setAccountAuthenticatorResult(intent.getExtras());
         setResult(RESULT_OK, intent);
 
+        sync();
         finish();
+    }
+
+    public void sync() {
+        Log.d("astro", "SPUŠTĚNA SYNCHRONIZACE...");
+        Account account;
+        Account[] accounts = AccountManager.get(this).getAccountsByType(getBaseContext().getString(R.string.accountType));
+        if(accounts.length > 0) {
+            account = accounts[0];
+            Bundle settingsBundle = new Bundle();
+            settingsBundle.putBoolean(
+                    ContentResolver.SYNC_EXTRAS_MANUAL, true);
+            settingsBundle.putBoolean(
+                    ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            ContentResolver.requestSync(account, AstroContract.CATALOG_AUTHORITY, settingsBundle);
+            ContentResolver.requestSync(account, AstroContract.DIARY_AUTHORITY, settingsBundle);
+        }
     }
 
 }

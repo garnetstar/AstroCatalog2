@@ -90,9 +90,9 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
 
     }
 
-    private Bundle getAuthTokenByGoogle(Account account,AccountManager am) {
+    private Bundle getAuthTokenByGoogle(Account account, AccountManager am) {
         Log.d("astro", "ACCOUNT_AUTENTICATOR - OBNOVENI TOKENŮ");
-        Log.d("astro", "--------------------------------------");
+        Log.d("astro", "--------------------------------------" + account.type);
 
         String refreshToken = am.getUserData(account, AuthenticatorActivity.REFRESH_TOKEN);
 
@@ -115,8 +115,11 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
             result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
             result.putString(AccountManager.KEY_AUTHTOKEN, googleTokenResponse.getAccessToken());
             result.putString(AuthenticatorActivity.ID_TOKEN, googleTokenResponse.getIdToken());
-            am.setUserData(account, AuthenticatorActivity.REFRESH_TOKEN, googleTokenResponse.getRefreshToken());
-            am.setUserData(account,AuthenticatorActivity.ID_TOKEN,googleTokenResponse.getIdToken() );
+
+            if (googleTokenResponse.getRefreshToken() != null) {
+                am.setUserData(account, AuthenticatorActivity.REFRESH_TOKEN, googleTokenResponse.getRefreshToken());
+            }
+            am.setUserData(account, AuthenticatorActivity.ID_TOKEN, googleTokenResponse.getIdToken());
 
             Log.d("astro", "NEW TOKEN = " + googleTokenResponse.getAccessToken());
 
@@ -154,7 +157,7 @@ public class AstroAccountAuthenticator extends AbstractAccountAuthenticator impl
             Log.d("astro", "INVALID REFRESHTOKEN EXCEPTION");
             String login = account.name;
             String password = am.getUserData(account, AuthenticatorActivity.PASSWORD);
-            Log.d("astro", "pass="+password + " " + "login:" + account.name);
+            Log.d("astro", "pass=" + password + " " + "login:" + account.name);
 
             try {
                 tokens = ApiAuthenticator.getTokenByLogin(login, password);

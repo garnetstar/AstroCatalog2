@@ -5,7 +5,11 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,9 +18,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -42,6 +49,9 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
     private ImageView imageView;
+    private RefreshBroudcastReceiver refreshReceiver = new RefreshBroudcastReceiver();
+    private RefreshBroudcastReceiverObject refreshReceiverObject = new RefreshBroudcastReceiverObject();
+
 
     /**
      * Perform initialization of all fragments and loaders.
@@ -53,6 +63,9 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
+
+        registerReceiver(refreshReceiver, new IntentFilter(DiaryActivity.REFRESH_DIARY_LIST));
+        registerReceiver(refreshReceiverObject, new IntentFilter(ObjectListActivity.REFRESH_OBJECTS_LIST));
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 // ziskani údajů uživatelova účtu
@@ -66,6 +79,8 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+
 
     }
 
@@ -107,6 +122,23 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
                 break;
         }
     }
+
+    public void onSyncClick(View v) {
+
+        Account account;
+        Account[] accounts = AccountManager.get(this).getAccountsByType(getBaseContext().getString(R.string.accountType));
+        if(accounts.length > 0) {
+            account = accounts[0];
+            Bundle settingsBundle = new Bundle();
+            settingsBundle.putBoolean(
+                    ContentResolver.SYNC_EXTRAS_MANUAL, true);
+            settingsBundle.putBoolean(
+                    ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            ContentResolver.requestSync(account, AstroContract.CATALOG_AUTHORITY, settingsBundle);
+            ContentResolver.requestSync(account, AstroContract.DIARY_AUTHORITY, settingsBundle);
+        }
+    }
+
 
     private void signOut() {
 
@@ -174,6 +206,35 @@ public class UserActivity extends FragmentActivity implements View.OnClickListen
         protected void onPostExecute(Bitmap bitmap) {
             imageView.setImageBitmap(bitmap);
         }
+    }
+
+    private class RefreshBroudcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("astro", "REFRESH DIARY");
+            showAlert("Deník byl aktualizován");
+        }
+    }
+
+    private class RefreshBroudcastReceiverObject extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("astro", "REFRESH OBJECTS");
+            showAlert("Databáze objektů byla aktualizována");
+        }
+    }
+
+    private void showAlert(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View toastRoot = inflater.inflate(R.layout.toast, null);
+        Toast toast = new Toast(getBaseContext());
+        toast.setView(toastRoot);
+        toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM,
+                0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        TextView toastMessage = (TextView) toastRoot.findViewById(R.id.toastMessage);
+        toastMessage.setText(message);
+        toast.show();
     }
 
 }

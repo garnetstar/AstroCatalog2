@@ -274,9 +274,6 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
                         startActivity(intent);
                     }
                 }
-
-
-
             }
 
         } catch (ParseException e) {
@@ -297,24 +294,7 @@ public class DiaryEditActivity extends AbstactBaseActivity implements View.OnCli
 
         getContentResolver().update(getUri(), cv, selected, selectedArgs);
         //navrat na vypis objektu
-        back();
-    }
-
-    /**
-     * Take care of popping the fragment back stack or finishing the activity
-     * as appropriate.
-     */
-    @Override
-    public void onBackPressed() {
         super.onBackPressed();
-        back();
-
-    }
-
-    private void back() {
-        //navrat na vypis objektu
-        Intent intent = new Intent(this, DiaryActivity.class);
-        startActivity(intent);
     }
 
     private Uri getUri() {

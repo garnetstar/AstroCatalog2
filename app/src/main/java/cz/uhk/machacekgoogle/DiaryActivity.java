@@ -152,23 +152,7 @@ public class DiaryActivity extends AbstactBaseActivity {
         return o;
     }
 
-    /**
-     * Take care of popping the fragment back stack or finishing the activity
-     * as appropriate.
-     */
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        back();
-    }
-
-    private void back() {
-        //navrat na vypis objektu
-        Intent intent = new Intent(this, HomePage.class);
-        startActivity(intent);
-    }
-
-    private class RefreshBroudcastReceiver extends BroadcastReceiver {
+     private class RefreshBroudcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             onResumeFragments();

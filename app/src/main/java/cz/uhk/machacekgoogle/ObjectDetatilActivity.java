@@ -144,13 +144,6 @@ public class ObjectDetatilActivity extends AbstactBaseActivity implements
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		getMenuInflater().inflate(R.menu.object_detatil, menu);
-		return true;
-	}
-
-	@Override
 	public void onLocationChanged(Location location) {
 		hideProgressDialog();
 		this.location = location;
