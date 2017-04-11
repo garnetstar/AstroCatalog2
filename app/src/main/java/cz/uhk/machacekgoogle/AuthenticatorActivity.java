@@ -55,7 +55,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     public final static String SIGN_IN_TYPE_ASTRO = "astro";
 
 
-    public final static int PERIOD_OF_SYNC_SEC = 30;
+    public final static int PERIOD_OF_SYNC_SEC = (60 * 60);
     public final static int KEY_SIGN_IN = 9001;
 
     public final static String NEW_ACCOUNT = "IS_ADDING_ACCOUNT";

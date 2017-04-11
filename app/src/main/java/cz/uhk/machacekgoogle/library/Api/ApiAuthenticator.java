@@ -2,31 +2,24 @@ package cz.uhk.machacekgoogle.library.Api;
 
 import android.content.SharedPreferences;
 import android.util.Log;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import cz.uhk.machacekgoogle.Config;
 import cz.uhk.machacekgoogle.Exception.ApiErrorException;
 import cz.uhk.machacekgoogle.Exception.InvalidateRefreshTokenException;
 import cz.uhk.machacekgoogle.Exception.WrongCredentialsException;
 import cz.uhk.machacekgoogle.library.Api.Http.Response;
-import cz.uhk.machacekgoogle.library.Api.Http.Utils;
 
 /**
  * Třída zapouzdřuje obstarání auth-tokenu ze serveru
  * Created by jan on 22.7.2016.
  */
 public class ApiAuthenticator {
-
-    private SharedPreferences preferences;
-
-    public ApiAuthenticator(SharedPreferences preferences) {
-        this.preferences = preferences;
-    }
 
     /**
      * @param login
@@ -39,22 +32,14 @@ public class ApiAuthenticator {
 
         Log.d("astro", "GET auth_token");
 
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpURLConnection conn = null;
 
         try {
 
-            HttpPost httpPost = Response.accessTokenByCredentials(login, password);
-            HttpResponse response = httpClient.execute(httpPost);
-
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+            conn = Response.accessTokenByCredentials(login, password);
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
             JSONObject jsonObject = new JSONObject(json);
-            //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
-            if (httpStatus >= 400) {
-                String message = jsonObject.getString("message");
-                throw new WrongCredentialsException(message + ": wrong credentials");
-            }
-
             Log.d("astro", "getTokenByLogin"  + json);
 
             String accessToken = jsonObject.getString("access_token");
@@ -64,9 +49,31 @@ public class ApiAuthenticator {
             ret[1] = refreshToken;
             return ret;
 
-        } catch (WrongCredentialsException e) {
-            throw e;
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
+            InputStream errorstream = conn.getErrorStream();
+            String response = "";
+            int code = 0;
+            String line;
+            if (null != errorstream) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(errorstream));
+                try {
+                    code = conn.getResponseCode();
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (code >= 400) {
+                Log.d("astro", "REFRESH TOKEN ERROR 3 " + response);
+                throw new WrongCredentialsException(response);
+            } else {
+                Log.d("astro", "REFRESH TOKEN ERROR 3 " + e.toString() + " " + e.getMessage());
+                throw new ApiErrorException(e.getMessage(), e);
+            }
+
+        }  catch (Exception e) {
             throw new ApiErrorException(e.getMessage(), e);
         }
     }
@@ -75,26 +82,13 @@ public class ApiAuthenticator {
 
         Log.d("astro", "method> getAccessTokenByRefreshToken");
 
-        HttpPost post = null;
+        HttpURLConnection conn = null;
         try {
-            post = Response.refreshToken(refreshToken);
-
-            HttpClient httpClient = new DefaultHttpClient();
-
-            HttpResponse response = httpClient.execute(post);
-
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-
-            Log.d("astro", "ssddgg" +  json);
+            conn = Response.refreshToken(refreshToken);
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
 
             JSONObject jsonObject = new JSONObject(json);
-
-            //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
-            if (httpStatus >= 400) {
-                String message = jsonObject.getString("message");
-                throw new InvalidateRefreshTokenException(message);
-            }
             String accessToken = jsonObject.getString(Config.API_ACCESS_TOKEN);
             refreshToken = jsonObject.getString(Config.API_REFRESH_TOKEN);
 
@@ -103,10 +97,32 @@ public class ApiAuthenticator {
             ret[1] = refreshToken;
             return ret;
 
-        }catch (InvalidateRefreshTokenException e) {
-            throw e;
-        }catch (Exception e) {
+        }catch (java.io.IOException e) {
+            InputStream errorstream = conn.getErrorStream();
+            String response = "";
+            int code = 0;
+            String line;
+            if (null != errorstream) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(errorstream));
+                try {
+                    code = conn.getResponseCode();
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (code >= 400) {
+                throw new InvalidateRefreshTokenException(response);
+            } else {
+                Log.d("astro", "REFRESH TOKEN ERROR 1 " + e.toString() + " " + e.getMessage());
+                throw new ApiErrorException(e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
+            Log.d("astro", "REFRESH TOKEN ERROR 2 " + e.toString());
             return null;
         }
     }

@@ -6,16 +6,17 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import cz.uhk.machacekgoogle.AstroContract;
@@ -26,7 +27,6 @@ import cz.uhk.machacekgoogle.Exception.ApiErrorException;
 import cz.uhk.machacekgoogle.Model.DiaryObject;
 import cz.uhk.machacekgoogle.coordinates.Angle;
 import cz.uhk.machacekgoogle.library.Api.Http.Response;
-import cz.uhk.machacekgoogle.library.Api.Http.Utils;
 
 /**
  * @author Jan Macháček
@@ -45,28 +45,25 @@ public class DiaryData {
     }
 
     /**
-     *
      * @return
      * @throws AccessTokenExpiredException
      * @throws ApiErrorException
      */
     public ArrayList<DiaryObject> getDataFromServer() throws AccessTokenExpiredException, ApiErrorException {
 
+        HttpURLConnection conn = null;
         try {
 
             Log.d("astro", "URL pro stahovaní dat ze serveru: " + getDiaryDownloadUrl(getClientCounter()));
 
-            HttpGet get = new HttpGet(getDiaryDownloadUrl(getClientCounter()));
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpResponse response = httpClient.execute(get);
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+            URL url = new URL(getDiaryDownloadUrl(getClientCounter()));
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+
             Log.d("astro", "DATA ZE SERVERU " + json);
             JSONObject jsonObject = new JSONObject(json);
-            //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
-            if (httpStatus == 401) {
-                throw new AccessTokenExpiredException();
-            }
             int serverCounter = jsonObject.getInt("servercounter");
             int userId = jsonObject.getInt("user_id");
 
@@ -102,14 +99,34 @@ public class DiaryData {
             }
 
             return newData;
-        } catch (AccessTokenExpiredException e) {
-            throw new AccessTokenExpiredException();
+        }catch (java.io.IOException e) {
+            InputStream errorstream = conn.getErrorStream();
+            String response = "";
+            int code = 0;
+            String line;
+            if (null != errorstream) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(errorstream));
+                try {
+                    code = conn.getResponseCode();
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (code == 401) {
+                throw new AccessTokenExpiredException();
+            } else {
+                Log.d("astro", "getVersionError " + e.toString() + " " + e.getMessage());
+                throw new ApiErrorException(e.getMessage(), e);
+            }
+
         } catch (Exception e) {
             Log.d("astro", "getDataFromServer exception " + e.toString());
             throw new ApiErrorException(e.getMessage(), e);
         }
     }
-
 
 
     /**
@@ -118,24 +135,34 @@ public class DiaryData {
      */
     public void sendDataToServer(ArrayList<DiaryObject> objects, int clientCounter) throws Api400ErrorException, IOException, JSONException {
 
-            HttpPost post = Response.diarySyncToServer(objects, clientCounter, access_token);
-
-            HttpClient httpClient = new DefaultHttpClient();
-
-
-            HttpResponse response = httpClient.execute(post);
-
-            //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
-
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+        HttpURLConnection conn = null;
+        try {
 
 
-            if (httpStatus >= 400) {
-                String message = "REsponse po uploadu na server" + json + " STATUS=" + Integer.toString(httpStatus);
-                throw new Api400ErrorException(message);
+            conn = Response.diarySyncToServer(objects, clientCounter, access_token);
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+            Log.d("astro", "SEND DIARY TO SERVER RESPONSE: " + json);
+        } catch (java.io.IOException e) {
+            InputStream errorstream = conn.getErrorStream();
+            String response = "";
+            int code = 0;
+            String line;
+            if (null != errorstream) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(errorstream));
+                try {
+                    code = conn.getResponseCode();
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
-
+            if (code >= 400) {
+                throw new Api400ErrorException(response);
+            }
+        }
     }
 
     private String getDiaryDownloadUrl(int client_counter) {

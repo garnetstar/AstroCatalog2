@@ -2,24 +2,20 @@ package cz.uhk.machacekgoogle.library.Api.Http;
 
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
 import cz.uhk.machacekgoogle.AstroContract;
 import cz.uhk.machacekgoogle.Config;
 import cz.uhk.machacekgoogle.Model.DiaryObject;
@@ -29,47 +25,63 @@ import cz.uhk.machacekgoogle.Model.DiaryObject;
  */
 public class Response {
 
-    public static HttpGet messierDataRequest(String url) {
+    public static HttpURLConnection refreshToken(String refreshToken) throws IOException, JSONException {
+        URL url = new URL(Config.API_URL + Config.API_TOKEN);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 
-        HttpGet get = new HttpGet(url);
-        return get;
+        JSONObject obj = new JSONObject();
+        obj.put(Config.API_REFRESH_TOKEN, refreshToken);
+        obj.put(Config.API_GRANT_TYPE, "refresh_token");
+        obj.put("client_id", Config.API_CLIENT_ID);
+
+        wr.writeBytes(obj.toString());
+        Log.e("astro", "JSON Input" + obj.toString());
+        wr.flush();
+        wr.close();
+
+        return conn;
     }
 
-    public static HttpPost refreshToken(String refreshToken) throws UnsupportedEncodingException {
-        String url = Config.API_URL + Config.API_TOKEN;
+    public static HttpURLConnection accessTokenByCredentials(String login, String password) throws IOException, JSONException {
 
-        HttpPost post = new HttpPost(url);
+        URL url = new URL(Config.API_URL + Config.API_TOKEN);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        JSONObject obj = new JSONObject();
 
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+        obj.put("login", login);
+        obj.put("password", password);
+        obj.put(Config.API_GRANT_TYPE, "password");
+        obj.put("client_id", Config.API_CLIENT_ID);
 
-        nameValuePairs.add(new BasicNameValuePair(Config.API_REFRESH_TOKEN, refreshToken));
-        nameValuePairs.add(new BasicNameValuePair(Config.API_GRANT_TYPE, "refresh_token"));
-        nameValuePairs.add(new BasicNameValuePair("client_id", Config.API_CLIENT_ID));
+        wr.writeBytes(obj.toString());
+        Log.d("astro", "JSON Input" + obj.toString());
+        wr.flush();
+        wr.close();
 
-        post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-        return post;
+        return conn;
     }
 
-    public static HttpPost accessTokenByCredentials(String login, String password) throws UnsupportedEncodingException {
+    public static HttpURLConnection diarySyncToServer(ArrayList<DiaryObject> objects, int lastClientCounter, String access_token) throws JSONException, IOException {
 
-        HttpPost httpPost = new HttpPost(Config.API_URL + Config.API_TOKEN);
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-        nameValuePairs.add(new BasicNameValuePair("login", login));
-        nameValuePairs.add(new BasicNameValuePair("password", password));
-        nameValuePairs.add(new BasicNameValuePair(Config.API_GRANT_TYPE, "password"));
-        nameValuePairs.add(new BasicNameValuePair("client_id", Config.API_CLIENT_ID));
+        String urlDiary = Config.API_URL + Config.API_DIARY_DATA + "/" + Integer.toString(lastClientCounter) + "?access_token=" + access_token;
+        Log.d("astro", "Url pro odesílání dat na server: " + urlDiary);
 
-        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-        return httpPost;
-    }
-
-    public static HttpPost diarySyncToServer(ArrayList<DiaryObject> objects, int lastClientCounter, String access_token) throws JSONException, UnsupportedEncodingException {
-
-        String url = Config.API_URL + Config.API_DIARY_DATA + "/" + Integer.toString(lastClientCounter) + "?access_token=" + access_token;
-        Log.d("astro", "Url pro odesílání dat na server: " + url);
-        HttpPost httpPost = new HttpPost(url);
-
+        URL url = new URL(urlDiary);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < objects.size(); i++) {
@@ -91,15 +103,18 @@ public class Response {
         jsonObject.put("objects", jsonArray);
         Log.d("astro", "Objekty které se budou posílat na server " + jsonObject.toString());
 
-        // je třeba nastavit správné kódování kvůli kompatibilitě se serverem
-        httpPost.setEntity(new StringEntity(jsonObject.toString(), "UTF8"));
-        httpPost.setHeader("Content-type", "application/json");
-        return httpPost;
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(os, "UTF-8"));
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+        os.close();
+        return conn;
     }
 
 
     /**
-     *
      * @param latitude
      * @param longitude
      * @return
@@ -111,12 +126,13 @@ public class Response {
         String lat = "&lat=" + Double.toString(latitude);
         String lon = "&lon=" + Double.toString(longitude);
         String weatherUrl = AstroContract.weatherUri + "&appid=" + AstroContract.weatherApiKey + lat + lon;
-
         Log.d("astro", "WEATHER> " + weatherUrl);
-        HttpGet get = new HttpGet(weatherUrl);
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpResponse response = httpClient.execute(get);
-        String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+        URL url = new URL(weatherUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        InputStream in = new BufferedInputStream(conn.getInputStream());
+        String json = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+
         Log.d("astro", "WEATHER API DATA " + json);
         JSONObject jsonObject = new JSONObject(json);
         return jsonObject;

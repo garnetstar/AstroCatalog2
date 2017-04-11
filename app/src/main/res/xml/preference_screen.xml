@@ -28,7 +28,7 @@
         android:title="@string/max_magnitude"
         custom:min="1" />
 
-    <Preference android:title="User" >
+    <Preference android:title="Účet" >
         <intent
             android:targetPackage="cz.uhk.machacekgoogle"
             android:targetClass="cz.uhk.machacekgoogle.UserActivity"

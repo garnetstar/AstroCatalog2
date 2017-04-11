@@ -4,31 +4,26 @@ import android.content.ContentProviderClient;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.util.Log;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import cz.uhk.machacekgoogle.Config;
 import cz.uhk.machacekgoogle.Exception.AccessTokenExpiredException;
 import cz.uhk.machacekgoogle.Exception.ApiErrorException;
 import cz.uhk.machacekgoogle.Model.AstroDbHelper;
 import cz.uhk.machacekgoogle.ObjectListActivity;
 import cz.uhk.machacekgoogle.coordinates.Angle;
-import cz.uhk.machacekgoogle.library.Api.Http.Response;
-import cz.uhk.machacekgoogle.library.Api.Http.Utils;
-import cz.uhk.machacekgoogle.library.Api.ApiAuthenticator;
 import cz.uhk.machacekgoogle.AstroContract;
 import cz.uhk.machacekgoogle.Model.AstroObject;
 
@@ -56,13 +51,12 @@ public class MessierData {
         actualVersion = serverVersion;
 
         if (deviceVersion < serverVersion) {
-
             ArrayList<AstroObject> astroObjects = new ArrayList<AstroObject>();
 
             getData(url, astroObjects);
 
             try {
-                providerClient.update(Uri.parse(AstroContract.CATALOG_URI + "/messier"),null,null, null);
+                providerClient.update(Uri.parse(AstroContract.CATALOG_URI + "/messier"), null, null, null);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -90,26 +84,44 @@ public class MessierData {
 
     private int getVersion(String accessToken) throws AccessTokenExpiredException, ApiErrorException {
 
-        String url = getVersionUrl(accessToken);
-        Log.d("astro ", "GET VERSION MESSIER 1 " + url);
-
+        String versionUrl = getVersionUrl(accessToken);
+        Log.d("astro ", "GET VERSION MESSIER 1 " + versionUrl);
+        HttpURLConnection conn = null;
         try {
-            HttpGet get = Response.messierDataRequest(url);
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpResponse response = httpClient.execute(get);
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
-            Log.d("astro", "version > " + json);
+            URL url = new URL(versionUrl);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+            Log.d("astro", "version (HttpUrlConnection) > " + json);
             JSONObject jsonObject = new JSONObject(json);
-            //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
-            if (httpStatus == 401) {
-                throw new AccessTokenExpiredException();
-            }
             int version = jsonObject.getInt("version");
             return version;
 
-        } catch (AccessTokenExpiredException e) {
-            throw e;
+        } catch (java.io.IOException e) {
+            InputStream errorstream = conn.getErrorStream();
+            String response = "";
+            int code = 0;
+            String line;
+            if (null != errorstream) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(errorstream));
+                try {
+                    code = conn.getResponseCode();
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            if (code == 401) {
+                throw new AccessTokenExpiredException();
+            } else {
+                Log.d("astro", "getVersionError " + e.toString() + " " + e.getMessage());
+                throw new ApiErrorException(e.getMessage(), e);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("astro", "getVersionError " + e.toString() + " " + e.getMessage());
@@ -117,17 +129,21 @@ public class MessierData {
         }
     }
 
-    private ArrayList<AstroObject> getData(String url, ArrayList<AstroObject> astroObjects) throws ApiErrorException, AccessTokenExpiredException {
+    private ArrayList<AstroObject> getData(String targetUrl, ArrayList<AstroObject> astroObjects) throws ApiErrorException, AccessTokenExpiredException {
 
+        HttpURLConnection conn = null;
         try {
-            Log.d("Response ", "URL: " + url);
-            HttpGet get = Response.messierDataRequest(url);
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpResponse response = httpClient.execute(get);
-            String json = Utils.convertInputStreamToString(response.getEntity().getContent());
+            Log.d("Response ", "URL: " + targetUrl);
+            URL url = new URL(targetUrl);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+
+
             JSONObject jsonObject = new JSONObject(json);
             //kontrola http statusu
-            int httpStatus = response.getStatusLine().getStatusCode();
+            int httpStatus = conn.getResponseCode();
             if (httpStatus == 401) {
                 throw new AccessTokenExpiredException();
             }
@@ -166,19 +182,42 @@ public class MessierData {
             }
 
             // polkud hlavička obsahuje "Link" a rel="next" vola metoda rekurzivně same sebe
-            HashMap<String, String> headers = Utils.convertHeadersToHashMap(response.getAllHeaders());
+            String headerLink = conn.getHeaderField("Link");
 
-            if (null != headers.get("Link")) {
-                String[] link = headers.get("Link").split(";");
+            Log.d("astro", "HEADER LINK: " + headerLink);
+
+            if (null != headerLink) {
+                String[] link = headerLink.split(";");
                 if (link[1].matches("rel=\"next\"")) {
                     String nextUrl = link[0].substring(1, link[0].length() - 1);
                     getData(nextUrl, astroObjects);
                 }
             }
 
-        } catch (AccessTokenExpiredException e) {
-            throw e;
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
+            InputStream errorstream = conn.getErrorStream();
+            String response = "";
+            int code = 0;
+            String line;
+            if (null != errorstream) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(errorstream));
+                try {
+                    code = conn.getResponseCode();
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (code == 401) {
+                throw new AccessTokenExpiredException();
+            } else {
+                Log.d("astro", "getVersionError " + e.toString() + " " + e.getMessage());
+                throw new ApiErrorException(e.getMessage(), e);
+            }
+
+        }  catch (Exception e) {
 
             Log.d("astro", "getData exception " + e.toString());
             throw new ApiErrorException(e.getMessage(), e);
